@@ -80,10 +80,10 @@ export default function ContactPage() {
                         <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
                             Contact Us
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
                             Get in <span className="text-springer-red">Touch</span>
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-white/80 leading-relaxed">
                             Have questions? We'd love to hear from you. Send us a message and we'll
                             respond as soon as possible.
                         </p>

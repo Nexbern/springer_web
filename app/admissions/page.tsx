@@ -65,10 +65,10 @@ export default function AdmissionsPage() {
                         <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
                             Admissions {admissionsOpen ? 'Open' : 'Closed'}
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
                             Begin Your <span className="text-springer-red">Journey</span> With Us
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-white/80 leading-relaxed">
                             Join Springer Public School and give your child the gift of quality education
                             and holistic development. Admissions are now open for the academic year 2025-26.
                         </p>

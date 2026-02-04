@@ -39,10 +39,10 @@ export default function AboutPage() {
                         <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
                             About Us
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
                             Building a Legacy of <span className="text-springer-red">Excellence</span>
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-white/80 leading-relaxed">
                             Since 1995, Springer Public School has been at the forefront of quality education,
                             nurturing young minds and shaping future leaders with a perfect blend of tradition and innovation.
                         </p>

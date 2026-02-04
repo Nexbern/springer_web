@@ -182,12 +182,12 @@ export function Hero() {
                         >
                             <span
                                 className={`inline-flex items-center gap-2 px-4 py-2 backdrop-blur-sm text-sm font-medium rounded-full mb-6 ${currentSlideData.badgeColor === 'spark'
-                                        ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white'
-                                        : currentSlideData.badgeColor === 'red'
-                                            ? 'bg-springer-red/90 text-white'
-                                            : currentSlideData.badgeColor === 'green'
-                                                ? 'bg-springer-green/90 text-white'
-                                                : 'bg-blue-500/90 text-white'
+                                    ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white'
+                                    : currentSlideData.badgeColor === 'red'
+                                        ? 'bg-springer-red/90 text-white'
+                                        : currentSlideData.badgeColor === 'green'
+                                            ? 'bg-springer-green/90 text-white'
+                                            : 'bg-blue-500/90 text-white'
                                     }`}
                             >
                                 {currentSlideData.badgeColor === 'spark' && <Sparkles className="w-4 h-4" />}
@@ -201,7 +201,7 @@ export function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.1 }}
-                            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6"
+                            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6"
                         >
                             {currentSlideData.title.split('.').map((part, index, arr) => (
                                 <span key={index}>
@@ -235,14 +235,14 @@ export function Hero() {
                         >
                             <Link
                                 href="/admissions"
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5"
                             >
                                 <Calendar className="w-5 h-5" />
                                 Admissions Open
                             </Link>
                             <Link
                                 href="/contact"
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300"
                             >
                                 <BookOpen className="w-5 h-5" />
                                 Book Campus Visit
@@ -290,8 +290,8 @@ export function Hero() {
                                 key={index}
                                 onClick={() => goToSlide(index)}
                                 className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
-                                        ? 'w-8 bg-springer-red'
-                                        : 'w-2 bg-white/40 hover:bg-white/60'
+                                    ? 'w-8 bg-springer-red'
+                                    : 'w-2 bg-white/40 hover:bg-white/60'
                                     }`}
                                 aria-label={`Go to slide ${index + 1}`}
                             />

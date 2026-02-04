@@ -29,7 +29,7 @@ export function Navbar() {
     if (href === '/') {
       return pathname === '/';
     }
-    return pathname.startsWith(href);
+    return pathname?.startsWith(href);
   };
 
   return (
@@ -52,7 +52,7 @@ export function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-springer-gray text-xs">{schoolInfo.affiliation}</span>
+              <span className="text-white text-xs">{schoolInfo.affiliation}</span>
             </div>
           </div>
         </div>

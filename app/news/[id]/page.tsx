@@ -9,7 +9,7 @@ import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
 export default function NewsDetailsPage() {
     const params = useParams();
     const router = useRouter();
-    const id = params.id as string;
+    const id = params?.id as string;
 
     const currentNotice = notices.find((n) => n.id === Number(id));
     const currentIndex = notices.findIndex((n) => n.id === Number(id));

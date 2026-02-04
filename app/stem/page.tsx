@@ -55,10 +55,10 @@ export default function STEMPage() {
                         <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
                             STEM & Skill Development
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
                             Preparing Students for the <span className="text-springer-red">Future</span>
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-white/80 leading-relaxed">
                             Our comprehensive STEM programs equip students with the skills and knowledge
                             needed to thrive in an increasingly technology-driven world.
                         </p>

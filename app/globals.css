@@ -25,7 +25,7 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 0 67% 46%;
-    --radius: 0.625rem;
+    --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 220 14% 15%;
     --sidebar-primary: 0 67% 46%;
@@ -57,25 +57,25 @@
   h4,
   h5,
   h6 {
-    @apply font-display font-semibold tracking-tight;
+    @apply font-display font-medium tracking-normal;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-springer-red text-white font-medium rounded-lg transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+    @apply inline-flex items-center justify-center px-6 py-3 bg-springer-red text-white font-medium rounded-md transition-all duration-300 hover:bg-red-700 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-springer-green text-white font-medium rounded-lg transition-all duration-300 hover:bg-green-800 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+    @apply inline-flex items-center justify-center px-6 py-3 bg-springer-green text-white font-medium rounded-md transition-all duration-300 hover:bg-green-800 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-springer-red text-springer-red font-medium rounded-lg transition-all duration-300 hover:bg-springer-red hover:text-white;
+    @apply inline-flex items-center justify-center px-6 py-3 border border-springer-red text-springer-red font-medium rounded-md transition-all duration-300 hover:bg-springer-red hover:text-white;
   }
 
   .card-modern {
-    @apply bg-white rounded-2xl shadow-card transition-all duration-300 hover:shadow-hover hover:-translate-y-1;
+    @apply bg-white rounded-lg border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-springer-red/20 hover:-translate-y-0.5;
   }
 
   .section-padding {

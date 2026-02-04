@@ -81,7 +81,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-            <body className="min-h-screen bg-springer-white">
+            <body className="min-h-screen bg-springer-white" suppressHydrationWarning>
                 <Navbar />
                 {children}
                 <Footer />

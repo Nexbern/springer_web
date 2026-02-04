@@ -45,13 +45,13 @@ export default function NoticesPage() {
 
                 <div className="section-padding relative z-10">
                     <div className="max-w-3xl">
-                        <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
+                        <span className="inline-block px-4 py-1 bg-springer-red text-white text-xs font-medium rounded-full mb-4">
                             Notices & Updates
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
                             Stay <span className="text-springer-red">Informed</span>
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-white/80 leading-relaxed">
                             Get the latest updates, announcements, and important information about
                             school activities and events.
                         </p>
@@ -101,15 +101,6 @@ export default function NoticesPage() {
                                 <div className="group card-modern p-6">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center gap-3">
-                                            <div className={cn(
-                                                'w-12 h-12 rounded-xl flex items-center justify-center',
-                                                notice.priority === 'high' ? 'bg-red-100' : 'bg-blue-100'
-                                            )}>
-                                                <Bell className={cn(
-                                                    'w-6 h-6',
-                                                    notice.priority === 'high' ? 'text-springer-red' : 'text-blue-600'
-                                                )} />
-                                            </div>
                                             <div>
                                                 <span className={cn(
                                                     'inline-block px-2 py-0.5 text-xs font-medium rounded',
@@ -122,7 +113,6 @@ export default function NoticesPage() {
                                                 </span>
                                                 {notice.priority === 'high' && (
                                                     <span className="ml-2 inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-medium rounded">
-                                                        <Sparkles className="w-3 h-3 mr-1" />
                                                         NEW
                                                     </span>
                                                 )}

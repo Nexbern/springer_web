@@ -39,7 +39,7 @@ export function FinalCTA() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6"
+            className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-6"
           >
             Ready to Shape Your Child's Future?
           </motion.h2>
@@ -62,14 +62,14 @@ export function FinalCTA() {
           >
             <Link
               href="/admissions"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-springer-red font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-springer-red font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5"
             >
               Apply for Admission
               <ArrowRight className="w-5 h-5" />
             </Link>
             <button
               onClick={() => alert('Prospectus download coming soon!')}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/20 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/30 hover:bg-white/20 transition-all duration-300"
             >
               <Download className="w-5 h-5" />
               Download Prospectus

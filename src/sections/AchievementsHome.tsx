@@ -20,7 +20,7 @@ export function AchievementsHome() {
                             <Trophy className="w-4 h-4 text-white" />
                             <span className="text-sm font-semibold text-white">Excellence</span>
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-springer-charcoal mb-4">
+                        <h2 className="text-2xl md:text-3xl font-semibold text-springer-charcoal mb-4">
                             Our Achievements
                         </h2>
                         <p className="text-springer-gray max-w-2xl mx-auto">
@@ -39,7 +39,7 @@ export function AchievementsHome() {
                         viewport={{ once: true }}
                         className="relative"
                     >
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <div className="relative rounded-xl overflow-hidden shadow-card border border-gray-200">
                             <img
                                 src="/images/hero_students_modern_classroom.jpg"
                                 alt="Student Achievements"
@@ -48,7 +48,7 @@ export function AchievementsHome() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
                             {/* Floating Achievement Badge */}
-                            <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-xl p-5 shadow-xl">
+                            <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-lg p-5 shadow-md border border-gray-200">
                                 <div className="grid grid-cols-3 gap-4 text-center">
                                     <div>
                                         <div className="text-2xl font-bold text-springer-red">500+</div>
@@ -79,7 +79,7 @@ export function AchievementsHome() {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <h3 className="text-2xl md:text-3xl font-bold text-springer-charcoal">
+                        <h3 className="text-xl md:text-2xl font-semibold text-springer-charcoal">
                             A Legacy of <span className="text-springer-red">Excellence</span>
                         </h3>
 
@@ -99,7 +99,7 @@ export function AchievementsHome() {
                         <div className="flex flex-wrap gap-4 pt-4">
                             <Link
                                 href="/achievements"
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5"
                             >
                                 View All Achievements
                                 <ArrowRight className="w-5 h-5" />

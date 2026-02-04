@@ -20,7 +20,7 @@ export function AboutIntro() {
                         <span className="text-sm font-semibold text-springer-red">About Springer Public School</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl font-bold text-springer-charcoal mb-6 leading-tight max-w-4xl mx-auto">
+                    <h2 className="text-3xl md:text-4xl font-semibold text-springer-charcoal mb-6 leading-tight max-w-4xl mx-auto">
                         Nurturing Young Minds for a{' '}
                         <span className="text-springer-red">Brighter Tomorrow</span>
                     </h2>
@@ -37,7 +37,7 @@ export function AboutIntro() {
                         className="relative"
                     >
                         {/* Main Image */}
-                        <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                        <div className="relative rounded-2xl overflow-hidden shadow-card border border-gray-200">
                             <img
                                 src="/images/hero_students_modern_classroom.jpg"
                                 alt="Springer Public School"
@@ -84,7 +84,7 @@ export function AboutIntro() {
                         <div className="pt-4">
                             <a
                                 href="/about"
-                                className="inline-flex items-center gap-2 px-10 py-5 bg-springer-red text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-lg"
+                                className="inline-flex items-center gap-2 px-10 py-5 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 text-lg"
                             >
                                 Discover Our Story
                             </a>

@@ -28,10 +28,10 @@ export default function FeesStructurePage() {
                         <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
                             Fees Structure
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
                             Transparent & <span className="text-springer-red">Affordable</span>
                         </h1>
-                        <p className="text-white/80 text-lg leading-relaxed">
+                        <p className="text-white/80 leading-relaxed">
                             Our fee structure is designed to be transparent and affordable while maintaining
                             the highest standards of education.
                         </p>
