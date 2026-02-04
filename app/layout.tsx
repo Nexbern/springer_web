@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { schoolInfo } from '@/data/siteData';
+import AdminProviders from '@/components/admin/AdminProviders';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -82,9 +83,11 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
             <body className="min-h-screen bg-springer-white" suppressHydrationWarning>
-                <Navbar />
-                {children}
-                <Footer />
+                <AdminProviders>
+                    <Navbar />
+                    {children}
+                    <Footer />
+                </AdminProviders>
             </body>
         </html>
     );

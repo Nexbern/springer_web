@@ -1,0 +1,126 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import connectDB from '@/lib/mongodb';
+import Notice from '@/models/Notice';
+import { authOptions } from '../../auth/[...nextauth]/route';
+
+// GET single notice (public)
+export async function GET(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    try {
+        await connectDB();
+        const notice = await Notice.findById(params.id);
+
+        if (!notice) {
+            return NextResponse.json(
+                { error: 'Notice not found' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json({ notice }, { status: 200 });
+    } catch (error: any) {
+        console.error('Get notice error:', error);
+        return NextResponse.json(
+            { error: 'Failed to fetch notice' },
+            { status: 500 }
+        );
+    }
+}
+
+// PUT update notice (admin only)
+export async function PUT(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    try {
+        const session = await getServerSession(authOptions);
+
+        if (!session) {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
+        const { title, content, date } = await request.json();
+
+        if (!title || !content) {
+            return NextResponse.json(
+                { error: 'Title and content are required' },
+                { status: 400 }
+            );
+        }
+
+        await connectDB();
+
+        const notice = await Notice.findByIdAndUpdate(
+            params.id,
+            {
+                title,
+                content,
+                date: date ? new Date(date) : undefined,
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!notice) {
+            return NextResponse.json(
+                { error: 'Notice not found' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json(
+            { message: 'Notice updated successfully', notice },
+            { status: 200 }
+        );
+    } catch (error: any) {
+        console.error('Update notice error:', error);
+        return NextResponse.json(
+            { error: error.message || 'Failed to update notice' },
+            { status: 500 }
+        );
+    }
+}
+
+// DELETE notice (admin only)
+export async function DELETE(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    try {
+        const session = await getServerSession(authOptions);
+
+        if (!session) {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
+        await connectDB();
+
+        const notice = await Notice.findByIdAndDelete(params.id);
+
+        if (!notice) {
+            return NextResponse.json(
+                { error: 'Notice not found' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json(
+            { message: 'Notice deleted successfully' },
+            { status: 200 }
+        );
+    } catch (error: any) {
+        console.error('Delete notice error:', error);
+        return NextResponse.json(
+            { error: 'Failed to delete notice' },
+            { status: 500 }
+        );
+    }
+}
