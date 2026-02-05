@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import Banner from '@/models/Banner';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { deleteImage } from '@/lib/cloudinary';
 
 // GET all banners for admin (admin only)
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -21,7 +22,7 @@ export async function GET(
         }
 
         await connectDB();
-        const banner = await Banner.findById(params.id);
+        const banner = await Banner.findById(id);
 
         if (!banner) {
             return NextResponse.json(
@@ -43,9 +44,10 @@ export async function GET(
 // PUT update banner (admin only)
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -67,7 +69,7 @@ export async function PUT(
         await connectDB();
 
         const banner = await Banner.findByIdAndUpdate(
-            params.id,
+            id,
             {
                 title,
                 message,
@@ -102,9 +104,10 @@ export async function PUT(
 // DELETE banner (admin only)
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -116,7 +119,7 @@ export async function DELETE(
 
         await connectDB();
 
-        const banner = await Banner.findById(params.id);
+        const banner = await Banner.findById(id);
 
         if (!banner) {
             return NextResponse.json(
@@ -137,7 +140,7 @@ export async function DELETE(
             }
         }
 
-        await Banner.findByIdAndDelete(params.id);
+        await Banner.findByIdAndDelete(id);
 
         return NextResponse.json(
             { message: 'Banner deleted successfully' },

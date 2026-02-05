@@ -37,8 +37,6 @@ const AdminSchema = new Schema<IAdmin>(
     }
 );
 
-// Index for faster queries
-AdminSchema.index({ username: 1 });
 
 const Admin = models.Admin || model<IAdmin>('Admin', AdminSchema);
 

@@ -2,16 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import Notice from '@/models/Notice';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 
 // GET single notice (public)
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         await connectDB();
-        const notice = await Notice.findById(params.id);
+        const notice = await Notice.findById(id);
 
         if (!notice) {
             return NextResponse.json(
@@ -33,9 +34,10 @@ export async function GET(
 // PUT update notice (admin only)
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -57,11 +59,11 @@ export async function PUT(
         await connectDB();
 
         const notice = await Notice.findByIdAndUpdate(
-            params.id,
+            id,
             {
                 title,
                 content,
-                date: date ? new Date(date) : undefined,
+                date: date ? new Date(date) : new Date(),
             },
             { new: true, runValidators: true }
         );
@@ -89,9 +91,10 @@ export async function PUT(
 // DELETE notice (admin only)
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -103,7 +106,7 @@ export async function DELETE(
 
         await connectDB();
 
-        const notice = await Notice.findByIdAndDelete(params.id);
+        const notice = await Notice.findById(id);
 
         if (!notice) {
             return NextResponse.json(
@@ -111,6 +114,8 @@ export async function DELETE(
                 { status: 404 }
             );
         }
+
+        await Notice.findByIdAndDelete(id);
 
         return NextResponse.json(
             { message: 'Notice deleted successfully' },

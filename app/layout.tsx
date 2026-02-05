@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { schoolInfo } from '@/data/siteData';
-import AdminProviders from '@/components/admin/AdminProviders';
+import ConditionalLayout from '@/components/layout/ConditionalLayout';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -83,11 +81,9 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
             <body className="min-h-screen bg-springer-white" suppressHydrationWarning>
-                <AdminProviders>
-                    <Navbar />
+                <ConditionalLayout>
                     {children}
-                    <Footer />
-                </AdminProviders>
+                </ConditionalLayout>
             </body>
         </html>
     );

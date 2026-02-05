@@ -2,17 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import Faculty from '@/models/Faculty';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { deleteImage } from '@/lib/cloudinary';
 
 // GET single faculty (public)
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         await connectDB();
-        const faculty = await Faculty.findById(params.id);
+        const faculty = await Faculty.findById(id);
 
         if (!faculty) {
             return NextResponse.json(
@@ -34,9 +35,10 @@ export async function GET(
 // PUT update faculty (admin only)
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -48,16 +50,9 @@ export async function PUT(
 
         const { name, experience, subject, description, image, order } = await request.json();
 
-        if (!name || !subject || !description || !image) {
+        if (!name || !experience || !subject || !description || !image) {
             return NextResponse.json(
-                { error: 'Name, subject, description, and image are required' },
-                { status: 400 }
-            );
-        }
-
-        if (experience === undefined || experience < 0) {
-            return NextResponse.json(
-                { error: 'Valid experience is required' },
+                { error: 'All fields are required' },
                 { status: 400 }
             );
         }
@@ -65,14 +60,14 @@ export async function PUT(
         await connectDB();
 
         const faculty = await Faculty.findByIdAndUpdate(
-            params.id,
+            id,
             {
                 name,
                 experience,
                 subject,
                 description,
                 image,
-                order,
+                order: order || 0,
             },
             { new: true, runValidators: true }
         );
@@ -100,9 +95,10 @@ export async function PUT(
 // DELETE faculty (admin only)
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -114,7 +110,7 @@ export async function DELETE(
 
         await connectDB();
 
-        const faculty = await Faculty.findById(params.id);
+        const faculty = await Faculty.findById(id);
 
         if (!faculty) {
             return NextResponse.json(
@@ -135,7 +131,7 @@ export async function DELETE(
             }
         }
 
-        await Faculty.findByIdAndDelete(params.id);
+        await Faculty.findByIdAndDelete(id);
 
         return NextResponse.json(
             { message: 'Faculty deleted successfully' },
