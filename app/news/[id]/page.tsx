@@ -125,7 +125,7 @@ export default function NewsDetailsPage() {
                             </div>
 
                             {/* Title */}
-                            <h1 className="text-3xl md:text-4xl font-bold text-springer-charcoal mb-6">
+                            <h1 className="text-xl md:text-2xl font-bold text-springer-charcoal mb-6">
                                 {notice.title}
                             </h1>
 
@@ -134,7 +134,7 @@ export default function NewsDetailsPage() {
                                 <div
                                     className="text-springer-gray leading-relaxed whitespace-pre-wrap"
                                     style={{
-                                        fontSize: '1.125rem',
+                                        fontSize: '1rem',
                                         lineHeight: '1.75rem'
                                     }}
                                 >

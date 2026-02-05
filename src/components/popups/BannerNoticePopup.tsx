@@ -34,6 +34,8 @@ export default function BannerNoticePopup() {
             const bannerShown = sessionStorage.getItem('bannerShown');
             const noticeShown = sessionStorage.getItem('noticeShown');
 
+            let hasBanner = false;
+
             // Fetch active banner
             if (!bannerShown) {
                 const bannerRes = await fetch('/api/admin/banners');
@@ -43,6 +45,7 @@ export default function BannerNoticePopup() {
                 if (activeBanner && activeBanner.image) {
                     setBanner(activeBanner);
                     setShowBanner(true);
+                    hasBanner = true;
                 }
             }
 
@@ -54,8 +57,8 @@ export default function BannerNoticePopup() {
 
                 if (latestNotice) {
                     setNotice(latestNotice);
-                    // Show notice after banner is closed, or immediately if no banner
-                    if (!banner && !bannerShown) {
+                    // Only show notice immediately if there's no banner to show
+                    if (!hasBanner && !bannerShown) {
                         setShowNotice(true);
                     }
                 }
@@ -104,7 +107,7 @@ export default function BannerNoticePopup() {
             {/* Notice Popup - Title, Date, and NEW GIF */}
             {showNotice && notice && (
                 <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 animate-fadeIn">
-                    <div className="bg-white rounded-2xl max-w-2xl w-full shadow-2xl animate-slideUp relative">
+                    <div className="bg-white rounded-lg max-w-2xl w-full shadow-2xl animate-slideUp relative">
                         <button
                             onClick={handleCloseNotice}
                             className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition z-10"
@@ -116,7 +119,7 @@ export default function BannerNoticePopup() {
                             <div className="flex items-start gap-4 mb-4">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 mb-3">
-                                        <h2 className="text-2xl font-bold text-springer-charcoal">
+                                        <h2 className="text-xl font-bold text-springer-charcoal">
                                             {notice.title}
                                         </h2>
                                         <img
@@ -138,11 +141,10 @@ export default function BannerNoticePopup() {
                                 </div>
                             </div>
 
-                            <div className="bg-springer-red/5 rounded-xl p-6 border-l-4 border-springer-red">
-                                <p className="text-springer-charcoal leading-relaxed whitespace-pre-wrap">
-                                    {notice.content}
-                                </p>
-                            </div>
+                            <p className="text-springer-charcoal leading-relaxed whitespace-pre-wrap">
+                                {notice.content}
+                            </p>
+
                         </div>
                     </div>
                 </div>
