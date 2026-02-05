@@ -19,6 +19,7 @@ export const navigation = [
   { name: "STEM", href: "/stem" },
   { name: "Achievements", href: "/achievements" },
   { name: "Admissions", href: "/admissions" },
+  { name: "Prospectus", href: "/prospectus" },
   { name: "Fees", href: "/fees-structure" },
   { name: "Notices", href: "/notices" },
   { name: "Contact", href: "/contact" },
