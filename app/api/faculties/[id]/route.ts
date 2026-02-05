@@ -48,9 +48,9 @@ export async function PUT(
             );
         }
 
-        const { name, experience, subject, description, image, order } = await request.json();
+        const { name, degree, experience, subject, description, image, order } = await request.json();
 
-        if (!name || !experience || !subject || !description || !image) {
+        if (!name || !degree || !experience || !subject || !description || !image) {
             return NextResponse.json(
                 { error: 'All fields are required' },
                 { status: 400 }
@@ -63,6 +63,7 @@ export async function PUT(
             id,
             {
                 name,
+                degree,
                 experience,
                 subject,
                 description,

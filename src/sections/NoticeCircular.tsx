@@ -1,11 +1,52 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Bell, ArrowRight } from 'lucide-react';
-import { notices } from '@/data/siteData';
+
+interface Notice {
+    _id: string;
+    title: string;
+    content: string;
+    date: string;
+}
 
 export function NoticeCircular() {
+    const [notices, setNotices] = useState<Notice[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchNotices();
+    }, []);
+
+    const fetchNotices = async () => {
+        try {
+            const response = await fetch('/api/notices');
+            const data = await response.json();
+            // Get latest 5 notices
+            setNotices(data.notices?.slice(0, 5) || []);
+        } catch (error) {
+            console.error('Failed to fetch notices:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <section className="section-padding bg-white">
+                <div className="max-w-7xl mx-auto text-center">
+                    <p className="text-springer-gray">Loading notices...</p>
+                </div>
+            </section>
+        );
+    }
+
+    if (notices.length === 0) {
+        return null; // Don't show section if no notices
+    }
+
     return (
         <section className="section-padding bg-white">
             <div className="max-w-7xl mx-auto">
@@ -51,8 +92,8 @@ export function NoticeCircular() {
                                 {/* Duplicate for seamless loop */}
                                 {[...notices, ...notices].map((notice, index) => (
                                     <Link
-                                        key={`${notice.id}-${index}`}
-                                        href={`/news/${notice.id}`}
+                                        key={`${notice._id}-${index}`}
+                                        href={`/news/${notice._id}`}
                                         className="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-springer-red/40 hover:shadow-md transition-all duration-300 group"
                                     >
                                         {/* Notice Content */}
@@ -62,11 +103,13 @@ export function NoticeCircular() {
                                                     {notice.title}
                                                 </h3>
                                                 {/* New GIF Icon - Right side of title */}
-                                                <img
-                                                    src="/images/new_gif.gif"
-                                                    alt="New"
-                                                    className="w-8 h-8 object-contain flex-shrink-0"
-                                                />
+                                                {index < notices.length && (
+                                                    <img
+                                                        src="/images/new_gif.gif"
+                                                        alt="New"
+                                                        className="w-8 h-8 object-contain flex-shrink-0"
+                                                    />
+                                                )}
                                             </div>
                                             <div className="flex items-center gap-2 text-xs text-springer-gray">
                                                 <span>

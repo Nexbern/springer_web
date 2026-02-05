@@ -3,6 +3,7 @@ import mongoose, { Schema, model, models } from 'mongoose';
 export interface IFaculty {
     _id: string;
     name: string;
+    degree: string;
     experience: number;
     subject: string;
     description: string;
@@ -19,6 +20,12 @@ const FacultySchema = new Schema<IFaculty>(
             required: [true, 'Name is required'],
             trim: true,
             maxlength: [100, 'Name cannot be more than 100 characters'],
+        },
+        degree: {
+            type: String,
+            required: [true, 'Degree is required'],
+            trim: true,
+            maxlength: [100, 'Degree cannot be more than 100 characters'],
         },
         experience: {
             type: Number,

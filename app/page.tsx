@@ -9,10 +9,12 @@ import { Facilities } from '@/sections/Facilities';
 import { FacultySpotlight } from '@/sections/FacultySpotlight';
 import { Testimonials } from '@/sections/Testimonials';
 import { FinalCTA } from '@/sections/FinalCTA';
+import BannerNoticePopup from '@/components/popups/BannerNoticePopup';
 
 export default function HomePage() {
     return (
         <main>
+            <BannerNoticePopup />
             <Hero />
             <LatestUpdates />
             <AboutIntro />

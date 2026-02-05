@@ -7,6 +7,7 @@ import ImageUpload from '@/components/admin/ImageUpload';
 interface Faculty {
     _id: string;
     name: string;
+    degree: string;
     experience: number;
     subject: string;
     description: string;
@@ -22,6 +23,7 @@ export default function FacultiesManagementPage() {
     const [editingFaculty, setEditingFaculty] = useState<Faculty | null>(null);
     const [formData, setFormData] = useState({
         name: '',
+        degree: '',
         experience: 0,
         subject: '',
         description: '',
@@ -104,6 +106,7 @@ export default function FacultiesManagementPage() {
         setEditingFaculty(faculty);
         setFormData({
             name: faculty.name,
+            degree: faculty.degree,
             experience: faculty.experience,
             subject: faculty.subject,
             description: faculty.description,
@@ -118,6 +121,7 @@ export default function FacultiesManagementPage() {
         setEditingFaculty(null);
         setFormData({
             name: '',
+            degree: '',
             experience: 0,
             subject: '',
             description: '',
@@ -148,7 +152,7 @@ export default function FacultiesManagementPage() {
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+                    className="flex items-center gap-2 px-4 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition"
                 >
                     <Plus className="w-5 h-5" />
                     Add Faculty
@@ -180,6 +184,9 @@ export default function FacultiesManagementPage() {
                                 <h3 className="font-semibold text-springer-charcoal text-lg mb-1">
                                     {faculty.name}
                                 </h3>
+                                <p className="text-xs text-springer-gray mb-2">
+                                    {faculty.degree}
+                                </p>
                                 <p className="text-sm text-springer-red font-medium mb-2">
                                     {faculty.subject}
                                 </p>
@@ -250,6 +257,20 @@ export default function FacultiesManagementPage() {
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
                                     placeholder="Enter faculty name"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Degree *
+                                </label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={formData.degree}
+                                    onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
+                                    placeholder="e.g., M.Sc., Ph.D., B.Ed."
                                 />
                             </div>
 
@@ -324,7 +345,7 @@ export default function FacultiesManagementPage() {
                                 <button
                                     type="submit"
                                     disabled={submitting}
-                                    className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                    className="px-6 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                 >
                                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                                     {editingFaculty ? 'Update' : 'Add'}

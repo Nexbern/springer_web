@@ -1,21 +1,63 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { faculty } from '@/data/siteData';
 import { SectionHeader } from '@/components/ui-custom/SectionHeader';
 
+interface Faculty {
+    _id: string;
+    name: string;
+    degree: string;
+    experience: number;
+    subject: string;
+    description: string;
+    image: string;
+}
+
 export function FacultySpotlight() {
+    const [faculties, setFaculties] = useState<Faculty[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const currentFaculty = faculty[currentIndex];
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchFaculties();
+    }, []);
+
+    const fetchFaculties = async () => {
+        try {
+            const response = await fetch('/api/faculties');
+            const data = await response.json();
+            setFaculties(data.faculties || []);
+        } catch (error) {
+            console.error('Failed to fetch faculties:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <section className="py-20 lg:py-28 bg-white">
+                <div className="section-padding text-center">
+                    <p className="text-springer-gray">Loading faculty...</p>
+                </div>
+            </section>
+        );
+    }
+
+    if (faculties.length === 0) {
+        return null; // Don't show section if no faculties
+    }
+
+    const currentFaculty = faculties[currentIndex];
 
     const next = () => {
-        setCurrentIndex((prev) => (prev + 1) % faculty.length);
+        setCurrentIndex((prev) => (prev + 1) % faculties.length);
     };
 
     const prev = () => {
-        setCurrentIndex((prev) => (prev - 1 + faculty.length) % faculty.length);
+        setCurrentIndex((prev) => (prev - 1 + faculties.length) % faculties.length);
     };
 
     return (
@@ -52,7 +94,7 @@ export function FacultySpotlight() {
                                     </div>
                                     {/* Badge */}
                                     <div className="absolute -bottom-4 -right-4 bg-springer-red text-white px-6 py-3 rounded-xl shadow-lg">
-                                        <div className="text-sm font-medium">{currentFaculty.experience}</div>
+                                        <div className="text-sm font-medium">{currentFaculty.experience} years</div>
                                         <div className="text-xs opacity-90">Experience</div>
                                     </div>
                                 </div>
@@ -67,19 +109,19 @@ export function FacultySpotlight() {
                                             {currentFaculty.subject}
                                         </p>
                                         <p className="text-springer-gray text-sm">
-                                            {currentFaculty.qualification}
+                                            {currentFaculty.degree}
                                         </p>
                                     </div>
 
                                     <p className="text-springer-gray leading-relaxed">
-                                        {currentFaculty.bio}
+                                        {currentFaculty.description}
                                     </p>
 
                                     {/* Stats */}
                                     <div className="flex gap-6 pt-4 border-t border-gray-200">
                                         <div>
                                             <div className="text-2xl font-bold text-springer-charcoal">
-                                                {currentFaculty.experience}
+                                                {currentFaculty.experience} years
                                             </div>
                                             <div className="text-xs text-springer-gray">Teaching Experience</div>
                                         </div>
@@ -106,7 +148,7 @@ export function FacultySpotlight() {
 
                             {/* Dots */}
                             <div className="flex gap-2">
-                                {faculty.map((_, index) => (
+                                {faculties.map((_, index) => (
                                     <button
                                         key={index}
                                         onClick={() => setCurrentIndex(index)}

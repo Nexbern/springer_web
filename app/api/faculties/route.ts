@@ -31,11 +31,11 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { name, experience, subject, description, image, order } = await request.json();
+        const { name, degree, experience, subject, description, image, order } = await request.json();
 
-        if (!name || !subject || !description || !image) {
+        if (!name || !degree || !subject || !description || !image) {
             return NextResponse.json(
-                { error: 'Name, subject, description, and image are required' },
+                { error: 'Name, degree, subject, description, and image are required' },
                 { status: 400 }
             );
         }
@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
 
         const faculty = await Faculty.create({
             name,
+            degree,
             experience,
             subject,
             description,

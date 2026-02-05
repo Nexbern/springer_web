@@ -161,7 +161,7 @@ export default function BannersManagementPage() {
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-springer-green text-white rounded-lg hover:bg-green-800 transition"
+                    className="flex items-center gap-2 px-4 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition"
                 >
                     <Plus className="w-5 h-5" />
                     Create Banner
@@ -350,7 +350,7 @@ export default function BannersManagementPage() {
                                 <button
                                     type="submit"
                                     disabled={submitting}
-                                    className="px-6 py-2 bg-springer-green text-white rounded-lg hover:bg-green-800 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                    className="px-6 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                 >
                                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                                     {editingBanner ? 'Update' : 'Create'}
