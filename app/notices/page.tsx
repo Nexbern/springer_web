@@ -41,7 +41,6 @@ export default function NoticesPage() {
 
     return (
         <main className="pt-24">
-            {/* Hero Banner */}
             <section className="relative py-24 lg:py-32 overflow-hidden">
                 <div className="absolute inset-0">
                     <img
@@ -57,7 +56,7 @@ export default function NoticesPage() {
                         <span className="inline-block px-4 py-1 bg-springer-red text-white text-xs font-medium rounded-full mb-4">
                             Notices & Updates
                         </span>
-                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
+                        <h1 className="text-xl lg:text-3xl font-semibold text-white mb-6">
                             Stay <span className="text-springer-red">Informed</span>
                         </h1>
                         <p className="text-white/80 leading-relaxed">

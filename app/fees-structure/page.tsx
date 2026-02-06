@@ -50,11 +50,11 @@ export default function FeesStructurePage() {
                     </div>
 
                     <div className="section-padding relative z-10">
-                        <div className="max-w-3xl mx-auto text-center">
-                            <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
+                        <div className="max-w-3xl">
+                            <span className="inline-block px-4 py-1 bg-springer-red text-white text-xs font-medium rounded-full mb-4">
                                 Fees Structure
                             </span>
-                            <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6">
+                            <h1 className="text-xl lg:text-3xl font-semibold text-white mb-6">
                                 Transparent & <span className="text-springer-red">Affordable</span>
                             </h1>
                             <p className="text-white/80 text-lg leading-relaxed">

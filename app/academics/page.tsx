@@ -53,10 +53,10 @@ export default function AcademicsPage() {
 
                 <div className="section-padding relative z-10">
                     <div className="max-w-3xl">
-                        <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
+                        <span className="inline-block px-4 py-1 bg-springer-red text-white text-xs font-medium rounded-full mb-4">
                             Academics
                         </span>
-                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
+                        <h1 className="text-xl lg:text-3xl font-semibold text-white mb-6">
                             Excellence in <span className="text-springer-red">Education</span>
                         </h1>
                         <p className="text-white/80 leading-relaxed">
