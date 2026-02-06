@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Mail, GraduationCap } from 'lucide-react';
+import { Menu, X, Phone, Mail, GraduationCap, LogIn } from 'lucide-react';
 import { navigation, schoolInfo } from '@/data/siteData';
 
 export function Navbar() {
@@ -61,8 +61,8 @@ export function Navbar() {
       {/* Main Navbar */}
       <nav
         className={`transition-all duration-300 ${isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-soft py-3'
-            : 'bg-white py-4'
+          ? 'bg-white/95 backdrop-blur-md shadow-soft py-3'
+          : 'bg-white py-4'
           }`}
       >
         <div className="section-padding">
@@ -87,8 +87,8 @@ export function Navbar() {
                   key={item.name}
                   href={item.href}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${isActive(item.href)
-                      ? 'text-springer-red bg-red-50'
-                      : 'text-springer-charcoal hover:text-springer-red hover:bg-gray-50'
+                    ? 'text-springer-red bg-red-50'
+                    : 'text-springer-charcoal hover:text-springer-red hover:bg-gray-50'
                     }`}
                 >
                   {item.name}
@@ -96,14 +96,22 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
-              <Link
-                href="/admissions"
-                className="btn-primary text-sm"
+            {/* Login Buttons & CTA */}
+            <div className="hidden lg:flex items-center gap-2">
+              <a
+                href="#"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-springer-charcoal hover:text-springer-red border border-gray-300 rounded-lg hover:border-springer-red transition-all"
               >
-                Apply Now
-              </Link>
+                <LogIn className="w-4 h-4" />
+                Teacher Login
+              </a>
+              <a
+                href="#"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium bg-springer-red text-white hover:bg-springer-darkred border border-gray-300 rounded-lg hover:border-springer-red transition-all"
+              >
+                <LogIn className="w-4 h-4" />
+                Parent Login
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -132,14 +140,28 @@ export function Navbar() {
                 key={item.name}
                 href={item.href}
                 className={`block px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 ${isActive(item.href)
-                    ? 'text-springer-red bg-red-50'
-                    : 'text-springer-charcoal hover:text-springer-red hover:bg-gray-50'
+                  ? 'text-springer-red bg-red-50'
+                  : 'text-springer-charcoal hover:text-springer-red hover:bg-gray-50'
                   }`}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="pt-4 border-t border-gray-100">
+            <div className="pt-4 border-t border-gray-100 space-y-2">
+              <a
+                href="#"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-springer-charcoal border border-gray-300 rounded-lg hover:border-springer-red hover:text-springer-red transition-all"
+              >
+                <LogIn className="w-4 h-4" />
+                Teacher Login
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-springer-charcoal border border-gray-300 rounded-lg hover:border-springer-red hover:text-springer-red transition-all"
+              >
+                <LogIn className="w-4 h-4" />
+                Parent Login
+              </a>
               <Link
                 href="/admissions"
                 className="btn-primary w-full text-center text-sm"
