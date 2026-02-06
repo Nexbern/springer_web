@@ -9,6 +9,7 @@ import {
     Bell,
     Megaphone,
     Users,
+    Trophy,
     LogOut,
     Menu,
     X,
@@ -20,6 +21,7 @@ const navigation = [
     { name: 'Notices', href: '/admin/notices', icon: Bell },
     { name: 'Banners', href: '/admin/banners', icon: Megaphone },
     { name: 'Faculties', href: '/admin/faculties', icon: Users },
+    { name: 'Achievers', href: '/admin/achievers', icon: Trophy },
 ];
 
 export default function AdminDashboardPage({

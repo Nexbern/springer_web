@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
-import Notice from '@/models/Notice';
+import StudentAchiever from '@/models/StudentAchiever';
 import { authOptions } from '@/lib/auth';
 
-// GET single notice (public)
+// GET single student achiever (public)
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -12,26 +12,26 @@ export async function GET(
     try {
         const { id } = await params;
         await connectDB();
-        const notice = await Notice.findById(id);
+        const achiever = await StudentAchiever.findById(id);
 
-        if (!notice) {
+        if (!achiever) {
             return NextResponse.json(
-                { error: 'Notice not found' },
+                { error: 'Student achiever not found' },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json({ notice }, { status: 200 });
+        return NextResponse.json({ achiever }, { status: 200 });
     } catch (error: any) {
-        console.error('Get notice error:', error);
+        console.error('Get achiever error:', error);
         return NextResponse.json(
-            { error: 'Failed to fetch notice' },
+            { error: 'Failed to fetch achiever' },
             { status: 500 }
         );
     }
 }
 
-// PUT update notice (admin only)
+// PUT update student achiever (admin only)
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -47,50 +47,50 @@ export async function PUT(
             );
         }
 
-        const { title, content, date, pdfUrl, pdfFileName } = await request.json();
+        const { name, imageUrl, heading, description, order } = await request.json();
 
-        if (!title || !content) {
+        if (!name || !imageUrl || !heading || !description) {
             return NextResponse.json(
-                { error: 'Title and content are required' },
+                { error: 'Name, image, heading, and description are required' },
                 { status: 400 }
             );
         }
 
         await connectDB();
 
-        const notice = await Notice.findByIdAndUpdate(
+        const achiever = await StudentAchiever.findByIdAndUpdate(
             id,
             {
-                title,
-                content,
-                date: date ? new Date(date) : new Date(),
-                pdfUrl,
-                pdfFileName,
+                name,
+                imageUrl,
+                heading,
+                description,
+                order: order || 0,
             },
             { new: true, runValidators: true }
         );
 
-        if (!notice) {
+        if (!achiever) {
             return NextResponse.json(
-                { error: 'Notice not found' },
+                { error: 'Student achiever not found' },
                 { status: 404 }
             );
         }
 
         return NextResponse.json(
-            { message: 'Notice updated successfully', notice },
+            { message: 'Student achiever updated successfully', achiever },
             { status: 200 }
         );
     } catch (error: any) {
-        console.error('Update notice error:', error);
+        console.error('Update achiever error:', error);
         return NextResponse.json(
-            { error: error.message || 'Failed to update notice' },
+            { error: error.message || 'Failed to update achiever' },
             { status: 500 }
         );
     }
 }
 
-// DELETE notice (admin only)
+// DELETE student achiever (admin only)
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -108,25 +108,25 @@ export async function DELETE(
 
         await connectDB();
 
-        const notice = await Notice.findById(id);
+        const achiever = await StudentAchiever.findById(id);
 
-        if (!notice) {
+        if (!achiever) {
             return NextResponse.json(
-                { error: 'Notice not found' },
+                { error: 'Student achiever not found' },
                 { status: 404 }
             );
         }
 
-        await Notice.findByIdAndDelete(id);
+        await StudentAchiever.findByIdAndDelete(id);
 
         return NextResponse.json(
-            { message: 'Notice deleted successfully' },
+            { message: 'Student achiever deleted successfully' },
             { status: 200 }
         );
     } catch (error: any) {
-        console.error('Delete notice error:', error);
+        console.error('Delete achiever error:', error);
         return NextResponse.json(
-            { error: 'Failed to delete notice' },
+            { error: 'Failed to delete achiever' },
             { status: 500 }
         );
     }

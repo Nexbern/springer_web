@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { title, content, date } = await request.json();
+        const { title, content, date, pdfUrl, pdfFileName } = await request.json();
 
         if (!title || !content) {
             return NextResponse.json(
@@ -46,6 +46,8 @@ export async function POST(request: NextRequest) {
             title,
             content,
             date: date ? new Date(date) : new Date(),
+            pdfUrl,
+            pdfFileName,
         });
 
         return NextResponse.json(

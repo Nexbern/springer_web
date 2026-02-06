@@ -15,7 +15,7 @@ export function AboutIntro() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-springer-red/10 rounded-full mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-1 bg-red-50 border border-red-200 text-springer-red rounded-full mb-4">
                         <Heart className="w-4 h-4 text-springer-red" />
                         <span className="text-sm font-semibold text-springer-red">About Springer Public School</span>
                     </div>

@@ -164,35 +164,13 @@ export function Hero() {
                 {/* Content */}
                 <div className="relative z-10 section-padding w-full">
                     <div className="max-w-3xl">
-                        {/* Badge */}
-                        <motion.div
-                            key={`badge-${currentSlide}`}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <span
-                                className={`inline-flex items-center gap-2 px-4 py-2 backdrop-blur-sm text-sm font-medium rounded-full mb-6 ${currentSlideData.badgeColor === 'spark'
-                                    ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white'
-                                    : currentSlideData.badgeColor === 'red'
-                                        ? 'bg-springer-red/90 text-white'
-                                        : currentSlideData.badgeColor === 'green'
-                                            ? 'bg-springer-green/90 text-white'
-                                            : 'bg-blue-500/90 text-white'
-                                    }`}
-                            >
-                                {currentSlideData.badgeColor === 'spark' && <Sparkles className="w-4 h-4" />}
-                                {currentSlideData.badge}
-                            </span>
-                        </motion.div>
-
                         {/* Title */}
                         <motion.h1
                             key={`title-${currentSlide}`}
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.1 }}
-                            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6"
+                            className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-tight mb-6"
                         >
                             {currentSlideData.title.split('.').map((part, index, arr) => (
                                 <span key={index}>
@@ -211,7 +189,7 @@ export function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="text-lg md:text-xl text-white/80 mb-8 max-w-xl leading-relaxed"
+                            className="text-md md:text-lg text-white/80 mb-8 max-w-xl leading-relaxed"
                         >
                             {currentSlideData.subtitle}
                         </motion.p>
@@ -226,14 +204,14 @@ export function Hero() {
                         >
                             <Link
                                 href="/admissions"
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 px-6 py-2 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5"
                             >
                                 <Calendar className="w-5 h-5" />
                                 Admissions Open
                             </Link>
                             <Link
                                 href="/contact"
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300"
+                                className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300"
                             >
                                 <BookOpen className="w-5 h-5" />
                                 Book Campus Visit
@@ -248,15 +226,15 @@ export function Hero() {
                             className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/20"
                         >
                             <div>
-                                <div className="text-3xl md:text-4xl font-bold text-white">30+</div>
+                                <div className="text-2xl md:text-3xl font-bold text-white">30+</div>
                                 <div className="text-white/60 text-sm">Years of Excellence</div>
                             </div>
                             <div>
-                                <div className="text-3xl md:text-4xl font-bold text-white">2500+</div>
+                                <div className="text-2xl md:text-3xl font-bold text-white">2500+</div>
                                 <div className="text-white/60 text-sm">Happy Students</div>
                             </div>
                             <div>
-                                <div className="text-3xl md:text-4xl font-bold text-white">150+</div>
+                                <div className="text-2xl md:text-3xl font-bold text-white">150+</div>
                                 <div className="text-white/60 text-sm">Expert Faculty</div>
                             </div>
                         </motion.div>

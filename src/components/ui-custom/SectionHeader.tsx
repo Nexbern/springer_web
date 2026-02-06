@@ -39,7 +39,7 @@ export function SectionHeader({
       )}
     >
       {subtitle && (
-        <span className="inline-block px-4 py-1.5 bg-springer-red/10 text-springer-red text-sm font-medium rounded-full mb-4">
+        <span className="inline-block px-4 py-1.5 bg-red-50 border border-red-200 text-springer-red text-sm font-medium rounded-full mb-4">
           {subtitle}
         </span>
       )}

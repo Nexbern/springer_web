@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export function AchievementsHome() {
     return (
-        <section className="section-padding bg-gradient-to-br from-springer-red/5 via-white to-springer-green/5">
+        <section className="section-padding bg-gradient-to-br from-springer-red/5 via-white to-springer-green/5 py-16">
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-12">
@@ -16,9 +16,9 @@ export function AchievementsHome() {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4">
-                            <Trophy className="w-4 h-4 text-white" />
-                            <span className="text-sm font-semibold text-white">Excellence</span>
+                        <div className="inline-flex items-center gap-2 px-4 py-1 bg-red-50 border border-red-200 text-springer-red rounded-full mb-4">
+                            <Trophy className="w-4 h-4" />
+                            <span className="text-sm font-semibold text-springer-red">Excellence</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-semibold text-springer-charcoal mb-4">
                             Our Achievements

@@ -4,6 +4,7 @@ import { AboutIntro } from '@/sections/AboutIntro';
 import { WhyChooseUs } from '@/sections/WhyChooseUs';
 import { AcademicPrograms } from '@/sections/AcademicPrograms';
 import { AchievementsHome } from '@/sections/AchievementsHome';
+import { StudentAchievers } from '@/sections/StudentAchievers';
 import { NoticeCircular } from '@/sections/NoticeCircular';
 import { Facilities } from '@/sections/Facilities';
 import { FacultySpotlight } from '@/sections/FacultySpotlight';
@@ -21,6 +22,7 @@ export default function HomePage() {
             <WhyChooseUs />
             <AcademicPrograms />
             <AchievementsHome />
+            <StudentAchievers />
             <NoticeCircular />
             <Facilities />
             <FacultySpotlight />

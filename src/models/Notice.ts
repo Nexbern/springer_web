@@ -5,6 +5,8 @@ export interface INotice {
     title: string;
     content: string;
     date: Date;
+    pdfUrl?: string;
+    pdfFileName?: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -25,6 +27,14 @@ const NoticeSchema = new Schema<INotice>(
         date: {
             type: Date,
             default: Date.now,
+        },
+        pdfUrl: {
+            type: String,
+            required: false,
+        },
+        pdfFileName: {
+            type: String,
+            required: false,
         },
     },
     {

@@ -16,6 +16,8 @@ interface Notice {
     title: string;
     content: string;
     date: string;
+    pdfUrl?: string;
+    pdfFileName?: string;
 }
 
 export default function BannerNoticePopup() {
@@ -144,6 +146,21 @@ export default function BannerNoticePopup() {
                             <p className="text-springer-charcoal leading-relaxed whitespace-pre-wrap">
                                 {notice.content}
                             </p>
+
+                            {/* PDF Download */}
+                            {notice.pdfUrl && (
+                                <div className="mt-6 pt-6 border-t border-gray-200">
+                                    <a
+                                        href={notice.pdfUrl}
+                                        target="_blank"
+                                        download={notice.pdfFileName || 'notice.pdf'}
+                                        className="inline-flex text-sm items-center gap-2 px-4 py-2 bg-red-50 border border-red-50 text-springer-red rounded-lg font-medium shadow-sm hover:border-red-400 transition-all duration-300"
+                                    >
+                                        <img src="/images/pdf_icon.png" alt="PDF" className="w-4 h-4" />
+                                        Download PDF
+                                    </a>
+                                </div>
+                            )}
 
                         </div>
                     </div>

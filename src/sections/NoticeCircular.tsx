@@ -10,6 +10,8 @@ interface Notice {
     title: string;
     content: string;
     date: string;
+    pdfUrl?: string;
+    pdfFileName?: string;
 }
 
 export function NoticeCircular() {
@@ -17,7 +19,8 @@ export function NoticeCircular() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchNotices();
+        fetchNotices().then();
+        console.log("notices : ", notices)
     }, []);
 
     const fetchNotices = async () => {
@@ -48,7 +51,7 @@ export function NoticeCircular() {
     }
 
     return (
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-white py-16">
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-12">
@@ -58,11 +61,11 @@ export function NoticeCircular() {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-springer-red/10 rounded-full mb-4">
+                        <div className="inline-flex items-center gap-2 px-4 py-1 bg-red-50 border border-red-200 text-springer-red rounded-full mb-4">
                             <Bell className="w-4 h-4 text-springer-red" />
                             <span className="text-sm font-semibold text-springer-red">Stay Updated</span>
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-springer-charcoal mb-4">
+                        <h2 className="text-2xl md:text-3xl font-semibold text-springer-charcoal mb-4">
                             Notice Board
                         </h2>
                         <p className="text-springer-gray max-w-2xl mx-auto">
@@ -90,7 +93,7 @@ export function NoticeCircular() {
                         <div className="h-[400px] overflow-hidden bg-white relative group/scroll">
                             <div className="animate-scroll-up group-hover/scroll:pause-animation p-6 space-y-4">
                                 {/* Duplicate for seamless loop */}
-                                {[...notices, ...notices].map((notice, index) => (
+                                {[...notices].map((notice, index) => (
                                     <Link
                                         key={`${notice._id}-${index}`}
                                         href={`/news/${notice._id}`}
@@ -122,8 +125,23 @@ export function NoticeCircular() {
                                             </div>
                                         </div>
 
-                                        {/* Arrow */}
-                                        <ArrowRight className="w-5 h-5 text-springer-gray group-hover:text-springer-red group-hover:translate-x-1 transition-all flex-shrink-0" />
+                                        {/* Arrow and PDF Download */}
+                                        <div className="flex items-center gap-2 flex-shrink-0">
+                                            {notice.pdfUrl && (
+                                                <a
+                                                    href={notice.pdfUrl}
+                                                    target="_blank"
+                                                    download={notice.pdfFileName || 'notice.pdf'}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-medium hover:bg-red-100 transition-all"
+                                                    title="Download PDF"
+                                                >
+                                                    <img src="/images/pdf_icon.png" alt="PDF" className="w-4 h-4" />
+                                                    PDF
+                                                </a>
+                                            )}
+                                            <ArrowRight className="w-5 h-5 text-springer-gray group-hover:text-springer-red group-hover:translate-x-1 transition-all" />
+                                        </div>
                                     </Link>
                                 ))}
                             </div>

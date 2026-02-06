@@ -12,23 +12,37 @@ export default cloudinary;
  * Upload image to Cloudinary
  * @param file - Base64 encoded image or file path
  * @param folder - Folder name in Cloudinary
+ * @param resourceType - Resource type: 'image', 'raw', or 'auto'
+ * @param additionalOptions - Additional Cloudinary upload options
  * @returns Cloudinary upload result with secure_url
  */
-export async function uploadImage(file: string, folder: string = 'springer-school') {
+export async function uploadImage(
+    file: string,
+    folder: string = 'springer-school',
+    resourceType: 'image' | 'raw' | 'auto' = 'auto',
+    additionalOptions: any = {}
+) {
     try {
-        const result = await cloudinary.uploader.upload(file, {
+        const uploadOptions: any = {
             folder,
-            resource_type: 'auto',
-            transformation: [
+            resource_type: resourceType,
+            ...additionalOptions,
+        };
+
+        // Only apply transformations for images
+        if (resourceType === 'image' || resourceType === 'auto') {
+            uploadOptions.transformation = [
                 { width: 1200, height: 1200, crop: 'limit' },
                 { quality: 'auto' },
                 { fetch_format: 'auto' }
-            ]
-        });
+            ];
+        }
+
+        const result = await cloudinary.uploader.upload(file, uploadOptions);
         return result;
     } catch (error) {
         console.error('Cloudinary upload error:', error);
-        throw new Error('Failed to upload image');
+        throw new Error('Failed to upload file');
     }
 }
 

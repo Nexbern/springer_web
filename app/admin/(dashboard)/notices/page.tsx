@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Loader2, X, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Notice {
@@ -9,6 +9,8 @@ interface Notice {
     title: string;
     content: string;
     date: string;
+    pdfUrl?: string;
+    pdfFileName?: string;
     createdAt: string;
 }
 
@@ -21,8 +23,11 @@ export default function NoticesManagementPage() {
         title: '',
         content: '',
         date: new Date().toISOString().split('T')[0],
+        pdfUrl: '',
+        pdfFileName: '',
     });
     const [submitting, setSubmitting] = useState(false);
+    const [uploadingPdf, setUploadingPdf] = useState(false);
 
     useEffect(() => {
         fetchNotices();
@@ -94,6 +99,8 @@ export default function NoticesManagementPage() {
             title: notice.title,
             content: notice.content,
             date: new Date(notice.date).toISOString().split('T')[0],
+            pdfUrl: notice.pdfUrl || '',
+            pdfFileName: notice.pdfFileName || '',
         });
         setShowModal(true);
     };
@@ -105,7 +112,55 @@ export default function NoticesManagementPage() {
             title: '',
             content: '',
             date: new Date().toISOString().split('T')[0],
+            pdfUrl: '',
+            pdfFileName: '',
         });
+    };
+
+    const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (file.type !== 'application/pdf') {
+            alert('Please upload a PDF file');
+            return;
+        }
+
+        setUploadingPdf(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', 'pdf');
+
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to upload PDF');
+            }
+
+            const data = await response.json();
+            setFormData(prev => ({
+                ...prev,
+                pdfUrl: data.url,
+                pdfFileName: data.fileName,
+            }));
+        } catch (error: any) {
+            alert(error.message || 'Failed to upload PDF');
+        } finally {
+            setUploadingPdf(false);
+        }
+    };
+
+    const handleRemovePdf = () => {
+        setFormData(prev => ({
+            ...prev,
+            pdfUrl: '',
+            pdfFileName: '',
+        }));
     };
 
     if (loading) {
@@ -168,8 +223,22 @@ export default function NoticesManagementPage() {
                                 notices.map((notice) => (
                                     <tr key={notice._id} className="hover:bg-gray-50">
                                         <td className="px-6 py-4">
-                                            <div className="text-sm font-medium text-springer-charcoal">
-                                                {notice.title}
+                                            <div className="flex items-center gap-2">
+                                                <div className="text-sm font-medium text-springer-charcoal">
+                                                    {notice.title}
+                                                </div>
+                                                {notice.pdfUrl && (
+                                                    <a
+                                                        href={notice.pdfUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 px-2 py-1 bg-red-50 text-red-600 rounded text-xs hover:bg-red-100 transition"
+                                                        title="Download PDF"
+                                                    >
+                                                        <FileText className="w-3 h-3" />
+                                                        PDF
+                                                    </a>
+                                                )}
                                             </div>
                                             <div className="text-sm text-springer-gray line-clamp-1">
                                                 {notice.content}
@@ -261,6 +330,52 @@ export default function NoticesManagementPage() {
                                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                 />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    PDF Attachment (Optional)
+                                </label>
+                                {formData.pdfUrl ? (
+                                    <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                        <div className="flex-1">
+                                            <p className="text-sm font-medium text-green-800">
+                                                {formData.pdfFileName}
+                                            </p>
+                                            <a
+                                                href={formData.pdfUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-xs text-green-600 hover:underline"
+                                            >
+                                                View PDF
+                                            </a>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={handleRemovePdf}
+                                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <input
+                                            type="file"
+                                            accept=".pdf"
+                                            onChange={handlePdfUpload}
+                                            disabled={uploadingPdf}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-springer-red file:text-white hover:file:bg-red-700 disabled:opacity-50"
+                                        />
+                                        {uploadingPdf && (
+                                            <p className="text-sm text-springer-gray mt-2 flex items-center gap-2">
+                                                <Loader2 className="w-4 h-4 animate-spin" />
+                                                Uploading PDF...
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
