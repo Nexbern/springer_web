@@ -16,7 +16,7 @@ export const navigation = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
   { name: "Academics", href: "/academics" },
-  { name: "STEM", href: "/stem" },
+  { name: "Gallery", href: "/gallery" },
   { name: "Achievements", href: "/achievements" },
   { name: "Admissions", href: "/admissions" },
   { name: "Prospectus", href: "/prospectus" },
