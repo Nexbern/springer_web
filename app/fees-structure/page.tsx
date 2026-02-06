@@ -1,190 +1,240 @@
-import type { Metadata } from 'next';
-import { schoolInfo, feesStructure } from '@/data/siteData';
-import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
-import { SectionHeader } from '@/components/ui-custom/SectionHeader';
-import { Check, Download, Phone } from 'lucide-react';
+'use client';
 
-export const metadata: Metadata = {
-    title: 'Fees Structure',
-    description: `View the complete fees structure for all classes at ${schoolInfo.name} for academic year 2025-26.`,
-};
+import { useState } from 'react';
+import type { Metadata } from 'next';
+import { Download, Eye, User, Mail, Phone, GraduationCap } from 'lucide-react';
+import Image from 'next/image';
 
 export default function FeesStructurePage() {
-    return (
-        <main className="pt-24">
-            {/* Hero Banner */}
-            <section className="relative py-24 lg:py-32 overflow-hidden">
-                <div className="absolute inset-0">
-                    <img
-                        src="/images/campus_exterior.jpg"
-                        alt="Fees Structure"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/70" />
-                </div>
+    const [showFeeStructure, setShowFeeStructure] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        class: '',
+    });
+    const [submitting, setSubmitting] = useState(false);
 
-                <div className="section-padding relative z-10">
-                    <div className="max-w-3xl">
-                        <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
-                            Fees Structure
-                        </span>
-                        <h1 className="text-2xl lg:text-4xl font-bold text-white mb-6">
-                            Transparent & <span className="text-springer-red">Affordable</span>
-                        </h1>
-                        <p className="text-white/80 leading-relaxed">
-                            Our fee structure is designed to be transparent and affordable while maintaining
-                            the highest standards of education.
-                        </p>
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSubmitting(true);
+
+        // Simulate form submission
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        setShowFeeStructure(true);
+        setSubmitting(false);
+    };
+
+    const handleDownloadPDF = () => {
+        const link = document.createElement('a');
+        link.href = '/pdf/fee_structure_springer.pdf';
+        link.download = 'AY 2026-27 FEE STRUCTURE SPRINGER.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    if (!showFeeStructure) {
+        return (
+            <main className="pt-24 min-h-screen bg-gradient-to-br from-gray-50 to-white">
+                {/* Hero Banner */}
+                <section className="relative py-20 overflow-hidden">
+                    <div className="absolute inset-0">
+                        <img
+                            src="/images/campus_exterior.jpg"
+                            alt="Fees Structure"
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/70" />
                     </div>
-                </div>
-            </section>
 
-            {/* Fees Table */}
-            <section className="py-20 lg:py-28 bg-white">
-                <div className="section-padding">
-                    <SectionHeader
-                        subtitle="Academic Year 2025-26"
-                        title="Complete Fee Structure"
-                        description="Detailed breakdown of fees for all classes. Additional charges may apply for transport, uniform, and extracurricular activities."
-                    />
-
-                    <div className="max-w-6xl mx-auto">
-                        <div className="overflow-x-auto">
-                            <table className="w-full bg-white rounded-2xl overflow-hidden shadow-card">
-                                <thead>
-                                    <tr className="bg-springer-red text-white">
-                                        <th className="px-6 py-4 text-left font-semibold">Class</th>
-                                        <th className="px-6 py-4 text-right font-semibold">Admission Fee</th>
-                                        <th className="px-6 py-4 text-right font-semibold">Annual Fee</th>
-                                        <th className="px-6 py-4 text-right font-semibold">Tuition Fee</th>
-                                        <th className="px-6 py-4 text-right font-semibold">Total (Annual)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {feesStructure.map((row, index) => (
-                                        <tr
-                                            key={row.class}
-                                            className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
-                                                }`}
-                                        >
-                                            <td className="px-6 py-4 font-semibold text-springer-charcoal">{row.class}</td>
-                                            <td className="px-6 py-4 text-right text-springer-gray">{row.admissionFee}</td>
-                                            <td className="px-6 py-4 text-right text-springer-gray">{row.annualFee}</td>
-                                            <td className="px-6 py-4 text-right text-springer-gray">{row.tuitionFee}</td>
-                                            <td className="px-6 py-4 text-right font-bold text-springer-red">{row.total}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="mt-8 p-6 bg-springer-gray-light rounded-xl">
-                            <h3 className="font-semibold text-springer-charcoal mb-3">Important Notes:</h3>
-                            <ul className="space-y-2 text-sm text-springer-gray">
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-springer-green mt-0.5 flex-shrink-0" />
-                                    <span>Admission fee is one-time and non-refundable</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-springer-green mt-0.5 flex-shrink-0" />
-                                    <span>Annual fee includes examination, library, sports, and development charges</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-springer-green mt-0.5 flex-shrink-0" />
-                                    <span>Tuition fee can be paid monthly, quarterly, or annually</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-springer-green mt-0.5 flex-shrink-0" />
-                                    <span>10% sibling discount available on tuition fees</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <Check className="w-4 h-4 text-springer-green mt-0.5 flex-shrink-0" />
-                                    <span>Transport and uniform charges are additional and vary by location/size</span>
-                                </li>
-                            </ul>
+                    <div className="section-padding relative z-10">
+                        <div className="max-w-3xl mx-auto text-center">
+                            <span className="inline-block px-4 py-1.5 bg-springer-red text-white text-sm font-medium rounded-full mb-4">
+                                Fees Structure
+                            </span>
+                            <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6">
+                                Transparent & <span className="text-springer-red">Affordable</span>
+                            </h1>
+                            <p className="text-white/80 text-lg leading-relaxed">
+                                Fill in your details below to view our complete fee structure
+                            </p>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* Additional Fees */}
-            <section className="py-20 lg:py-28 bg-springer-gray-light">
-                <div className="section-padding">
-                    <SectionHeader
-                        subtitle="Additional Charges"
-                        title="Optional Services"
-                        description="Additional services available for enhanced learning and convenience."
-                    />
+                {/* Form Section */}
+                <section className="py-16">
+                    <div className="max-w-2xl mx-auto px-6">
+                        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                            <div className="text-center mb-8">
+                                <h2 className="text-2xl font-bold text-springer-charcoal mb-3">
+                                    Request Fee Structure
+                                </h2>
+                                <p className="text-springer-gray">
+                                    Please provide your details to access the fee structure
+                                </p>
+                            </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                        {[
-                            {
-                                title: "Transport",
-                                description: "Safe and comfortable bus service",
-                                price: "₹2,000 - ₹4,000/month",
-                                features: ["GPS tracking", "Trained staff", "Multiple routes"],
-                            },
-                            {
-                                title: "Uniform",
-                                description: "Complete school uniform set",
-                                price: "₹5,000 - ₹8,000/year",
-                                features: ["Summer uniform", "Winter uniform", "Sports uniform"],
-                            },
-                            {
-                                title: "Extra Classes",
-                                description: "Additional coaching and activities",
-                                price: "₹1,500 - ₹3,000/month",
-                                features: ["Subject coaching", "Music/Dance", "Sports training"],
-                            },
-                        ].map((service, index) => (
-                            <AnimatedCard key={service.title} delay={index * 100}>
-                                <div className="card-modern p-6 h-full">
-                                    <h3 className="text-xl font-bold text-springer-charcoal mb-2">
-                                        {service.title}
-                                    </h3>
-                                    <p className="text-springer-gray text-sm mb-4">{service.description}</p>
-                                    <div className="text-2xl font-bold text-springer-red mb-4">
-                                        {service.price}
-                                    </div>
-                                    <ul className="space-y-2">
-                                        {service.features.map((feature) => (
-                                            <li key={feature} className="flex items-center gap-2 text-sm text-springer-gray">
-                                                <Check className="w-4 h-4 text-springer-green flex-shrink-0" />
-                                                {feature}
-                                            </li>
-                                        ))}
-                                    </ul>
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        <User className="w-4 h-4 inline mr-2" />
+                                        Full Name *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                        placeholder="Enter your full name"
+                                    />
                                 </div>
-                            </AnimatedCard>
-                        ))}
+
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        <Mail className="w-4 h-4 inline mr-2" />
+                                        Email Address *
+                                    </label>
+                                    <input
+                                        type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                        placeholder="your.email@example.com"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        <Phone className="w-4 h-4 inline mr-2" />
+                                        Phone Number *
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        required
+                                        value={formData.phone}
+                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                        placeholder="+91 XXXXX XXXXX"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        <GraduationCap className="w-4 h-4 inline mr-2" />
+                                        Class Interested In *
+                                    </label>
+                                    <select
+                                        required
+                                        value={formData.class}
+                                        onChange={(e) => setFormData({ ...formData, class: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                    >
+                                        <option value="">Select a class</option>
+                                        <option value="Nursery">Nursery</option>
+                                        <option value="LKG">LKG</option>
+                                        <option value="UKG">UKG</option>
+                                        <option value="Class 1">Class 1</option>
+                                        <option value="Class 2">Class 2</option>
+                                        <option value="Class 3">Class 3</option>
+                                        <option value="Class 4">Class 4</option>
+                                        <option value="Class 5">Class 5</option>
+                                        <option value="Class 6">Class 6</option>
+                                        <option value="Class 7">Class 7</option>
+                                        <option value="Class 8">Class 8</option>
+                                        <option value="Class 9">Class 9</option>
+                                        <option value="Class 10">Class 10</option>
+                                        <option value="Class 11">Class 11</option>
+                                        <option value="Class 12">Class 12</option>
+                                    </select>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    disabled={submitting}
+                                    className="w-full px-6 py-4 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                >
+                                    {submitting ? (
+                                        <>
+                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                            Processing...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Eye className="w-5 h-5" />
+                                            View Fee Structure
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        );
+    }
+
+    return (
+        <main className="pt-24 min-h-screen bg-gray-50">
+            {/* Header */}
+            <section className="bg-white border-b border-gray-200 py-8">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div>
+                            <h1 className="text-2xl font-semibold text-springer-charcoal mb-2">
+                                Fee Structure 2025-26
+                            </h1>
+                            <p className="text-springer-gray">
+                                Springer Public School - Complete Fee Details
+                            </p>
+                        </div>
+                        <button
+                            onClick={handleDownloadPDF}
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                        >
+                            <Download className="w-5 h-5" />
+                            Download PDF
+                        </button>
                     </div>
                 </div>
             </section>
 
-            {/* CTA */}
-            <section className="py-20 lg:py-28 bg-white">
-                <div className="section-padding">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold text-springer-charcoal mb-6">
-                            Have Questions About Fees?
-                        </h2>
-                        <p className="text-springer-gray text-lg mb-8">
-                            Our admissions team is here to help you understand our fee structure and payment options.
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-4">
-                            <a
-                                href="/contact"
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300"
-                            >
-                                <Phone className="w-5 h-5" />
-                                Contact Us
-                            </a>
-                            <button className="inline-flex items-center gap-2 px-8 py-4 bg-white text-springer-red font-semibold rounded-xl border-2 border-springer-red hover:bg-springer-red hover:text-white transition-all duration-300">
-                                <Download className="w-5 h-5" />
-                                Download PDF
-                            </button>
-                        </div>
+            {/* Fee Structure Image */}
+            <section className="py-12">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="bg-white rounded-2xl overflow-hidden">
+                        <Image
+                            src="/images/fee_structure_springer_school.webp"
+                            alt="Fee Structure"
+                            width={1920}
+                            height={1080}
+                            className="w-full h-auto"
+                            priority
+                        />
                     </div>
+                </div>
+            </section>
+
+            {/* Download Section */}
+            <section className="py-12 bg-white">
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    <h2 className="text-2xl font-bold text-springer-charcoal mb-4">
+                        Need a Copy?
+                    </h2>
+                    <p className="text-springer-gray mb-6">
+                        Download the fee structure PDF for your records
+                    </p>
+                    <button
+                        onClick={handleDownloadPDF}
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-springer-red text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                    >
+                        <Download className="w-5 h-5" />
+                        Download Fee Structure PDF
+                    </button>
                 </div>
             </section>
         </main>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ChevronUp } from 'lucide-react';
+import { ChevronUp, Download } from 'lucide-react';
 
 export default function ProspectusPage() {
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -80,16 +80,30 @@ export default function ProspectusPage() {
             </div>
 
             {/* Bottom Thumbnail Navigation */}
-            <div className="bg-white border-t border-gray-200 py-4 sticky bottom-0 left-0 right-0 z-10 mt-12">
+            <div className="bg-white border-t border-gray-200 py-4 sticky bottom-0 left-0 right-0 z-10 mt-12 flex flex-col items-center justify-center gap-3">
+                 <button
+                onClick={() => {
+                    const link = document.createElement('a');
+                    link.href = '/pdf/prospectus.pdf';
+                    link.download = 'Prospectus.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-springer-red text-springer-white font-semibold rounded-lg hover:bg-springer-red/80 hover:text-springer-white transition-all duration-300"
+            >
+                <Download className="w-4 h-4" />
+                Download PDF
+            </button>
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                    <div className="flex items-center gap-2 overflow-x-auto p-2">
                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                             <button
                                 key={page}
                                 onClick={() => scrollToPage(page)}
                                 className={`flex-shrink-0 w-16 h-20 border-2 rounded overflow-hidden transition-all ${currentPage === page
-                                        ? 'border-springer-red ring-2 ring-springer-red/30 scale-110'
-                                        : 'border-gray-300 hover:border-springer-red/50 opacity-60 hover:opacity-100'
+                                    ? 'border-springer-red ring-2 ring-springer-red/30 scale-110'
+                                    : 'border-gray-300 hover:border-springer-red/50 opacity-60 hover:opacity-100'
                                     }`}
                             >
                                 <img
@@ -101,6 +115,7 @@ export default function ProspectusPage() {
                         ))}
                     </div>
                 </div>
+               
             </div>
 
             {/* Scroll to Top Button */}

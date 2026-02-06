@@ -68,7 +68,14 @@ export function FinalCTA() {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <button
-              onClick={() => alert('Prospectus download coming soon!')}
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/pdf/prospectus.pdf';
+                link.download = 'Prospectus.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/30 hover:bg-white/20 transition-all duration-300"
             >
               <Download className="w-5 h-5" />
