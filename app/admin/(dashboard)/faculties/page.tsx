@@ -238,114 +238,116 @@ export default function FacultiesManagementPage() {
 
             {/* Modal */}
             <Dialog open={showModal} onOpenChange={handleCloseModal}>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
+                <DialogContent className="max-w-2xl h-[92vh] flex flex-col p-0 overflow-hidden gap-0">
+                    <DialogHeader className="p-6 border-b shrink-0">
                         <DialogTitle>
                             {editingFaculty ? 'Edit Faculty' : 'Add Faculty'}
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Faculty Image *
-                            </label>
-                            <ImageUpload
-                                value={formData.image}
-                                onChange={(url) => setFormData({ ...formData, image: url })}
-                                onRemove={() => setFormData({ ...formData, image: '' })}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Name *
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                placeholder="Enter faculty name"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Degree *
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.degree}
-                                onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                placeholder="e.g., M.Sc., Ph.D., B.Ed."
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
+                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                        <div className="flex-1 overflow-y-auto p-6 space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Subject *
+                                    Faculty Image *
+                                </label>
+                                <ImageUpload
+                                    value={formData.image}
+                                    onChange={(url) => setFormData({ ...formData, image: url })}
+                                    onRemove={() => setFormData({ ...formData, image: '' })}
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Name *
                                 </label>
                                 <input
                                     type="text"
                                     required
-                                    value={formData.subject}
-                                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                    placeholder="e.g., Mathematics"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    placeholder="Enter faculty name"
                                 />
                             </div>
+
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Experience (years) *
+                                    Degree *
+                                </label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={formData.degree}
+                                    onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    placeholder="e.g., M.Sc., Ph.D., B.Ed."
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        Subject *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.subject}
+                                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                        placeholder="e.g., Mathematics"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        Experience (years) *
+                                    </label>
+                                    <input
+                                        type="number"
+                                        required
+                                        min="0"
+                                        value={formData.experience}
+                                        onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                        placeholder="0"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Description *
+                                </label>
+                                <textarea
+                                    required
+                                    value={formData.description}
+                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    rows={4}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                    placeholder="Brief description about the faculty member"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Display Order
                                 </label>
                                 <input
                                     type="number"
-                                    required
-                                    min="0"
-                                    value={formData.experience}
-                                    onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
+                                    value={formData.order}
+                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                     placeholder="0"
                                 />
+                                <p className="text-xs text-springer-gray mt-1">
+                                    Lower numbers appear first
+                                </p>
                             </div>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Description *
-                            </label>
-                            <textarea
-                                required
-                                value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                rows={4}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none resize-none"
-                                placeholder="Brief description about the faculty member"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Display Order
-                            </label>
-                            <input
-                                type="number"
-                                value={formData.order}
-                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                placeholder="0"
-                            />
-                            <p className="text-xs text-springer-gray mt-1">
-                                Lower numbers appear first
-                            </p>
-                        </div>
-
-                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                        <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50/50 shrink-0">
                             <Button
                                 type="button"
                                 variant="outline"
@@ -356,7 +358,7 @@ export default function FacultiesManagementPage() {
                             <Button
                                 type="submit"
                                 disabled={submitting}
-                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                                className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
                                 {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingFaculty ? 'Update' : 'Add'}

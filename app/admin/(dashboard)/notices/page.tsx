@@ -294,102 +294,121 @@ export default function NoticesManagementPage() {
 
             {/* Modal */}
             <Dialog open={showModal} onOpenChange={handleCloseModal}>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
+                <DialogContent className="max-w-2xl h-[92vh] flex flex-col p-0 overflow-hidden">
+                    <DialogHeader className="p-6 border-b shrink-0">
                         <DialogTitle>
                             {editingNotice ? 'Edit Notice' : 'Create Notice'}
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Title *
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                placeholder="Enter notice title"
-                            />
-                        </div>
+                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Title *
+                                </label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={formData.title}
+                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    placeholder="Enter notice title"
+                                />
+                            </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Content *
-                            </label>
-                            <textarea
-                                required
-                                value={formData.content}
-                                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                rows={6}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
-                                placeholder="Enter notice content"
-                            />
-                        </div>
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Content *
+                                </label>
+                                <textarea
+                                    required
+                                    value={formData.content}
+                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                                    rows={8}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                    placeholder="Enter notice content"
+                                />
+                            </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Date *
-                            </label>
-                            <input
-                                type="date"
-                                required
-                                value={formData.date}
-                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                            />
-                        </div>
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Date *
+                                </label>
+                                <input
+                                    type="date"
+                                    required
+                                    value={formData.date}
+                                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                />
+                            </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                PDF Attachment (Optional)
-                            </label>
-                            {formData.pdfUrl ? (
-                                <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                                    <div className="flex-1">
-                                        <p className="text-sm font-medium text-green-800">
-                                            {formData.pdfFileName}
-                                        </p>
-                                        <a
-                                            href={formData.pdfUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-xs text-green-600 hover:underline"
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    PDF Attachment (Optional)
+                                </label>
+                                {formData.pdfUrl ? (
+                                    <div className="flex items-center gap-3 p-4 bg-red-50/50 border border-red-100 rounded-lg">
+                                        <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100">
+                                            <FileText className="w-5 h-5 text-springer-red" />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-medium text-springer-charcoal truncate">
+                                                {formData.pdfFileName}
+                                            </p>
+                                            <a
+                                                href={formData.pdfUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-xs text-springer-red hover:underline font-medium"
+                                            >
+                                                View PDF
+                                            </a>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={handleRemovePdf}
+                                            className="p-2 text-springer-gray hover:text-red-600 hover:bg-red-50 rounded-lg transition"
                                         >
-                                            View PDF
-                                        </a>
+                                            <X className="w-4 h-4" />
+                                        </button>
                                     </div>
-                                    <button
-                                        type="button"
-                                        onClick={handleRemovePdf}
-                                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            ) : (
-                                <div>
-                                    <input
-                                        type="file"
-                                        accept=".pdf"
-                                        onChange={handlePdfUpload}
-                                        disabled={uploadingPdf}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-springer-red file:text-white hover:file:bg-red-700 disabled:opacity-50"
-                                    />
-                                    {uploadingPdf && (
-                                        <p className="text-sm text-springer-gray mt-2 flex items-center gap-2">
-                                            <Loader2 className="w-4 h-4 animate-spin" />
-                                            Uploading PDF...
-                                        </p>
-                                    )}
-                                </div>
-                            )}
+                                ) : (
+                                    <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center bg-gray-50">
+                                        <input
+                                            type="file"
+                                            id="notice-pdf"
+                                            accept=".pdf"
+                                            onChange={handlePdfUpload}
+                                            disabled={uploadingPdf}
+                                            className="hidden"
+                                        />
+                                        <label
+                                            htmlFor="notice-pdf"
+                                            className="flex flex-col items-center cursor-pointer"
+                                        >
+                                            <div className="p-3 bg-white rounded-full shadow-sm border border-gray-100 mb-2">
+                                                <FileText className="w-6 h-6 text-springer-red" />
+                                            </div>
+                                            <span className="text-sm font-medium text-springer-charcoal text-center px-4">
+                                                Click to upload notice PDF
+                                            </span>
+                                            <span className="text-xs text-springer-gray mt-1">
+                                                PDF file only (Max. 10MB)
+                                            </span>
+                                        </label>
+                                        {uploadingPdf && (
+                                            <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
+                                                <Loader2 className="w-6 h-6 animate-spin text-springer-red" />
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
-                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                        <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50/50 shrink-0">
                             <Button
                                 type="button"
                                 variant="outline"
@@ -400,7 +419,7 @@ export default function NoticesManagementPage() {
                             <Button
                                 type="submit"
                                 disabled={submitting}
-                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                                className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
                                 {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingNotice ? 'Update' : 'Create'}
