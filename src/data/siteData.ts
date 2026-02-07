@@ -3,13 +3,14 @@
 export const schoolInfo = {
   name: "Springer Public School",
   tagline: "Shaping Minds. Building Futures.",
-  description: "CBSE-based modern education with values & innovation",
+  description: "Council for the Indian School Certificate Examinations (10+2) affiliated institution",
   founded: 1992,
-  address: "123 Education Lane, Knowledge City, India - 110001",
-  phone: "+91 11 2345 6789",
+  address: "Gorakhpur, Uttar Pradesh, India",
+  phone: "+917897012434",
   email: "info@springerpublicschool.edu.in",
   website: "www.springerpublicschool.edu.in",
-  affiliation: "CBSE Affiliation No: 1234567",
+  affiliation: "Affiliated to the Council for the Indian School Certificate Examinations (10+2), New Delhi [Affiliation / School Code: UP125]",
+  portalUrl: "https://springer.campusconnecterp.com",
 };
 
 export const navigation = [

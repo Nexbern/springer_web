@@ -92,7 +92,7 @@ export function FinalCTA() {
           >
             <div className="flex items-center gap-2 text-white/80">
               <FileText className="w-5 h-5" />
-              <span className="text-sm">CBSE Affiliated</span>
+              <span className="text-sm">CISCE Affiliated</span>
             </div>
             <div className="flex items-center gap-2 text-white/80">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

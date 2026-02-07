@@ -20,7 +20,7 @@ const heroSlides = [
         badge: 'Admissions Open 2025-26',
         badgeColor: 'red',
         title: 'Shaping Minds. Building Futures.',
-        subtitle: 'CBSE-based modern education with values & innovation',
+        subtitle: 'CISCE-affiliated modern education with values & innovation',
     },
     {
         id: 2,

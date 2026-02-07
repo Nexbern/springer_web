@@ -21,10 +21,10 @@ const achievementCategories = [
 const allAchievements = [
     {
         id: 1,
-        title: "100% CBSE Board Results",
+        title: "100% ICSE/ISC Board Results",
         category: "academic",
         year: "2024",
-        description: "All students passed with first division, with 45% scoring above 90%",
+        description: "Consistency in producing 100% results in Council examinations with numerous distinctions.",
         icon: Trophy,
     },
     {
@@ -48,7 +48,7 @@ const allAchievements = [
         title: "Best School Award",
         category: "events",
         year: "2023",
-        description: "Recognized as the Best CBSE School in the district",
+        description: "Recognized as the Best CISCE School in the district",
         icon: Star,
     },
     {
@@ -91,8 +91,8 @@ const demoAchievers: Achiever[] = [
         _id: 'demo1',
         name: 'Aarav Sharma',
         imageUrl: '/images/parent_01.jpg',
-        heading: 'Class 10th Board Topper',
-        description: 'CBSE Board - 98.6%',
+        heading: 'Class 10th ICSE Topper',
+        description: 'Council Board - 98.6%',
         order: 1
     },
     {

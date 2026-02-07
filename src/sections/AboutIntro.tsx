@@ -69,9 +69,9 @@ export function AboutIntro() {
                         </p>
 
                         <p className="text-xl text-springer-gray leading-relaxed">
-                            Our CBSE-affiliated curriculum, combined with state-of-the-art facilities and
-                            a dedicated faculty, ensures that every child receives personalized attention
-                            and opportunities to discover their true potential.
+                            Our curriculum affiliated to the Council for the Indian School Certificate Examinations (10+2),
+                            combined with state-of-the-art facilities and a dedicated faculty, ensures that every child
+                            receives personalized attention and opportunities to discover their true potential.
                         </p>
 
                         <p className="text-xl text-springer-gray leading-relaxed">

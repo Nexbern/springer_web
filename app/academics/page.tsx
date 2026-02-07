@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils';
 
 const curriculumItems = [
     {
-        title: "CBSE Curriculum",
-        content: "We follow the Central Board of Secondary Education (CBSE) curriculum, which is nationally recognized and provides a strong foundation for higher education. Our curriculum is designed to develop critical thinking, problem-solving skills, and holistic development.",
+        title: "CISCE Curriculum",
+        content: "We follow the curriculum laid down by the Council for the Indian School Certificate Examinations (10+2), New Delhi. This curriculum is globally recognized and provides a strong foundation for higher education, focusing on deep analytical skills and holistic development.",
         icon: BookOpen,
     },
     {
@@ -33,7 +33,7 @@ const curriculumItems = [
 
 export default function AcademicsPage() {
     const [activeTab, setActiveTab] = useState(academicPrograms[0].id);
-    const [openAccordion, setOpenAccordion] = useState<string | null>("CBSE Curriculum");
+    const [openAccordion, setOpenAccordion] = useState<string | null>("CISCE Curriculum");
     const activeProgram = academicPrograms.find(p => p.id === activeTab) || academicPrograms[0];
 
     return (

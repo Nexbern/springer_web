@@ -26,7 +26,7 @@ export function Footer() {
             <Link href="/" className="inline-block mb-6">
               <div className="relative w-[25rem] h-16 rounded-lg overflow-hidden">
                 <Image
-                  src="/images/springer_asset/logo.webp"
+                  src="/images/springer_asset/logo.png"
                   alt={schoolInfo.name}
                   fill
                   className="object-cover object-left"
@@ -35,7 +35,7 @@ export function Footer() {
             </Link>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed max-w-md">
               Shaping minds and building futures through quality education,
-              innovative learning, and strong values since 1995.
+              innovative learning, and strong values since 1992.
             </p>
 
             {/* Social Media */}

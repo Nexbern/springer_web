@@ -20,13 +20,15 @@ const poppins = Poppins({
 export const metadata: Metadata = {
     metadataBase: new URL('https://springerpublicschool.edu.in'),
     title: {
-        default: `${schoolInfo.name} - CBSE Affiliated School in India`,
+        default: `${schoolInfo.name} - CISCE Affiliated School in Gorakhpur`,
         template: `%s | ${schoolInfo.name}`,
     },
-    description: `${schoolInfo.name} offers quality CBSE education with modern facilities, expert faculty, and holistic development programs. Admissions open for 2025-26.`,
+    description: `${schoolInfo.name} is affiliated to the Council for the Indian School Certificate Examinations (10+2), New Delhi. We offer quality education with modern facilities, expert faculty, and holistic development programs. admissions open for 2025-26.`,
     keywords: [
-        'CBSE school',
-        'best school in India',
+        'ICSE school',
+        'CISCE affiliated',
+        'ISC school',
+        'Gorakhpur schools',
         'quality education',
         'STEM education',
         'school admissions',
@@ -40,8 +42,8 @@ export const metadata: Metadata = {
         locale: 'en_IN',
         url: 'https://springerpublicschool.edu.in',
         siteName: schoolInfo.name,
-        title: `${schoolInfo.name} - CBSE Affiliated School in India`,
-        description: `${schoolInfo.name} offers quality CBSE education with modern facilities, expert faculty, and holistic development programs.`,
+        title: `${schoolInfo.name} - CISCE Affiliated School in Gorakhpur`,
+        description: `${schoolInfo.name} is affiliated to the Council for the Indian School Certificate Examinations (10+2), New Delhi. We offer quality education with modern facilities and holistic development programs.`,
         images: [
             {
                 url: '/images/hero_students_modern_classroom.jpg',
@@ -53,8 +55,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: `${schoolInfo.name} - CBSE Affiliated School`,
-        description: 'Quality CBSE education with modern facilities and expert faculty.',
+        title: `${schoolInfo.name} - CISCE Affiliated School`,
+        description: 'Quality education affiliated to the Council for the Indian School Certificate Examinations (10+2), New Delhi.',
         images: ['/images/hero_students_modern_classroom.jpg'],
     },
     robots: {

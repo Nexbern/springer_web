@@ -71,7 +71,7 @@ export function Navbar() {
             <Link href="/" className="flex items-center">
               <div className="relative w-[13rem] h-12 sm:w-[15rem] sm:h-14">
                 <Image
-                  src="/images/springer_asset/logo.webp"
+                  src="/images/springer_asset/logo.png"
                   alt={schoolInfo.name}
                   fill
                   className="object-contain"
@@ -96,22 +96,24 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Login Buttons & CTA */}
+            {/* Portal Login */}
             <div className="hidden lg:flex items-center gap-2">
               <a
-                href="#"
+                href={schoolInfo.portalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-springer-charcoal hover:text-springer-red border border-gray-300 rounded-lg hover:border-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                Teacher Login
+                Portal Login
               </a>
-              <a
-                href="#"
+              <Link
+                href="/admissions"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium bg-springer-red text-white hover:bg-springer-darkred border border-red-500 rounded-lg hover:border-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                Parent Login
-              </a>
+                Apply Now
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -149,19 +151,21 @@ export function Navbar() {
             ))}
             <div className="pt-4 border-t border-gray-100 space-y-2">
               <a
-                href="#"
+                href={schoolInfo.portalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-springer-charcoal border border-gray-300 rounded-lg hover:border-springer-red hover:text-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                Teacher Login
+                Student/Parent Portal
               </a>
-              <a
-                href="#"
-                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-springer-charcoal border border-gray-300 rounded-lg hover:border-springer-red hover:text-springer-red transition-all"
+              <Link
+                href="/admissions"
+                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-springer-red rounded-lg hover:bg-red-700 transition-all font-semibold"
               >
                 <LogIn className="w-4 h-4" />
-                Parent Login
-              </a>
+                Apply for Admission
+              </Link>
             </div>
           </div>
         </div>

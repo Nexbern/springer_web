@@ -23,8 +23,8 @@ const DEMO_ACHIEVERS: Achiever[] = [
         _id: 'demo1',
         name: 'Aarav Sharma',
         imageUrl: '/images/parent_01.jpg',
-        heading: 'Class 10th Board Topper',
-        description: 'CBSE Board - 98.6%',
+        heading: 'Class 10th ICSE Topper',
+        description: 'Council Board - 98.6%',
         order: 1
     },
     {

@@ -284,69 +284,6 @@ export default function AdmissionsPage() {
                 </div>
             </section>
 
-            {/* Fee Structure */}
-            <section className="py-20 lg:py-28 bg-white">
-                <div className="section-padding">
-                    <SectionHeader
-                        subtitle="Fee Structure"
-                        title="Transparent & Affordable"
-                        description="Our fee structure is designed to be transparent and affordable while maintaining the highest standards of education."
-                    />
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
-                        {[
-                            {
-                                title: "Pre-Primary",
-                                grades: "Nursery - KG",
-                                fee: "₹45,000",
-                                period: "per annum",
-                                features: ["Tuition Fee", "Activity Fee", "Learning Materials"],
-                            },
-                            {
-                                title: "Primary",
-                                grades: "Class 1-5",
-                                fee: "₹55,000",
-                                period: "per annum",
-                                features: ["Tuition Fee", "Lab Fee", "Library Access", "Sports"],
-                            },
-                            {
-                                title: "Secondary",
-                                grades: "Class 6-12",
-                                fee: "₹65,000",
-                                period: "per annum",
-                                features: ["Tuition Fee", "Science Labs", "Computer Lab", "Library", "Sports"],
-                            },
-                        ].map((plan, index) => (
-                            <AnimatedCard key={plan.title} delay={index * 100}>
-                                <div className="card-modern p-8 text-center h-full">
-                                    <h3 className="text-xl font-bold text-springer-charcoal mb-1">
-                                        {plan.title}
-                                    </h3>
-                                    <p className="text-springer-gray text-sm mb-4">{plan.grades}</p>
-                                    <div className="text-4xl font-bold text-springer-red mb-1">
-                                        {plan.fee}
-                                    </div>
-                                    <p className="text-springer-gray text-sm mb-6">{plan.period}</p>
-                                    <ul className="space-y-3 text-left">
-                                        {plan.features.map((feature) => (
-                                            <li key={feature} className="flex items-center gap-2 text-sm text-springer-gray">
-                                                <Check className="w-4 h-4 text-springer-green flex-shrink-0" />
-                                                {feature}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </AnimatedCard>
-                        ))}
-                    </div>
-
-                    <p className="text-center text-springer-gray text-sm mt-8">
-                        * Additional charges may apply for transport, uniform, and extracurricular activities.
-                        Contact us for detailed fee structure.
-                    </p>
-                </div>
-            </section>
-
             {/* Success Dialog */}
             <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
                 <DialogContent>
