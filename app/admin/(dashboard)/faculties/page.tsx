@@ -3,6 +3,14 @@
 import { useEffect, useState } from 'react';
 import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
 import ImageUpload from '@/components/admin/ImageUpload';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { Button } from '@/components/ui/button';
 
 interface Faculty {
     _id: string;
@@ -31,6 +39,8 @@ export default function FacultiesManagementPage() {
         order: 0,
     });
     const [submitting, setSubmitting] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [facultyToDelete, setFacultyToDelete] = useState<string | null>(null);
 
     useEffect(() => {
         fetchFaculties();
@@ -84,11 +94,16 @@ export default function FacultiesManagementPage() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this faculty member?')) return;
+    const handleDeleteClick = (id: string) => {
+        setFacultyToDelete(id);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleDelete = async () => {
+        if (!facultyToDelete) return;
 
         try {
-            const response = await fetch(`/api/faculties/${id}`, {
+            const response = await fetch(`/api/faculties/${facultyToDelete}`, {
                 method: 'DELETE',
             });
 
@@ -99,6 +114,9 @@ export default function FacultiesManagementPage() {
             await fetchFaculties();
         } catch (error) {
             alert('Failed to delete faculty');
+        } finally {
+            setIsDeleteDialogOpen(false);
+            setFacultyToDelete(null);
         }
     };
 
@@ -205,7 +223,7 @@ export default function FacultiesManagementPage() {
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => handleDelete(faculty._id)}
+                                        onClick={() => handleDeleteClick(faculty._id)}
                                         className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm text-red-600 border border-red-600 rounded-lg hover:bg-red-50 transition"
                                     >
                                         <Trash2 className="w-4 h-4" />
@@ -219,142 +237,144 @@ export default function FacultiesManagementPage() {
             </div>
 
             {/* Modal */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-semibold text-springer-charcoal">
-                                {editingFaculty ? 'Edit Faculty' : 'Add Faculty'}
-                            </h2>
-                            <button
-                                onClick={handleCloseModal}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+            <Dialog open={showModal} onOpenChange={handleCloseModal}>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>
+                            {editingFaculty ? 'Edit Faculty' : 'Add Faculty'}
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Faculty Image *
+                            </label>
+                            <ImageUpload
+                                value={formData.image}
+                                onChange={(url) => setFormData({ ...formData, image: url })}
+                                onRemove={() => setFormData({ ...formData, image: '' })}
+                            />
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Faculty Image *
-                                </label>
-                                <ImageUpload
-                                    value={formData.image}
-                                    onChange={(url) => setFormData({ ...formData, image: url })}
-                                    onRemove={() => setFormData({ ...formData, image: '' })}
-                                />
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Name *
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
+                                placeholder="Enter faculty name"
+                            />
+                        </div>
 
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Degree *
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.degree}
+                                onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
+                                placeholder="e.g., M.Sc., Ph.D., B.Ed."
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Name *
+                                    Subject *
                                 </label>
                                 <input
                                     type="text"
                                     required
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    value={formData.subject}
+                                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                    placeholder="Enter faculty name"
+                                    placeholder="e.g., Mathematics"
                                 />
                             </div>
-
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Degree *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.degree}
-                                    onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                    placeholder="e.g., M.Sc., Ph.D., B.Ed."
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                        Subject *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.subject}
-                                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                        placeholder="e.g., Mathematics"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                        Experience (years) *
-                                    </label>
-                                    <input
-                                        type="number"
-                                        required
-                                        min="0"
-                                        value={formData.experience}
-                                        onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
-                                        placeholder="0"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Description *
-                                </label>
-                                <textarea
-                                    required
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    rows={4}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none resize-none"
-                                    placeholder="Brief description about the faculty member"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Display Order
+                                    Experience (years) *
                                 </label>
                                 <input
                                     type="number"
-                                    value={formData.order}
-                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+                                    required
+                                    min="0"
+                                    value={formData.experience}
+                                    onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
                                     placeholder="0"
                                 />
-                                <p className="text-xs text-springer-gray mt-1">
-                                    Lower numbers appear first
-                                </p>
                             </div>
+                        </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
-                                <button
-                                    type="button"
-                                    onClick={handleCloseModal}
-                                    className="px-6 py-2 border border-gray-300 text-springer-gray rounded-lg hover:bg-gray-50 transition"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={submitting}
-                                    className="px-6 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                                >
-                                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-                                    {editingFaculty ? 'Update' : 'Add'}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Description *
+                            </label>
+                            <textarea
+                                required
+                                value={formData.description}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                rows={4}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none resize-none"
+                                placeholder="Brief description about the faculty member"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Display Order
+                            </label>
+                            <input
+                                type="number"
+                                value={formData.order}
+                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none"
+                                placeholder="0"
+                            />
+                            <p className="text-xs text-springer-gray mt-1">
+                                Lower numbers appear first
+                            </p>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={handleCloseModal}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={submitting}
+                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                            >
+                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {editingFaculty ? 'Update' : 'Add'}
+                            </Button>
+                        </div>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            <ConfirmDialog
+                isOpen={isDeleteDialogOpen}
+                onClose={() => setIsDeleteDialogOpen(false)}
+                onConfirm={handleDelete}
+                title="Delete Faculty Member"
+                description="Are you sure you want to delete this faculty member?"
+                confirmText="Delete"
+                variant="destructive"
+            />
         </div>
     );
 }

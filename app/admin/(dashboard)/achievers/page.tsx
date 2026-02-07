@@ -3,6 +3,14 @@
 import { useEffect, useState } from 'react';
 import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
 import Image from 'next/image';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { Button } from '@/components/ui/button';
 
 interface StudentAchiever {
     _id: string;
@@ -28,6 +36,8 @@ export default function AchieversManagementPage() {
     });
     const [submitting, setSubmitting] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [achieverToDelete, setAchieverToDelete] = useState<string | null>(null);
 
     useEffect(() => {
         fetchAchievers();
@@ -75,11 +85,16 @@ export default function AchieversManagementPage() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this achiever?')) return;
+    const handleDeleteClick = (id: string) => {
+        setAchieverToDelete(id);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleDelete = async () => {
+        if (!achieverToDelete) return;
 
         try {
-            const response = await fetch(`/api/achievers/${id}`, {
+            const response = await fetch(`/api/achievers/${achieverToDelete}`, {
                 method: 'DELETE',
             });
 
@@ -90,6 +105,9 @@ export default function AchieversManagementPage() {
             await fetchAchievers();
         } catch (error) {
             alert('Failed to delete achiever');
+        } finally {
+            setIsDeleteDialogOpen(false);
+            setAchieverToDelete(null);
         }
     };
 
@@ -232,7 +250,7 @@ export default function AchieversManagementPage() {
                                             <Edit className="w-4 h-4" />
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(achiever._id)}
+                                            onClick={() => handleDeleteClick(achiever._id)}
                                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                         >
                                             <Trash2 className="w-4 h-4" />
@@ -246,145 +264,147 @@ export default function AchieversManagementPage() {
             </div>
 
             {/* Modal */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-semibold text-springer-charcoal">
-                                {editingAchiever ? 'Edit Achiever' : 'Add Achiever'}
-                            </h2>
-                            <button
-                                onClick={handleCloseModal}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+            <Dialog open={showModal} onOpenChange={handleCloseModal}>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>
+                            {editingAchiever ? 'Edit Achiever' : 'Add Achiever'}
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Student Name *
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                placeholder="Enter student name"
+                            />
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Student Name *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                    placeholder="Enter student name"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Student Image *
-                                </label>
-                                {formData.imageUrl ? (
-                                    <div className="space-y-3">
-                                        <div className="relative h-48 rounded-lg overflow-hidden border border-gray-200">
-                                            <Image
-                                                src={formData.imageUrl}
-                                                alt="Preview"
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={handleRemoveImage}
-                                            className="text-sm text-red-600 hover:underline"
-                                        >
-                                            Remove Image
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageUpload}
-                                            disabled={uploadingImage}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-springer-red file:text-white hover:file:bg-red-700 disabled:opacity-50"
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Student Image *
+                            </label>
+                            {formData.imageUrl ? (
+                                <div className="space-y-3">
+                                    <div className="relative h-48 rounded-lg overflow-hidden border border-gray-200">
+                                        <Image
+                                            src={formData.imageUrl}
+                                            alt="Preview"
+                                            fill
+                                            className="object-cover"
                                         />
-                                        {uploadingImage && (
-                                            <p className="text-sm text-springer-gray mt-2 flex items-center gap-2">
-                                                <Loader2 className="w-4 h-4 animate-spin" />
-                                                Uploading image...
-                                            </p>
-                                        )}
                                     </div>
-                                )}
-                            </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleRemoveImage}
+                                        className="text-sm text-red-600 hover:underline"
+                                    >
+                                        Remove Image
+                                    </button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        disabled={uploadingImage}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-springer-red file:text-white hover:file:bg-red-700 disabled:opacity-50"
+                                    />
+                                    {uploadingImage && (
+                                        <p className="text-sm text-springer-gray mt-2 flex items-center gap-2">
+                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                            Uploading image...
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Heading *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.heading}
-                                    onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                    placeholder="e.g., Class 10 Topper, State Level Cricket"
-                                />
-                                <p className="text-xs text-springer-gray mt-1">
-                                    Mention class for academic achievements or sport name for sports achievements
-                                </p>
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Heading *
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.heading}
+                                onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                placeholder="e.g., Class 10 Topper, State Level Cricket"
+                            />
+                            <p className="text-xs text-springer-gray mt-1">
+                                Mention class for academic achievements or sport name for sports achievements
+                            </p>
+                        </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Description *
-                                </label>
-                                <textarea
-                                    required
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    rows={4}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
-                                    placeholder="Describe the achievement (e.g., marks obtained, tournament details)"
-                                />
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Description *
+                            </label>
+                            <textarea
+                                required
+                                value={formData.description}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                rows={4}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                placeholder="Describe the achievement (e.g., marks obtained, tournament details)"
+                            />
+                        </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Display Order
-                                </label>
-                                <input
-                                    type="number"
-                                    value={formData.order}
-                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                    placeholder="0"
-                                />
-                                <p className="text-xs text-springer-gray mt-1">
-                                    Lower numbers appear first
-                                </p>
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Display Order
+                            </label>
+                            <input
+                                type="number"
+                                value={formData.order}
+                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                placeholder="0"
+                            />
+                            <p className="text-xs text-springer-gray mt-1">
+                                Lower numbers appear first
+                            </p>
+                        </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
-                                <button
-                                    type="button"
-                                    onClick={handleCloseModal}
-                                    className="px-6 py-2 border border-gray-300 text-springer-gray rounded-lg hover:bg-gray-50 transition"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={submitting || !formData.imageUrl}
-                                    className="px-6 py-2 bg-springer-red text-white rounded-lg hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                                >
-                                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-                                    {editingAchiever ? 'Update' : 'Create'}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={handleCloseModal}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={submitting || !formData.imageUrl}
+                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                            >
+                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {editingAchiever ? 'Update' : 'Create'}
+                            </Button>
+                        </div>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            <ConfirmDialog
+                isOpen={isDeleteDialogOpen}
+                onClose={() => setIsDeleteDialogOpen(false)}
+                onConfirm={handleDelete}
+                title="Delete Achiever"
+                description="Are you sure you want to delete this achiever?"
+                confirmText="Delete"
+                variant="destructive"
+            />
         </div>
     );
 }

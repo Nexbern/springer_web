@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Calendar, Download, ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { cn } from "@/lib/utils";
 
 interface Banner {
     _id: string;
@@ -32,13 +35,11 @@ export default function BannerNoticePopup() {
 
     const fetchPopupData = async () => {
         try {
-            // Check if popups were already shown in this session
             const bannerShown = sessionStorage.getItem('bannerShown');
             const noticeShown = sessionStorage.getItem('noticeShown');
 
             let hasBanner = false;
 
-            // Fetch active banner
             if (!bannerShown) {
                 const bannerRes = await fetch('/api/admin/banners');
                 const bannerData = await bannerRes.json();
@@ -51,7 +52,6 @@ export default function BannerNoticePopup() {
                 }
             }
 
-            // Fetch latest notice
             if (!noticeShown) {
                 const noticeRes = await fetch('/api/notices');
                 const noticeData = await noticeRes.json();
@@ -59,7 +59,6 @@ export default function BannerNoticePopup() {
 
                 if (latestNotice) {
                     setNotice(latestNotice);
-                    // Only show notice immediately if there's no banner to show
                     if (!hasBanner && !bannerShown) {
                         setShowNotice(true);
                     }
@@ -74,9 +73,8 @@ export default function BannerNoticePopup() {
         setShowBanner(false);
         sessionStorage.setItem('bannerShown', 'true');
 
-        // Show notice after banner is closed
         if (notice && !sessionStorage.getItem('noticeShown')) {
-            setTimeout(() => setShowNotice(true), 300);
+            setTimeout(() => setShowNotice(true), 400);
         }
     };
 
@@ -86,109 +84,154 @@ export default function BannerNoticePopup() {
     };
 
     return (
-        <>
-            {/* Banner Popup - Only Image with Close Button */}
+        <AnimatePresence>
+            {/* Banner Popup */}
             {showBanner && banner && banner.image && (
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 animate-fadeIn">
-                    <div className="relative max-w-4xl w-full animate-slideUp">
-                        <img
-                            src={banner.image}
-                            alt="Banner"
-                            className="w-full h-auto rounded-2xl shadow-2xl"
-                        />
-                        <button
-                            onClick={handleCloseBanner}
-                            className="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition"
-                        >
-                            <X className="w-6 h-6 text-springer-charcoal" />
-                        </button>
-                    </div>
-                </div>
+                <DialogPrimitive.Root open={showBanner} onOpenChange={handleCloseBanner}>
+                    <DialogPrimitive.Portal>
+                        <DialogPrimitive.Overlay asChild>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                            />
+                        </DialogPrimitive.Overlay>
+                        <DialogPrimitive.Content asChild>
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-4xl outline-none"
+                            >
+                                <div className="relative group">
+                                    <img
+                                        src={banner.image}
+                                        alt="Banner"
+                                        className="w-full h-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
+                                    />
+                                    <DialogPrimitive.Close asChild>
+                                        <button
+                                            className="absolute -top-3 -right-3 p-2 bg-white text-springer-charcoal rounded-full shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 z-10 border border-gray-100"
+                                            aria-label="Close banner"
+                                        >
+                                            <X className="w-5 h-5" />
+                                        </button>
+                                    </DialogPrimitive.Close>
+                                </div>
+                            </motion.div>
+                        </DialogPrimitive.Content>
+                    </DialogPrimitive.Portal>
+                </DialogPrimitive.Root>
             )}
 
-            {/* Notice Popup - Title, Date, and NEW GIF */}
+            {/* Notice Popup */}
             {showNotice && notice && (
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 animate-fadeIn">
-                    <div className="bg-white rounded-lg max-w-2xl w-full shadow-2xl animate-slideUp relative">
-                        <button
-                            onClick={handleCloseNotice}
-                            className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition z-10"
-                        >
-                            <X className="w-5 h-5 text-springer-charcoal" />
-                        </button>
-
-                        <div className="p-8">
-                            <div className="flex items-start gap-4 mb-4">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <h2 className="text-xl font-bold text-springer-charcoal">
-                                            {notice.title}
-                                        </h2>
-                                        <img
-                                            src="/images/new_gif.gif"
-                                            alt="New"
-                                            className="w-12 h-12 object-contain flex-shrink-0"
-                                        />
+                <DialogPrimitive.Root open={showNotice} onOpenChange={handleCloseNotice}>
+                    <DialogPrimitive.Portal>
+                        <DialogPrimitive.Overlay asChild>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                            />
+                        </DialogPrimitive.Overlay>
+                        <DialogPrimitive.Content asChild>
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0, y: 30 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.9, opacity: 0, y: 30 }}
+                                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-2xl outline-none"
+                            >
+                                <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.4)] overflow-hidden border border-white/20">
+                                    {/* Header with Close */}
+                                    <div className="absolute top-4 right-4 z-10">
+                                        <DialogPrimitive.Close asChild>
+                                            <button
+                                                className="p-2 bg-gray-100/80 hover:bg-gray-200/80 rounded-full transition-all duration-200 group"
+                                                aria-label="Close notice"
+                                            >
+                                                <X className="w-5 h-5 text-gray-500 group-hover:text-springer-charcoal" />
+                                            </button>
+                                        </DialogPrimitive.Close>
                                     </div>
-                                    <p className="text-springer-gray text-sm flex items-center gap-2">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                        {new Date(notice.date).toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
-                                    </p>
+
+                                    <div className="p-8 md:p-10">
+                                        <div className="flex flex-col gap-1 mb-6">
+                                            <div className="flex items-center gap-3">
+                                                <DialogPrimitive.Title className="text-2xl md:text-3xl font-extrabold text-springer-charcoal tracking-tight leading-tight">
+                                                    {notice.title}
+                                                </DialogPrimitive.Title>
+                                                <img
+                                                    src="/images/new_gif.gif"
+                                                    alt="New"
+                                                    className="w-10 h-10 object-contain flex-shrink-0 animate-pulse"
+                                                />
+                                            </div>
+                                            <div className="flex items-center gap-2 text-springer-gray font-medium mt-1">
+                                                <Calendar className="w-4 h-4 text-springer-red/70" />
+                                                <span className="text-sm">
+                                                    {new Date(notice.date).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric'
+                                                    })}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-wrap">
+                                                {notice.content}
+                                            </p>
+                                        </div>
+
+                                        {/* Action Area */}
+                                        {notice.pdfUrl && (
+                                            <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between gap-4">
+                                                <div className="flex-1">
+                                                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">
+                                                        Attachment
+                                                    </p>
+                                                    <p className="text-sm text-gray-500 truncate max-w-[200px] md:max-w-xs">
+                                                        {notice.pdfFileName || 'Official Notice Document'}
+                                                    </p>
+                                                </div>
+                                                <div className="flex gap-3">
+                                                    <a
+                                                        href={notice.pdfUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="p-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-colors"
+                                                        title="View Document"
+                                                    >
+                                                        <ExternalLink className="w-5 h-5" />
+                                                    </a>
+                                                    <a
+                                                        href={notice.pdfUrl}
+                                                        target="_blank"
+                                                        download={notice.pdfFileName || 'notice.pdf'}
+                                                        className="flex items-center gap-2 px-6 py-3 bg-springer-red text-white rounded-xl font-bold shadow-lg shadow-springer-red/25 hover:bg-red-700 hover:shadow-springer-red/40 transition-all duration-300"
+                                                    >
+                                                        <Download className="w-5 h-5" />
+                                                        <span>Download PDF</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Bottom visual accent */}
+                                    <div className="h-2 w-full bg-gradient-to-r from-springer-red via-red-400 to-springer-red/50" />
                                 </div>
-                            </div>
-
-                            <p className="text-springer-charcoal leading-relaxed whitespace-pre-wrap">
-                                {notice.content}
-                            </p>
-
-                            {/* PDF Download */}
-                            {notice.pdfUrl && (
-                                <div className="mt-6 pt-6 border-t border-gray-200">
-                                    <a
-                                        href={notice.pdfUrl}
-                                        target="_blank"
-                                        download={notice.pdfFileName || 'notice.pdf'}
-                                        className="inline-flex text-sm items-center gap-2 px-4 py-2 bg-red-50 border border-red-50 text-springer-red rounded-lg font-medium shadow-sm hover:border-red-400 transition-all duration-300"
-                                    >
-                                        <img src="/images/pdf_icon.png" alt="PDF" className="w-4 h-4" />
-                                        Download PDF
-                                    </a>
-                                </div>
-                            )}
-
-                        </div>
-                    </div>
-                </div>
+                            </motion.div>
+                        </DialogPrimitive.Content>
+                    </DialogPrimitive.Portal>
+                </DialogPrimitive.Root>
             )}
-
-            <style jsx>{`
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes slideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                .animate-fadeIn {
-                    animation: fadeIn 0.3s ease-out;
-                }
-                .animate-slideUp {
-                    animation: slideUp 0.4s ease-out;
-                }
-            `}</style>
-        </>
+        </AnimatePresence>
     );
 }

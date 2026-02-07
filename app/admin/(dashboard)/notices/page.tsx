@@ -3,6 +3,14 @@
 import { useEffect, useState } from 'react';
 import { Plus, Edit, Trash2, Loader2, X, FileText } from 'lucide-react';
 import { format } from 'date-fns';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { Button } from '@/components/ui/button';
 
 interface Notice {
     _id: string;
@@ -28,6 +36,8 @@ export default function NoticesManagementPage() {
     });
     const [submitting, setSubmitting] = useState(false);
     const [uploadingPdf, setUploadingPdf] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [noticeToDelete, setNoticeToDelete] = useState<string | null>(null);
 
     useEffect(() => {
         fetchNotices();
@@ -75,11 +85,16 @@ export default function NoticesManagementPage() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this notice?')) return;
+    const handleDeleteClick = (id: string) => {
+        setNoticeToDelete(id);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleDelete = async () => {
+        if (!noticeToDelete) return;
 
         try {
-            const response = await fetch(`/api/notices/${id}`, {
+            const response = await fetch(`/api/notices/${noticeToDelete}`, {
                 method: 'DELETE',
             });
 
@@ -90,6 +105,9 @@ export default function NoticesManagementPage() {
             await fetchNotices();
         } catch (error) {
             alert('Failed to delete notice');
+        } finally {
+            setIsDeleteDialogOpen(false);
+            setNoticeToDelete(null);
         }
     };
 
@@ -259,7 +277,7 @@ export default function NoticesManagementPage() {
                                                     <Edit className="w-4 h-4" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDelete(notice._id)}
+                                                    onClick={() => handleDeleteClick(notice._id)}
                                                     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -275,130 +293,132 @@ export default function NoticesManagementPage() {
             </div>
 
             {/* Modal */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-semibold text-springer-charcoal">
-                                {editingNotice ? 'Edit Notice' : 'Create Notice'}
-                            </h2>
-                            <button
-                                onClick={handleCloseModal}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+            <Dialog open={showModal} onOpenChange={handleCloseModal}>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>
+                            {editingNotice ? 'Edit Notice' : 'Create Notice'}
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Title *
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.title}
+                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                placeholder="Enter notice title"
+                            />
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Title *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                    placeholder="Enter notice title"
-                                />
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Content *
+                            </label>
+                            <textarea
+                                required
+                                value={formData.content}
+                                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                                rows={6}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                placeholder="Enter notice content"
+                            />
+                        </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Content *
-                                </label>
-                                <textarea
-                                    required
-                                    value={formData.content}
-                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    rows={6}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
-                                    placeholder="Enter notice content"
-                                />
-                            </div>
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Date *
+                            </label>
+                            <input
+                                type="date"
+                                required
+                                value={formData.date}
+                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                            />
+                        </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Date *
-                                </label>
-                                <input
-                                    type="date"
-                                    required
-                                    value={formData.date}
-                                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    PDF Attachment (Optional)
-                                </label>
-                                {formData.pdfUrl ? (
-                                    <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                                        <div className="flex-1">
-                                            <p className="text-sm font-medium text-green-800">
-                                                {formData.pdfFileName}
-                                            </p>
-                                            <a
-                                                href={formData.pdfUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-xs text-green-600 hover:underline"
-                                            >
-                                                View PDF
-                                            </a>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={handleRemovePdf}
-                                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                PDF Attachment (Optional)
+                            </label>
+                            {formData.pdfUrl ? (
+                                <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                    <div className="flex-1">
+                                        <p className="text-sm font-medium text-green-800">
+                                            {formData.pdfFileName}
+                                        </p>
+                                        <a
+                                            href={formData.pdfUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs text-green-600 hover:underline"
                                         >
-                                            <X className="w-4 h-4" />
-                                        </button>
+                                            View PDF
+                                        </a>
                                     </div>
-                                ) : (
-                                    <div>
-                                        <input
-                                            type="file"
-                                            accept=".pdf"
-                                            onChange={handlePdfUpload}
-                                            disabled={uploadingPdf}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-springer-red file:text-white hover:file:bg-red-700 disabled:opacity-50"
-                                        />
-                                        {uploadingPdf && (
-                                            <p className="text-sm text-springer-gray mt-2 flex items-center gap-2">
-                                                <Loader2 className="w-4 h-4 animate-spin" />
-                                                Uploading PDF...
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleRemovePdf}
+                                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <input
+                                        type="file"
+                                        accept=".pdf"
+                                        onChange={handlePdfUpload}
+                                        disabled={uploadingPdf}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-springer-red file:text-white hover:file:bg-red-700 disabled:opacity-50"
+                                    />
+                                    {uploadingPdf && (
+                                        <p className="text-sm text-springer-gray mt-2 flex items-center gap-2">
+                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                            Uploading PDF...
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
-                                <button
-                                    type="button"
-                                    onClick={handleCloseModal}
-                                    className="px-6 py-2 border border-gray-300 text-springer-gray rounded-lg hover:bg-gray-50 transition"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={submitting}
-                                    className="px-6 py-2 bg-springer-red text-white rounded-lg hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                                >
-                                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-                                    {editingNotice ? 'Update' : 'Create'}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={handleCloseModal}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={submitting}
+                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                            >
+                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {editingNotice ? 'Update' : 'Create'}
+                            </Button>
+                        </div>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            <ConfirmDialog
+                isOpen={isDeleteDialogOpen}
+                onClose={() => setIsDeleteDialogOpen(false)}
+                onConfirm={handleDelete}
+                title="Delete Notice"
+                description="Are you sure you want to delete this notice?"
+                confirmText="Delete"
+                variant="destructive"
+            />
         </div>
     );
 }

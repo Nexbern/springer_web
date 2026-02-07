@@ -1,9 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Edit, Trash2, Loader2, X, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
 import { format } from 'date-fns';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { Switch } from '@/components/ui/switch';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from '@/components/ui/dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { Button } from '@/components/ui/button';
 
 interface Banner {
     _id: string;
@@ -30,6 +40,8 @@ export default function BannersManagementPage() {
         image: '',
     });
     const [submitting, setSubmitting] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [bannerToDelete, setBannerToDelete] = useState<string | null>(null);
 
     useEffect(() => {
         fetchBanners();
@@ -77,11 +89,16 @@ export default function BannersManagementPage() {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this banner?')) return;
+    const handleDeleteClick = (id: string) => {
+        setBannerToDelete(id);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleDelete = async () => {
+        if (!bannerToDelete) return;
 
         try {
-            const response = await fetch(`/api/banners/${id}`, {
+            const response = await fetch(`/api/banners/${bannerToDelete}`, {
                 method: 'DELETE',
             });
 
@@ -92,6 +109,9 @@ export default function BannersManagementPage() {
             await fetchBanners();
         } catch (error) {
             alert('Failed to delete banner');
+        } finally {
+            setIsDeleteDialogOpen(false);
+            setBannerToDelete(null);
         }
     };
 
@@ -196,19 +216,10 @@ export default function BannersManagementPage() {
                                     <h3 className="font-semibold text-springer-charcoal">
                                         {banner.title}
                                     </h3>
-                                    <button
-                                        onClick={() => handleToggleActive(banner)}
-                                        className={`p-1 rounded transition ${banner.active
-                                                ? 'text-green-600 hover:bg-green-50'
-                                                : 'text-gray-400 hover:bg-gray-100'
-                                            }`}
-                                    >
-                                        {banner.active ? (
-                                            <ToggleRight className="w-6 h-6" />
-                                        ) : (
-                                            <ToggleLeft className="w-6 h-6" />
-                                        )}
-                                    </button>
+                                    <Switch
+                                        checked={banner.active}
+                                        onCheckedChange={() => handleToggleActive(banner)}
+                                    />
                                 </div>
                                 <p className="text-sm text-springer-gray mb-3 line-clamp-2">
                                     {banner.message}
@@ -232,7 +243,7 @@ export default function BannersManagementPage() {
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => handleDelete(banner._id)}
+                                        onClick={() => handleDeleteClick(banner._id)}
                                         className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm text-red-600 border border-red-600 rounded-lg hover:bg-red-50 transition"
                                     >
                                         <Trash2 className="w-4 h-4" />
@@ -246,120 +257,120 @@ export default function BannersManagementPage() {
             </div>
 
             {/* Modal */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-semibold text-springer-charcoal">
-                                {editingBanner ? 'Edit Banner' : 'Create Banner'}
-                            </h2>
-                            <button
-                                onClick={handleCloseModal}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+            <Dialog open={showModal} onOpenChange={handleCloseModal}>
+                <DialogContent className="max-w-md max-h-[92vh]">
+                    <DialogHeader>
+                        <DialogTitle>
+                            {editingBanner ? 'Edit Banner' : 'Create Banner'}
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    <form onSubmit={handleSubmit} className="space-y-6 ">
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Title *
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={formData.title}
+                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                placeholder="Enter banner title"
+                            />
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Message *
+                            </label>
+                            <textarea
+                                required
+                                value={formData.message}
+                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                rows={4}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none resize-none"
+                                placeholder="Enter banner message"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                Banner Image
+                            </label>
+                            <ImageUpload
+                                value={formData.image}
+                                onChange={(url) => setFormData({ ...formData, image: url })}
+                                onRemove={() => setFormData({ ...formData, image: '' })}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Title *
+                                    Start Date (Optional)
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    type="date"
+                                    value={formData.startDate}
+                                    onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
-                                    placeholder="Enter banner title"
                                 />
                             </div>
-
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Message *
+                                    End Date (Optional)
                                 </label>
-                                <textarea
-                                    required
-                                    value={formData.message}
-                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                    rows={4}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none resize-none"
-                                    placeholder="Enter banner message"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Banner Image (Optional)
-                                </label>
-                                <ImageUpload
-                                    value={formData.image}
-                                    onChange={(url) => setFormData({ ...formData, image: url })}
-                                    onRemove={() => setFormData({ ...formData, image: '' })}
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                        Start Date (Optional)
-                                    </label>
-                                    <input
-                                        type="date"
-                                        value={formData.startDate}
-                                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                        End Date (Optional)
-                                    </label>
-                                    <input
-                                        type="date"
-                                        value={formData.endDate}
-                                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-3">
                                 <input
-                                    type="checkbox"
-                                    id="active"
-                                    checked={formData.active}
-                                    onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                                    className="w-4 h-4 text-springer-green border-gray-300 rounded focus:ring-springer-green"
+                                    type="date"
+                                    value={formData.endDate}
+                                    onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
                                 />
-                                <label htmlFor="active" className="text-sm font-medium text-springer-charcoal">
-                                    Active (Show on website)
-                                </label>
                             </div>
+                        </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
-                                <button
-                                    type="button"
-                                    onClick={handleCloseModal}
-                                    className="px-6 py-2 border border-gray-300 text-springer-gray rounded-lg hover:bg-gray-50 transition"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={submitting}
-                                    className="px-6 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                                >
-                                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-                                    {editingBanner ? 'Update' : 'Create'}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+                        <div className="flex items-center gap-3">
+                            <Switch
+                                id="active"
+                                checked={formData.active}
+                                onCheckedChange={(checked) => setFormData({ ...formData, active: checked })}
+                            />
+                            <label htmlFor="active" className="text-sm font-medium text-springer-charcoal">
+                                Active (Show on website)
+                            </label>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={handleCloseModal}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={submitting}
+                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                            >
+                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {editingBanner ? 'Update' : 'Create'}
+                            </Button>
+                        </div>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            <ConfirmDialog
+                isOpen={isDeleteDialogOpen}
+                onClose={() => setIsDeleteDialogOpen(false)}
+                onConfirm={handleDelete}
+                title="Delete Banner"
+                description="Are you sure you want to delete this banner?"
+                confirmText="Delete"
+                variant="destructive"
+            />
         </div>
     );
 }
