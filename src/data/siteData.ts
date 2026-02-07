@@ -4,7 +4,7 @@ export const schoolInfo = {
   name: "Springer Public School",
   tagline: "Shaping Minds. Building Futures.",
   description: "CBSE-based modern education with values & innovation",
-  founded: 1995,
+  founded: 1992,
   address: "123 Education Lane, Knowledge City, India - 110001",
   phone: "+91 11 2345 6789",
   email: "info@springerpublicschool.edu.in",
