@@ -6,6 +6,7 @@ import { ChevronDown, BookOpen, ClipboardList, Monitor, GraduationCap, Check } f
 import { academicPrograms } from '@/data/siteData';
 import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
 import { SectionHeader } from '@/components/ui-custom/SectionHeader';
+import { FinancialRoadmap } from '@/sections/FinancialRoadmap';
 import { cn } from '@/lib/utils';
 
 const curriculumItems = [
@@ -239,6 +240,9 @@ export default function AcademicsPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Financial Literacy Roadmap */}
+            <FinancialRoadmap />
 
             {/* Academic Calendar */}
             <section className="py-20 lg:py-28 bg-white">
