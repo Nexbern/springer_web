@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import StudentAchiever from '@/models/StudentAchiever';
 import { authOptions } from '@/lib/auth';
+import { deleteImage, extractPublicIdFromUrl } from '@/lib/cloudinary';
 
 // GET single student achiever (public)
 export async function GET(
@@ -115,6 +116,17 @@ export async function DELETE(
                 { error: 'Student achiever not found' },
                 { status: 404 }
             );
+        }
+
+        if (achiever.imageUrl) {
+            const publicId = extractPublicIdFromUrl(achiever.imageUrl);
+            if (publicId) {
+                try {
+                    await deleteImage(publicId);
+                } catch (error) {
+                    console.error('Failed to delete achiever image from Cloudinary:', error);
+                }
+            }
         }
 
         await StudentAchiever.findByIdAndDelete(id);

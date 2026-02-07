@@ -58,3 +58,28 @@ export async function deleteImage(publicId: string) {
         throw new Error('Failed to delete image');
     }
 }
+
+/**
+ * Extract public ID from a Cloudinary URL
+ * @param url - Cloudinary URL
+ * @returns Public ID or null if not found
+ */
+export function extractPublicIdFromUrl(url: string): string | null {
+    try {
+        if (!url) return null;
+
+        // Example URL: https://res.cloudinary.com/cloud_name/image/upload/v12345/folder/public_id.jpg
+        // Split by '/upload/'
+        const parts = url.split('/upload/');
+        if (parts.length < 2) return null;
+
+        // Remove versioning (e.g., v12345/) and extension
+        const path = parts[1].split('/').slice(1).join('/'); // Remove version part
+        const publicId = path.substring(0, path.lastIndexOf('.'));
+
+        return publicId;
+    } catch (error) {
+        console.error('Error extracting public ID:', error);
+        return null;
+    }
+}

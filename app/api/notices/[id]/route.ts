@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import Notice from '@/models/Notice';
 import { authOptions } from '@/lib/auth';
+import { deleteImage, extractPublicIdFromUrl } from '@/lib/cloudinary';
 
 // GET single notice (public)
 export async function GET(
@@ -115,6 +116,17 @@ export async function DELETE(
                 { error: 'Notice not found' },
                 { status: 404 }
             );
+        }
+
+        if (notice.pdfUrl) {
+            const publicId = extractPublicIdFromUrl(notice.pdfUrl);
+            if (publicId) {
+                try {
+                    await deleteImage(publicId);
+                } catch (error) {
+                    console.error('Failed to delete notice PDF from Cloudinary:', error);
+                }
+            }
         }
 
         await Notice.findByIdAndDelete(id);

@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import Faculty from '@/models/Faculty';
 import { authOptions } from '@/lib/auth';
-import { deleteImage } from '@/lib/cloudinary';
+import { deleteImage, extractPublicIdFromUrl } from '@/lib/cloudinary';
 
 // GET single faculty (public)
 export async function GET(
@@ -122,13 +122,13 @@ export async function DELETE(
 
         // Delete image from Cloudinary
         if (faculty.image) {
-            try {
-                const publicId = faculty.image.split('/').pop()?.split('.')[0];
-                if (publicId) {
-                    await deleteImage(`springer-school/${publicId}`);
+            const publicId = extractPublicIdFromUrl(faculty.image);
+            if (publicId) {
+                try {
+                    await deleteImage(publicId);
+                } catch (error) {
+                    console.error('Failed to delete faculty image from Cloudinary:', error);
                 }
-            } catch (error) {
-                console.error('Failed to delete image from Cloudinary:', error);
             }
         }
 

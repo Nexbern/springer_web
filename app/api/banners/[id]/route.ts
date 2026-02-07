@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import connectDB from '@/lib/mongodb';
 import Banner from '@/models/Banner';
 import { authOptions } from '@/lib/auth';
-import { deleteImage } from '@/lib/cloudinary';
+import { deleteImage, extractPublicIdFromUrl } from '@/lib/cloudinary';
 
 // GET all banners for admin (admin only)
 export async function GET(
@@ -130,13 +130,13 @@ export async function DELETE(
 
         // Delete image from Cloudinary if exists
         if (banner.image) {
-            try {
-                const publicId = banner.image.split('/').pop()?.split('.')[0];
-                if (publicId) {
-                    await deleteImage(`springer-school/${publicId}`);
+            const publicId = extractPublicIdFromUrl(banner.image);
+            if (publicId) {
+                try {
+                    await deleteImage(publicId);
+                } catch (error) {
+                    console.error('Failed to delete banner image from Cloudinary:', error);
                 }
-            } catch (error) {
-                console.error('Failed to delete image from Cloudinary:', error);
             }
         }
 
