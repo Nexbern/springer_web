@@ -2,12 +2,36 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { notices } from '@/data/siteData';
+
+interface Notice {
+  _id: string;
+  title: string;
+  content: string;
+  date: string;
+}
 
 export function LatestUpdates() {
+  const [notices, setNotices] = useState<Notice[]>([]);
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [shouldScroll, setShouldScroll] = useState(false);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const response = await fetch('/api/notices');
+        const data = await response.json();
+        setNotices(data.notices || []);
+      } catch (error) {
+        console.error('Failed to fetch notices:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotices();
+  }, []);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -18,10 +42,27 @@ export function LatestUpdates() {
       }
     };
 
-    checkScroll();
-    window.addEventListener('resize', checkScroll);
+    if (!loading) {
+      checkScroll();
+      window.addEventListener('resize', checkScroll);
+    }
     return () => window.removeEventListener('resize', checkScroll);
-  }, []);
+  }, [loading, notices]);
+
+  if (loading) {
+    return (
+      <section className="bg-springer-charcoal h-14 flex items-center">
+        <div className="bg-springer-red flex items-center gap-3 lg:w-64 flex-shrink-0 pl-12 h-full">
+          <span className="text-white font-semibold">Latest News</span>
+        </div>
+        <div className="flex-1 px-6">
+          <span className="text-white/50 text-sm italic">Loading latest updates...</span>
+        </div>
+      </section>
+    );
+  }
+
+  if (notices.length === 0) return null;
 
   // Double the notices only if we need to scroll for a seamless loop
   const displayNotices = shouldScroll ? [...notices, ...notices] : notices;
@@ -42,8 +83,8 @@ export function LatestUpdates() {
               >
                 {displayNotices.map((notice, index) => (
                   <Link
-                    key={`${notice.id}-${index}`}
-                    href={`/news/${notice.id}`}
+                    key={`${notice._id}-${index}`}
+                    href={`/news/${notice._id}`}
                     className="inline-flex items-center gap-3 px-6 hover:text-springer-red transition-colors whitespace-nowrap"
                   >
                     <span className="font-medium text-springer-white">
