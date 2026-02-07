@@ -52,20 +52,20 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Vision & Mission */}
-            <section className="py-20 lg:py-28 bg-white">
+            {/* Vision & Mission Sections */}
+            <section className="py-20 lg:py-24 bg-white">
                 <div className="section-padding">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
                         {/* Vision */}
                         <AnimatedCard>
-                            <div className="bg-red-50 rounded-3xl p-8 lg:p-10 h-full">
-                                <div className="w-16 h-16 bg-springer-red rounded-2xl flex items-center justify-center mb-6">
-                                    <Lightbulb className="w-8 h-8 text-white" />
+                            <div className="bg-red-50 rounded-3xl p-8 lg:p-10 h-full border border-red-100/50">
+                                <div className="w-14 h-14 bg-springer-red rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-red-200">
+                                    <Lightbulb className="w-7 h-7 text-white" />
                                 </div>
-                                <h2 className="text-2xl lg:text-3xl font-bold text-springer-charcoal mb-4">
+                                <h2 className="text-xl lg:text-2xl font-semibold text-springer-charcoal mb-4">
                                     Our Vision
                                 </h2>
-                                <p className="text-springer-gray leading-relaxed">
+                                <p className="text-springer-gray leading-relaxed text-sm lg:text-base">
                                     To be a leading educational institution that nurtures creative thinkers,
                                     compassionate leaders, and responsible global citizens who contribute
                                     positively to society and drive positive change in the world.
@@ -75,14 +75,14 @@ export default function AboutPage() {
 
                         {/* Mission */}
                         <AnimatedCard delay={100}>
-                            <div className="bg-green-50 rounded-3xl p-8 lg:p-10 h-full">
-                                <div className="w-16 h-16 bg-springer-green rounded-2xl flex items-center justify-center mb-6">
-                                    <Award className="w-8 h-8 text-white" />
+                            <div className="bg-green-50 rounded-3xl p-8 lg:p-10 h-full border border-green-100/50">
+                                <div className="w-14 h-14 bg-springer-green rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-200">
+                                    <Award className="w-7 h-7 text-white" />
                                 </div>
-                                <h2 className="text-2xl lg:text-3xl font-bold text-springer-charcoal mb-4">
+                                <h2 className="text-xl lg:text-2xl font-semibold text-springer-charcoal mb-4">
                                     Our Mission
                                 </h2>
-                                <p className="text-springer-gray leading-relaxed">
+                                <p className="text-springer-gray leading-relaxed text-sm lg:text-base">
                                     To provide a holistic education that combines academic excellence with
                                     character development, fostering critical thinking, creativity, and
                                     ethical values in a supportive and inclusive learning environment.
@@ -94,12 +94,12 @@ export default function AboutPage() {
             </section>
 
             {/* Founder Section */}
-            <section className="py-20 lg:py-28 bg-springer-gray-light">
+            <section className="py-20 lg:py-24 bg-springer-gray-light">
                 <div className="section-padding">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-center">
                         <AnimatedCard direction="left">
                             <div className="flex justify-center lg:justify-start">
-                                <div className="relative max-w-sm w-full">
+                                <div className="relative w-[280px]">
                                     <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                                         <img
                                             src="/images/founder.jpg"
@@ -116,26 +116,28 @@ export default function AboutPage() {
                         </AnimatedCard>
 
                         <AnimatedCard direction="right" delay={100}>
-                            <span className="inline-block px-4 py-1.5 bg-springer-red/10 text-springer-red text-sm font-medium rounded-full mb-4">
-                                Our Foundation & Visionary Founder
-                            </span>
-                            <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
-                                Late Shri Vaibhav Srivastava
-                            </h2>
-                            <div className="space-y-4 text-springer-gray leading-relaxed">
-                                <p>
-                                    Springer Public School was founded by Late Shri Vaibhav Srivastava, a visionary educationist
-                                    and engineer, whose personal journey deeply shaped the philosophy of the institution.
-                                </p>
-                                <p>
-                                    A meritorious student and District Topper in HSC, he earned a Gold Medal in Civil Engineering
-                                    from BIT Mesra. Driven by a desire to provide world-class education to his hometown region,
-                                    he envisioned an institution that matched national standards while remaining rooted in strong values.
-                                </p>
-                                <p>
-                                    In 1992, he formally registered the Springer Education Foundation Society, laying the foundation
-                                    for what would become a cornerstone of education in Gorakhpur.
-                                </p>
+                            <div>
+                                <span className="inline-block px-4 py-1.5 bg-springer-red/10 text-springer-red text-sm font-medium rounded-full mb-4">
+                                    Our Foundation & Visionary Founder
+                                </span>
+                                <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
+                                    Late Shri Vaibhav Srivastava
+                                </h2>
+                                <div className="space-y-4 text-springer-gray leading-relaxed text-sm lg:text-base">
+                                    <p>
+                                        Springer Public School was founded by Late Shri Vaibhav Srivastava, a visionary educationist
+                                        and engineer, whose personal journey deeply shaped the philosophy of the institution.
+                                    </p>
+                                    <p>
+                                        A meritorious student and District Topper in HSC, he earned a Gold Medal in Civil Engineering
+                                        from BIT Mesra. Driven by a desire to provide world-class education to his hometown region,
+                                        he envisioned an institution that matched national standards while remaining rooted in strong values.
+                                    </p>
+                                    <p>
+                                        In 1992, he formally registered the Springer Education Foundation Society, laying the foundation
+                                        for what would become a cornerstone of education in Gorakhpur.
+                                    </p>
+                                </div>
                             </div>
                         </AnimatedCard>
                     </div>
@@ -168,27 +170,29 @@ export default function AboutPage() {
             </section>
 
             {/* Transition & Resilience Section */}
-            <section className="py-20 lg:py-28 bg-springer-gray-light">
+            <section className="py-20 lg:py-24 bg-springer-gray-light">
                 <div className="section-padding">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 lg:gap-12 items-center">
                         <AnimatedCard direction="left" className="order-2 lg:order-1">
-                            <span className="inline-block px-4 py-1.5 bg-springer-green/10 text-springer-green text-sm font-medium rounded-full mb-4">
-                                Resilience & Continuity of Vision
-                            </span>
-                            <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
-                                Mrs. Shipra Srivastava
-                            </h2>
-                            <p className="text-springer-gray leading-relaxed mb-6">
-                                Following the untimely demise of the founder in 2011, Mrs. Shipra Srivastava—a renowned social
-                                worker and former Member of the UP State Women Commission—assumed charge. Under her
-                                stewardship, the school stayed true to its mission of providing quality, value-based education.
-                            </p>
-                            <div className="font-bold text-springer-charcoal text-lg">Mrs. Shipra Srivastava</div>
-                            <div className="text-springer-gray">Secretary, Springer Education Foundation Society</div>
+                            <div>
+                                <span className="inline-block px-4 py-1.5 bg-springer-green/10 text-springer-green text-sm font-medium rounded-full mb-4">
+                                    Resilience & Continuity of Vision
+                                </span>
+                                <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
+                                    Mrs. Shipra Srivastava
+                                </h2>
+                                <p className="text-springer-gray leading-relaxed mb-6 text-sm lg:text-base">
+                                    Following the untimely demise of the founder in 2011, Mrs. Shipra Srivastava—a renowned social
+                                    worker and former Member of the UP State Women Commission—assumed charge. Under her
+                                    stewardship, the school stayed true to its mission of providing quality, value-based education.
+                                </p>
+                                <div className="font-bold text-springer-charcoal text-lg">Mrs. Shipra Srivastava</div>
+                                <div className="text-springer-gray">Secretary, Springer Education Foundation Society</div>
+                            </div>
                         </AnimatedCard>
 
                         <AnimatedCard direction="right" className="order-1 lg:order-2 flex justify-center lg:justify-end">
-                            <div className="relative max-w-sm w-full">
+                            <div className="relative w-[280px]">
                                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                                     <img
                                         src="/images/principal.jpg"
@@ -203,11 +207,11 @@ export default function AboutPage() {
             </section>
 
             {/* Managing Director Section */}
-            <section className="py-20 lg:py-28 bg-white">
+            <section className="py-20 lg:py-24 bg-white">
                 <div className="section-padding">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-center">
                         <AnimatedCard direction="left" className="flex justify-center lg:justify-start">
-                            <div className="relative max-w-sm w-full">
+                            <div className="relative w-[280px]">
                                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                                     <img
                                         src="/images/principal.jpg"
@@ -223,30 +227,32 @@ export default function AboutPage() {
                         </AnimatedCard>
 
                         <AnimatedCard direction="right" delay={100}>
-                            <span className="inline-block px-4 py-1.5 bg-springer-green/10 text-springer-green text-sm font-medium rounded-full mb-4">
-                                A New Era of Leadership & Innovation
-                            </span>
-                            <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
-                                Mr. Arjun Vaibhav Srivastava
-                            </h2>
-                            <div className="space-y-4 text-springer-gray leading-relaxed">
-                                <p>
-                                    In 2020, Mr. Arjun Vaibhav Srivastava stepped into leadership, quickly pivoting the school to
-                                    structured online learning during the pandemic—a first for the region.
-                                </p>
-                                <p>
-                                    An alumnus of IIT Jodhpur, he brings deep expertise in Computer Science, Entrepreneurship,
-                                    and Data Engineering to the institution. Under his dynamic leadership, Springer has entered
-                                    a phase of rapid innovation and national recognition.
-                                </p>
-                                <p>
-                                    He has spearheaded partnerships with IIT Madras, established cutting-edge AI labs, and
-                                    introduced financial literacy—ensuring Springer students are future-ready.
-                                </p>
-                            </div>
-                            <div className="mt-8">
-                                <div className="font-bold text-springer-charcoal text-lg">Mr. Arjun Vaibhav Srivastava</div>
-                                <div className="text-springer-gray font-medium">Managing Director & Visionary Leader</div>
+                            <div>
+                                <span className="inline-block px-4 py-1.5 bg-springer-green/10 text-springer-green text-sm font-medium rounded-full mb-4">
+                                    A New Era of Leadership & Innovation
+                                </span>
+                                <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
+                                    Mr. Arjun Vaibhav Srivastava
+                                </h2>
+                                <div className="space-y-4 text-springer-gray leading-relaxed text-sm lg:text-base">
+                                    <p>
+                                        In 2020, Mr. Arjun Vaibhav Srivastava stepped into leadership, quickly pivoting the school to
+                                        structured online learning during the pandemic—a first for the region.
+                                    </p>
+                                    <p>
+                                        An alumnus of IIT Jodhpur, he brings deep expertise in Computer Science, Entrepreneurship,
+                                        and Data Engineering to the institution. Under his dynamic leadership, Springer has entered
+                                        a phase of rapid innovation and national recognition.
+                                    </p>
+                                    <p>
+                                        He has spearheaded partnerships with IIT Madras, established cutting-edge AI labs, and
+                                        introduced financial literacy—ensuring Springer students are future-ready.
+                                    </p>
+                                </div>
+                                <div className="mt-8">
+                                    <div className="font-bold text-springer-charcoal text-lg">Mr. Arjun Vaibhav Srivastava</div>
+                                    <div className="text-springer-gray font-medium">Managing Director & Visionary Leader</div>
+                                </div>
                             </div>
                         </AnimatedCard>
                     </div>
@@ -284,7 +290,7 @@ export default function AboutPage() {
             </section>
 
             {/* Philosophy Section */}
-            <section className="py-20 lg:py-28 bg-white">
+            <section className="py-16 lg:py-20 bg-white">
                 <div className="section-padding">
                     <div className="max-w-4xl mx-auto text-center">
                         <span className="inline-block px-4 py-1.5 bg-springer-red/10 text-springer-red text-sm font-medium rounded-full mb-4">
@@ -293,12 +299,12 @@ export default function AboutPage() {
                         <h2 className="text-xl lg:text-3xl font-semibold text-springer-charcoal mb-8">
                             Dream Big. Achieve with Integrity.
                         </h2>
-                        <p className="text-sm lg:text-lg text-springer-gray leading-relaxed mb-10">
+                        <p className="text-sm lg:text-lg text-springer-gray leading-relaxed mb-6">
                             At Springer, education is not limited to academic achievement. We are committed to nurturing
                             curious minds, ethical values, leadership qualities, and life-ready skills, preparing students to
                             excel in an ever-evolving global landscape.
                         </p>
-                        <p className="text-springer-gray italic">
+                        <p className="text-springer-gray italic text-xs lg:text-sm">
                             With the blessings and enduring vision of Late Vaibhav Srivastava, we continue to blend
                             legacy with innovation, empowering generations of learners.
                         </p>
