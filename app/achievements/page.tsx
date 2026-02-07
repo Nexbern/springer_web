@@ -7,6 +7,7 @@ import { achievements } from '@/data/siteData';
 import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
 import { SectionHeader } from '@/components/ui-custom/SectionHeader';
 import { Counter } from '@/components/ui-custom/Counter';
+import { AchieversShowcase, type Achiever } from '@/components/ui-custom/AchieversShowcase';
 import { cn } from '@/lib/utils';
 
 const achievementCategories = [
@@ -82,6 +83,98 @@ const allAchievements = [
         description: "Best performing school in computer science applications",
         icon: Star,
     },
+];
+
+// Demo achievers data for the showcase
+const demoAchievers: Achiever[] = [
+    {
+        _id: 'demo1',
+        name: 'Aarav Sharma',
+        imageUrl: '/images/parent_01.jpg',
+        heading: 'Class 10th Board Topper',
+        description: 'CBSE Board - 98.6%',
+        order: 1
+    },
+    {
+        _id: 'demo2',
+        name: 'Priya Patel',
+        imageUrl: '/images/parent_02.jpg',
+        heading: 'State Chess Championship',
+        description: '1st Position - Under 16',
+        order: 2
+    },
+    {
+        _id: 'demo3',
+        name: 'Rohan Verma',
+        imageUrl: '/images/parent_01.jpg',
+        heading: 'Inter-School Debate',
+        description: 'Winner - Best Speaker Award',
+        order: 3
+    },
+    {
+        _id: 'demo4',
+        name: 'Ananya Singh',
+        imageUrl: '/images/parent_02.jpg',
+        heading: 'Mathematics Olympiad',
+        description: 'Gold Medal - National Level',
+        order: 4
+    },
+    {
+        _id: 'demo5',
+        name: 'Kabir Mehta',
+        imageUrl: '/images/parent_01.jpg',
+        heading: 'District Athletics Meet',
+        description: '100m Sprint - Gold Medal',
+        order: 5
+    },
+    {
+        _id: 'demo6',
+        name: 'Ishita Reddy',
+        imageUrl: '/images/parent_02.jpg',
+        heading: 'State Art Competition',
+        description: '1st Prize - Painting Category',
+        order: 6
+    },
+    {
+        _id: 'demo7',
+        name: 'Arjun Kumar',
+        imageUrl: '/images/parent_01.jpg',
+        heading: 'Science Exhibition',
+        description: 'Best Innovation Award - Regional',
+        order: 7
+    },
+    {
+        _id: 'demo8',
+        name: 'Diya Sharma',
+        imageUrl: '/images/parent_02.jpg',
+        heading: 'Class 12th Commerce',
+        description: 'School Topper - 96.4%',
+        order: 8
+    },
+    {
+        _id: 'demo9',
+        name: 'Vivaan Joshi',
+        imageUrl: '/images/parent_01.jpg',
+        heading: 'Basketball Tournament',
+        description: 'MVP - Inter-School Championship',
+        order: 9
+    },
+    {
+        _id: 'demo10',
+        name: 'Aisha Khan',
+        imageUrl: '/images/parent_02.jpg',
+        heading: 'English Olympiad',
+        description: 'Silver Medal - International',
+        order: 10
+    },
+    {
+        _id: 'demo11',
+        name: 'Siddharth Rao',
+        imageUrl: '/images/parent_01.jpg',
+        heading: 'Badminton Championship',
+        description: '1st Position - State Level',
+        order: 11
+    }
 ];
 
 export default function AchievementsPage() {
@@ -202,48 +295,15 @@ export default function AchievementsPage() {
                 </div>
             </section>
 
-            {/* Hall of Fame */}
-            <section className="py-20 lg:py-28 bg-springer-gray-light">
-                <div className="section-padding">
-                    <SectionHeader
-                        subtitle="Hall of Fame"
-                        title="Our Star Performers"
-                        description="Recognizing the outstanding achievements of our students who have brought laurels to the school."
-                    />
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {[
-                            { name: "Rahul Sharma", achievement: "99.2% in CBSE Class 12", year: "2024", image: "/images/faculty_profile_02.jpg" },
-                            { name: "Priya Patel", achievement: "NSO National Rank 1", year: "2024", image: "/images/faculty_profile_01.jpg" },
-                            { name: "Amit Kumar", achievement: "IMO Gold Medalist", year: "2023", image: "/images/parent_02.jpg" },
-                            { name: "Sneha Gupta", achievement: "Best Athlete Award", year: "2024", image: "/images/parent_01.jpg" },
-                        ].map((student, index) => (
-                            <AnimatedCard key={student.name} delay={index * 100}>
-                                <div className="group card-modern overflow-hidden text-center">
-                                    <div className="aspect-square overflow-hidden">
-                                        <img
-                                            src={student.image}
-                                            alt={student.name}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                        />
-                                    </div>
-                                    <div className="p-6">
-                                        <h4 className="font-bold text-springer-charcoal mb-1">
-                                            {student.name}
-                                        </h4>
-                                        <p className="text-springer-red text-sm font-medium mb-2">
-                                            {student.achievement}
-                                        </p>
-                                        <span className="text-xs text-springer-gray">
-                                            Batch of {student.year}
-                                        </span>
-                                    </div>
-                                </div>
-                            </AnimatedCard>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* Achievers Showcase */}
+            <AchieversShowcase
+                achievers={demoAchievers}
+                title="Our Star Performers"
+                subtitle="Hall of Fame"
+                description="Recognizing the outstanding achievements of our students who have brought laurels to the school."
+                showBackground={true}
+            />
         </main>
     );
 }
+

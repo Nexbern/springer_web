@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Mail, GraduationCap, LogIn } from 'lucide-react';
+import { Menu, X, Phone, Mail, LogIn } from 'lucide-react';
 import { navigation, schoolInfo } from '@/data/siteData';
+import Image from 'next/image';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -61,22 +62,21 @@ export function Navbar() {
       {/* Main Navbar */}
       <nav
         className={`transition-all duration-300 ${isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-soft py-3'
-          : 'bg-white py-4'
+          ? 'bg-white/95 backdrop-blur-md shadow-soft py-2'
+          : 'bg-white py-3'
           }`}
       >
         <div className="section-padding">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-springer-red to-red-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                <GraduationCap className="w-6 h-6 text-white" />
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="font-display font-bold text-lg leading-tight text-springer-charcoal">
-                  {schoolInfo.name}
-                </h1>
-                <p className="text-xs text-springer-gray">Excellence in Education</p>
+            <Link href="/" className="flex items-center">
+              <div className="relative w-[13rem] h-12 sm:w-[15rem] sm:h-14">
+                <Image
+                  src="/images/springer_asset/logo.webp"
+                  alt={schoolInfo.name}
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
             </Link>
 
