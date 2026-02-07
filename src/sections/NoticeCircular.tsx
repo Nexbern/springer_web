@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Bell, ArrowRight } from 'lucide-react';
@@ -17,11 +17,19 @@ interface Notice {
 export function NoticeCircular() {
     const [notices, setNotices] = useState<Notice[]>([]);
     const [loading, setLoading] = useState(true);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [shouldScroll, setShouldScroll] = useState(false);
 
     useEffect(() => {
         fetchNotices().then();
-        console.log("notices : ", notices)
     }, []);
+
+    useEffect(() => {
+        if (notices.length > 0 && contentRef.current) {
+            // Container height is 400px
+            setShouldScroll(contentRef.current.scrollHeight > 400);
+        }
+    }, [notices]);
 
     const fetchNotices = async () => {
         try {
@@ -49,6 +57,9 @@ export function NoticeCircular() {
     if (notices.length === 0) {
         return null; // Don't show section if no notices
     }
+
+    // Double the notices only if we need to scroll for a seamless loop
+    const displayNotices = shouldScroll ? [...notices, ...notices] : notices;
 
     return (
         <section className="section-padding bg-white py-16">
@@ -91,9 +102,11 @@ export function NoticeCircular() {
 
                         {/* Scrolling Notice List with CSS Animation */}
                         <div className="h-[400px] overflow-hidden bg-white relative group/scroll">
-                            <div className="animate-scroll-up group-hover/scroll:pause-animation p-6 space-y-4">
-                                {/* Duplicate for seamless loop */}
-                                {[...notices].map((notice, index) => (
+                            <div
+                                ref={contentRef}
+                                className={`p-6 space-y-4 ${shouldScroll ? 'animate-scroll-up group-hover/scroll:pause-animation' : ''}`}
+                            >
+                                {displayNotices.map((notice, index) => (
                                     <Link
                                         key={`${notice._id}-${index}`}
                                         href={`/news/${notice._id}`}
@@ -106,7 +119,7 @@ export function NoticeCircular() {
                                                     {notice.title}
                                                 </h3>
                                                 {/* New GIF Icon - Right side of title */}
-                                                {index < notices.length && (
+                                                {(shouldScroll ? index < notices.length : true) && (
                                                     <img
                                                         src="/images/new_gif.gif"
                                                         alt="New"

@@ -34,219 +34,52 @@ export const notices = [
     priority: "high",
     badge: "NEW",
     content: "Applications are now being accepted for all classes. Limited seats available.",
-    fullContent: `We are pleased to announce that admissions for the academic year 2025-26 are now open for all classes from Nursery to Class 12. 
-
-Springer Public School continues its legacy of providing quality education with a perfect blend of academics, sports, and co-curricular activities. Our state-of-the-art infrastructure, experienced faculty, and holistic approach to education make us the preferred choice for parents.
-
-**Key Highlights:**
-- CBSE Affiliated School
-- Smart Classrooms with Digital Learning
-- Well-equipped Science and Computer Labs
-- Extensive Sports Facilities
-- Transportation Available
-- Experienced and Caring Faculty
-
-**Admission Process:**
-1. Fill the online application form
-2. Submit required documents
-3. Appear for age-appropriate assessment
-4. Parent interaction
-5. Fee payment and confirmation
-
-**Important Dates:**
-- Application Start: January 15, 2025
-- Last Date: March 31, 2025
-- Assessment Dates: February onwards
-
-For more information, please visit our admissions office or call +91 11 2345 6789.`,
-    image: "/images/hero_students_modern_classroom.jpg",
   },
-  {
-    id: 2,
-    title: "Annual Sports Day - February 15, 2025",
-    date: "2025-01-10",
-    category: "Event",
-    priority: "medium",
-    badge: "EVENT",
-    content: "Join us for our Annual Sports Day celebration with various competitions.",
-    fullContent: `Mark your calendars! Springer Public School is excited to announce our Annual Sports Day on February 15, 2025. This grand event will showcase the athletic talents of our students across various age groups.
-
-**Event Details:**
-- Date: February 15, 2025
-- Time: 8:00 AM - 4:00 PM
-- Venue: School Sports Ground
-
-**Events Include:**
-- Track and Field Events (100m, 200m, 400m, Relay Races)
-- Jumping Events (Long Jump, High Jump)
-- Throwing Events (Shot Put, Discus Throw)
-- Team Sports Demonstrations
-- March Past and Drill Display
-- Cultural Performances
-
-**Special Guests:**
-We are honored to have renowned athletes and sports personalities as our chief guests who will inspire our young champions.
-
-**Parent Participation:**
-Parents are cordially invited to attend and cheer for their children. Special seating arrangements will be made for parents and guests.
-
-Let's celebrate the spirit of sportsmanship together!`,
-    image: "/images/sports_ground.jpg",
-  },
-  {
-    id: 3,
-    title: "Parent-Teacher Meeting Schedule",
-    date: "2025-01-08",
-    category: "Academic",
-    priority: "medium",
-    badge: "IMPORTANT",
-    content: "PTM scheduled for January 25, 2025. Timings: 9:00 AM - 3:00 PM.",
-    fullContent: `Dear Parents,
-
-We cordially invite you to the Parent-Teacher Meeting scheduled for January 25, 2025. This is an excellent opportunity to discuss your child's academic progress, behavior, and overall development.
-
-**Meeting Details:**
-- Date: January 25, 2025
-- Time: 9:00 AM - 3:00 PM
-- Venue: Respective Classrooms
-
-**Class-wise Timings:**
-- Pre-Primary (Nursery - KG): 9:00 AM - 11:00 AM
-- Primary (Class 1-5): 11:00 AM - 1:00 PM
-- Middle & Senior (Class 6-12): 1:00 PM - 3:00 PM
-
-**Agenda:**
-- Review of academic performance
-- Discussion on areas of improvement
-- Feedback on co-curricular activities
-- Addressing parent concerns
-- Guidance for upcoming examinations
-
-**Important Notes:**
-- Please bring your child's diary
-- Maintain the scheduled timings to ensure all parents get adequate time
-- For detailed discussion, prior appointments can be scheduled
-
-We look forward to your active participation in your child's educational journey.`,
-    image: "/images/hero_students_modern_classroom.jpg",
-  },
-  {
-    id: 4,
-    title: "Winter Break Extended Due to Cold Wave",
-    date: "2025-01-05",
-    category: "General",
-    priority: "high",
-    badge: "UPDATE",
-    content: "School will remain closed until January 12, 2025 due to severe cold conditions.",
-    fullContent: `Dear Parents and Students,
-
-In view of the severe cold wave conditions and in the interest of student safety and health, the school administration has decided to extend the winter break.
-
-**Revised Schedule:**
-- Extended Break: January 5 - January 12, 2025
-- School Reopening: January 13, 2025 (Monday)
-
-**Reason:**
-The meteorological department has issued warnings about severe cold conditions with temperatures dropping significantly below normal. Considering the health and safety of our students, especially younger children, this decision has been taken.
-
-**Important Information:**
-- All scheduled assessments during this period are postponed
-- Revised assessment dates will be communicated after school reopens
-- Online classes will NOT be conducted during this period
-- Students are advised to utilize this time for revision and self-study
-
-**Health Advisory:**
-- Keep children warm and avoid exposure to cold
-- Ensure proper nutrition and hydration
-- Consult a doctor if any cold-related symptoms appear
-
-We appreciate your understanding and cooperation. Stay safe and warm!
-
-For any queries, please contact the school office.`,
-    image: "/images/campus_exterior.jpg",
-  },
-  {
-    id: 5,
-    title: "Science Exhibition 2025 - Call for Projects",
-    date: "2025-01-20",
-    category: "Academic",
-    priority: "medium",
-    badge: "NEW",
-    content: "Annual Science Exhibition scheduled for March 2025. Students can start preparing their projects.",
-    fullContent: `Springer Public School proudly announces the Annual Science Exhibition 2025! This is a platform for young scientists to showcase their creativity, innovation, and scientific temperament.
-
-**Exhibition Details:**
-- Date: March 15-16, 2025
-- Theme: "Science for Sustainable Future"
-- Open to: Classes 6-12
-
-**Project Categories:**
-1. Physics & Engineering
-2. Chemistry & Materials Science
-3. Biology & Life Sciences
-4. Environmental Science
-5. Computer Science & AI
-6. Mathematics & Statistics
-
-**Guidelines:**
-- Students can participate individually or in groups (max 3 members)
-- Projects should be original and innovative
-- Working models are encouraged
-- Detailed project report must be submitted
-- Presentation skills will be evaluated
-
-**Important Dates:**
-- Project Registration: January 25 - February 10, 2025
-- Project Submission: March 1, 2025
-- Exhibition: March 15-16, 2025
-
-**Prizes:**
-- Best Project in each category
-- Best Innovation Award
-- People's Choice Award
-- Certificates for all participants
-
-Let's inspire the next generation of scientists!`,
-    image: "/images/science_lab.jpg",
-  },
-  {
-    id: 6,
-    title: "Republic Day Celebration - January 26, 2025",
-    date: "2025-01-18",
-    category: "Event",
-    priority: "high",
-    badge: "EVENT",
-    content: "Join us in celebrating the 76th Republic Day with flag hoisting and cultural programs.",
-    fullContent: `Springer Public School invites all students, parents, and staff to celebrate the 76th Republic Day of India with great enthusiasm and patriotic fervor.
-
-**Program Schedule:**
-- Date: January 26, 2025
-- Time: 8:00 AM - 11:00 AM
-- Venue: School Assembly Ground
-
-**Event Highlights:**
-- Flag Hoisting Ceremony at 8:00 AM
-- National Anthem
-- March Past by Students
-- Patriotic Songs and Dances
-- Speech on the significance of Republic Day
-- Cultural Performances
-- Distribution of Refreshments
-
-**Dress Code:**
-Students are requested to wear traditional Indian attire (preferably in tricolor theme).
-
-**Special Note:**
-This is a wonderful opportunity to instill patriotic values in our children and celebrate our nation's democratic heritage. We encourage maximum participation from parents and guardians.
-
-**COVID-19 Precautions:**
-- Maintain social distancing
-- Masks are recommended
-- Sanitizers will be available
-
-Jai Hind! 🇮🇳`,
-    image: "/images/campus_exterior.jpg",
-  },
+  // {
+  //   id: 2,
+  //   title: "Annual Sports Day - February 15, 2025",
+  //   date: "2025-01-10",
+  //   category: "Event",
+  //   priority: "medium",
+  //   badge: "EVENT",
+  //   content: "Join us for our Annual Sports Day celebration with various competitions.",
+  // },
+  // {
+  //   id: 3,
+  //   title: "Parent-Teacher Meeting Schedule",
+  //   date: "2025-01-08",
+  //   category: "Academic",
+  //   priority: "medium",
+  //   badge: "IMPORTANT",
+  //   content: "PTM scheduled for January 25, 2025. Timings: 9:00 AM - 3:00 PM.",
+  // },
+  // {
+  //   id: 4,
+  //   title: "Winter Break Extended Due to Cold Wave",
+  //   date: "2025-01-05",
+  //   category: "General",
+  //   priority: "high",
+  //   badge: "UPDATE",
+  //   content: "School will remain closed until January 12, 2025 due to severe cold conditions.",
+  // },
+  // {
+  //   id: 5,
+  //   title: "Science Exhibition 2025 - Call for Projects",
+  //   date: "2025-01-20",
+  //   category: "Academic",
+  //   priority: "medium",
+  //   badge: "NEW",
+  //   content: "Annual Science Exhibition scheduled for March 2025. Students can start preparing their projects.",
+  // },
+  // {
+  //   id: 6,
+  //   title: "Republic Day Celebration - January 26, 2025",
+  //   date: "2025-01-18",
+  //   category: "Event",
+  //   priority: "high",
+  //   badge: "EVENT",
+  //   content: "Join us in celebrating the 76th Republic Day with flag hoisting and cultural programs.",
+  // },
 ];
 
 export const whyChooseUs = [
