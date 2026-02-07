@@ -294,7 +294,7 @@ export default function NoticesManagementPage() {
 
             {/* Modal */}
             <Dialog open={showModal} onOpenChange={handleCloseModal}>
-                <DialogContent className="max-w-2xl h-[92vh] flex flex-col p-0 overflow-hidden">
+                <DialogContent className="max-w-2xl h-[92vh] flex flex-col p-0 overflow-hidden gap-0">
                     <DialogHeader className="p-6 border-b shrink-0">
                         <DialogTitle>
                             {editingNotice ? 'Edit Notice' : 'Create Notice'}
@@ -302,7 +302,7 @@ export default function NoticesManagementPage() {
                     </DialogHeader>
 
                     <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
-                        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                        <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     Title *
@@ -312,7 +312,7 @@ export default function NoticesManagementPage() {
                                     required
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                     placeholder="Enter notice title"
                                 />
                             </div>
@@ -325,8 +325,8 @@ export default function NoticesManagementPage() {
                                     required
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    rows={8}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                    rows={6}
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
                                     placeholder="Enter notice content"
                                 />
                             </div>

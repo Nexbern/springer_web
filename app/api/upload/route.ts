@@ -48,10 +48,10 @@ export async function POST(request: NextRequest) {
                     { status: 400 }
                 );
             }
-            // Validate image file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
+            // Validate image file size (max 1MB)
+            if (file.size > 1 * 1024 * 1024) {
                 return NextResponse.json(
-                    { error: 'Image file size must be less than 5MB' },
+                    { error: 'Image file size must be less than 1MB' },
                     { status: 400 }
                 );
             }

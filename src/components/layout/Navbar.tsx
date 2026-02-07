@@ -107,7 +107,7 @@ export function Navbar() {
               </a>
               <a
                 href="#"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium bg-springer-red text-white hover:bg-springer-darkred border border-gray-300 rounded-lg hover:border-springer-red transition-all"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium bg-springer-red text-white hover:bg-springer-darkred border border-red-500 rounded-lg hover:border-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
                 Parent Login
@@ -162,12 +162,6 @@ export function Navbar() {
                 <LogIn className="w-4 h-4" />
                 Parent Login
               </a>
-              <Link
-                href="/admissions"
-                className="btn-primary w-full text-center text-sm"
-              >
-                Apply Now
-              </Link>
             </div>
           </div>
         </div>

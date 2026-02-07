@@ -25,9 +25,9 @@ export default function ImageUpload({ value, onChange, onRemove }: ImageUploadPr
             return;
         }
 
-        // Validate file size (5MB)
-        if (file.size > 5 * 1024 * 1024) {
-            alert('File size must be less than 5MB');
+        // Validate file size (1MB)
+        if (file.size > 1 * 1024 * 1024) {
+            alert('File size must be less than 1MB');
             return;
         }
 
@@ -115,7 +115,7 @@ export default function ImageUpload({ value, onChange, onRemove }: ImageUploadPr
                                     Click to upload image
                                 </p>
                                 <p className="text-xs text-springer-gray mt-1">
-                                    PNG, JPG, WEBP up to 5MB
+                                    PNG, JPG, WEBP up to 1MB
                                 </p>
                             </div>
                         </>

@@ -258,90 +258,92 @@ export default function BannersManagementPage() {
 
             {/* Modal */}
             <Dialog open={showModal} onOpenChange={handleCloseModal}>
-                <DialogContent className="max-w-md max-h-[92vh]">
-                    <DialogHeader>
+                <DialogContent className="max-w-2xl h-[92vh] flex flex-col p-0 overflow-hidden gap-0">
+                    <DialogHeader className="p-6 border-b shrink-0">
                         <DialogTitle>
                             {editingBanner ? 'Edit Banner' : 'Create Banner'}
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="space-y-6 ">
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Title *
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
-                                placeholder="Enter banner title"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Message *
-                            </label>
-                            <textarea
-                                required
-                                value={formData.message}
-                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                rows={4}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none resize-none"
-                                placeholder="Enter banner message"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                Banner Image
-                            </label>
-                            <ImageUpload
-                                value={formData.image}
-                                onChange={(url) => setFormData({ ...formData, image: url })}
-                                onRemove={() => setFormData({ ...formData, image: '' })}
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
+                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                        <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Start Date (Optional)
+                                    Title *
                                 </label>
                                 <input
-                                    type="date"
-                                    value={formData.startDate}
-                                    onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                    type="text"
+                                    required
+                                    value={formData.title}
+                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                    placeholder="Enter banner title"
                                 />
                             </div>
+
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    End Date (Optional)
+                                    Message *
                                 </label>
-                                <input
-                                    type="date"
-                                    value={formData.endDate}
-                                    onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                <textarea
+                                    required
+                                    value={formData.message}
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                    rows={4}
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none resize-none"
+                                    placeholder="Enter banner message"
                                 />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                    Banner Image
+                                </label>
+                                <ImageUpload
+                                    value={formData.image}
+                                    onChange={(url) => setFormData({ ...formData, image: url })}
+                                    onRemove={() => setFormData({ ...formData, image: '' })}
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        Start Date (Optional)
+                                    </label>
+                                    <input
+                                        type="date"
+                                        value={formData.startDate}
+                                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        End Date (Optional)
+                                    </label>
+                                    <input
+                                        type="date"
+                                        value={formData.endDate}
+                                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                <Switch
+                                    id="active"
+                                    checked={formData.active}
+                                    onCheckedChange={(checked) => setFormData({ ...formData, active: checked })}
+                                />
+                                <label htmlFor="active" className="text-sm font-medium text-springer-charcoal">
+                                    Active (Show on website)
+                                </label>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-3">
-                            <Switch
-                                id="active"
-                                checked={formData.active}
-                                onCheckedChange={(checked) => setFormData({ ...formData, active: checked })}
-                            />
-                            <label htmlFor="active" className="text-sm font-medium text-springer-charcoal">
-                                Active (Show on website)
-                            </label>
-                        </div>
-
-                        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                        <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50/50 shrink-0">
                             <Button
                                 type="button"
                                 variant="outline"
@@ -352,7 +354,7 @@ export default function BannersManagementPage() {
                             <Button
                                 type="submit"
                                 disabled={submitting}
-                                className="bg-springer-red hover:bg-springer-red/80 text-white"
+                                className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
                                 {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingBanner ? 'Update' : 'Create'}

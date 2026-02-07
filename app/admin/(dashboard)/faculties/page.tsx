@@ -246,7 +246,7 @@ export default function FacultiesManagementPage() {
                     </DialogHeader>
 
                     <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
-                        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                        <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     Faculty Image *
@@ -267,7 +267,7 @@ export default function FacultiesManagementPage() {
                                     required
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                     placeholder="Enter faculty name"
                                 />
                             </div>
@@ -281,7 +281,7 @@ export default function FacultiesManagementPage() {
                                     required
                                     value={formData.degree}
                                     onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                     placeholder="e.g., M.Sc., Ph.D., B.Ed."
                                 />
                             </div>
@@ -296,7 +296,7 @@ export default function FacultiesManagementPage() {
                                         required
                                         value={formData.subject}
                                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                        className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                         placeholder="e.g., Mathematics"
                                     />
                                 </div>
@@ -310,7 +310,7 @@ export default function FacultiesManagementPage() {
                                         min="0"
                                         value={formData.experience}
                                         onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                        className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                         placeholder="0"
                                     />
                                 </div>
@@ -325,7 +325,7 @@ export default function FacultiesManagementPage() {
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                     rows={4}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
                                     placeholder="Brief description about the faculty member"
                                 />
                             </div>
@@ -338,7 +338,7 @@ export default function FacultiesManagementPage() {
                                     type="number"
                                     value={formData.order}
                                     onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
                                     placeholder="0"
                                 />
                                 <p className="text-xs text-springer-gray mt-1">

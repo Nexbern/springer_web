@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Edit, Trash2, Loader2, X,  } from 'lucide-react';
+import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
+import ImageUpload from '@/components/admin/ImageUpload';
 import Image from 'next/image';
 import {
     Dialog,
@@ -35,7 +36,6 @@ export default function AchieversManagementPage() {
         order: 0,
     });
     const [submitting, setSubmitting] = useState(false);
-    const [uploadingImage, setUploadingImage] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [achieverToDelete, setAchieverToDelete] = useState<string | null>(null);
 
@@ -133,50 +133,6 @@ export default function AchieversManagementPage() {
             description: '',
             order: 0,
         });
-    };
-
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        if (!file.type.startsWith('image/')) {
-            alert('Please upload an image file');
-            return;
-        }
-
-        setUploadingImage(true);
-        try {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('type', 'image');
-
-            const response = await fetch('/api/upload', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.error || 'Failed to upload image');
-            }
-
-            const data = await response.json();
-            setFormData(prev => ({
-                ...prev,
-                imageUrl: data.url,
-            }));
-        } catch (error: any) {
-            alert(error.message || 'Failed to upload image');
-        } finally {
-            setUploadingImage(false);
-        }
-    };
-
-    const handleRemoveImage = () => {
-        setFormData(prev => ({
-            ...prev,
-            imageUrl: '',
-        }));
     };
 
     if (loading) {
@@ -292,55 +248,11 @@ export default function AchieversManagementPage() {
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     Student Image *
                                 </label>
-                                {formData.imageUrl ? (
-                                    <div className="space-y-3">
-                                        <div className="relative h-48 rounded-lg overflow-hidden border border-gray-200">
-                                            <Image
-                                                src={formData.imageUrl}
-                                                alt="Preview"
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={handleRemoveImage}
-                                            className="text-sm text-red-600 hover:underline flex items-center gap-2"
-                                        >
-                                            <Trash2 className="w-4 h-4" /> Remove Image
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center bg-gray-50">
-                                        <input
-                                            type="file"
-                                            id="achiever-image"
-                                            accept="image/*"
-                                            onChange={handleImageUpload}
-                                            disabled={uploadingImage}
-                                            className="hidden"
-                                        />
-                                        <label
-                                            htmlFor="achiever-image"
-                                            className="flex flex-col items-center cursor-pointer"
-                                        >
-                                            <div className="p-3 bg-white rounded-full shadow-sm border border-gray-100 mb-2">
-                                                <Plus className="w-6 h-6 text-springer-red" />
-                                            </div>
-                                            <span className="text-sm font-medium text-springer-charcoal">
-                                                Click to upload student image
-                                            </span>
-                                            <span className="text-xs text-springer-gray mt-1">
-                                                PNG, JPG or JPEG (Max. 5MB)
-                                            </span>
-                                        </label>
-                                        {uploadingImage && (
-                                            <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
-                                                <Loader2 className="w-6 h-6 animate-spin text-springer-red" />
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
+                                <ImageUpload
+                                    value={formData.imageUrl}
+                                    onChange={(url) => setFormData({ ...formData, imageUrl: url })}
+                                    onRemove={() => setFormData({ ...formData, imageUrl: '' })}
+                                />
                             </div>
 
                             <div>
