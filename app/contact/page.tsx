@@ -130,7 +130,7 @@ export default function ContactPage() {
                         {/* Contact Form */}
                         <AnimatedCard direction="left">
                             <div className="bg-white rounded-3xl shadow-card p-8 lg:p-10">
-                                <h2 className="text-2xl lg:text-3xl font-bold text-springer-charcoal mb-2">
+                                <h2 className="text-xl lg:text-2xl font-semibold text-springer-charcoal mb-2">
                                     Send us a Message
                                 </h2>
                                 <p className="text-springer-gray mb-8">

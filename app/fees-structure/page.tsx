@@ -1,29 +1,47 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import type { Metadata } from 'next';
 import { Download, Eye, User, Mail, Phone, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
 
+const feeFormSchema = z.object({
+    name: z.string()
+        .min(3, 'Name must be at least 3 characters long')
+        .regex(/^[a-zA-Z\s]+$/, 'Name should only contain letters'),
+    email: z.string().email('Please enter a valid email address'),
+    phone: z.string()
+        .regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit mobile number'),
+    class: z.string().min(1, 'Please select a class'),
+});
+
+type FeeFormData = z.infer<typeof feeFormSchema>;
+
 export default function FeesStructurePage() {
     const [showFeeStructure, setShowFeeStructure] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        class: '',
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<FeeFormData>({
+        resolver: zodResolver(feeFormSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            phone: '',
+            class: '',
+        }
     });
-    const [submitting, setSubmitting] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setSubmitting(true);
-
+    const onSubmit = async (data: FeeFormData) => {
+        // data is already validated by zod here
         // Simulate form submission
         await new Promise(resolve => setTimeout(resolve, 1000));
-
         setShowFeeStructure(true);
-        setSubmitting(false);
     };
 
     const handleDownloadPDF = () => {
@@ -96,20 +114,24 @@ export default function FeesStructurePage() {
                                     </p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
+                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                     <div>
                                         <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                             <User className="w-4 h-4 inline mr-2" />
                                             Full Name *
                                         </label>
                                         <input
-                                            type="text"
-                                            required
-                                            value={formData.name}
-                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                            {...register('name')}
+                                            className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.name
+                                                ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                }`}
                                             placeholder="Enter your full name"
+                                            disabled={isSubmitting}
                                         />
+                                        {errors.name && (
+                                            <p className="mt-1 text-xs text-red-500 font-medium">{errors.name.message}</p>
+                                        )}
                                     </div>
 
                                     <div>
@@ -118,13 +140,17 @@ export default function FeesStructurePage() {
                                             Email Address *
                                         </label>
                                         <input
-                                            type="email"
-                                            required
-                                            value={formData.email}
-                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                            {...register('email')}
+                                            className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.email
+                                                ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                }`}
                                             placeholder="your.email@example.com"
+                                            disabled={isSubmitting}
                                         />
+                                        {errors.email && (
+                                            <p className="mt-1 text-xs text-red-500 font-medium">{errors.email.message}</p>
+                                        )}
                                     </div>
 
                                     <div>
@@ -133,13 +159,25 @@ export default function FeesStructurePage() {
                                             Phone Number *
                                         </label>
                                         <input
-                                            type="tel"
-                                            required
-                                            value={formData.phone}
-                                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
-                                            placeholder="+91 XXXXX XXXXX"
+                                            {...register('phone')}
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={10}
+                                            onChange={(e) => {
+                                                const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                                e.target.value = value;
+                                                register('phone').onChange(e);
+                                            }}
+                                            className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.phone
+                                                ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                }`}
+                                            placeholder="10 digit mobile number"
+                                            disabled={isSubmitting}
                                         />
+                                        {errors.phone && (
+                                            <p className="mt-1 text-xs text-red-500 font-medium">{errors.phone.message}</p>
+                                        )}
                                     </div>
 
                                     <div>
@@ -148,10 +186,12 @@ export default function FeesStructurePage() {
                                             Class Interested In *
                                         </label>
                                         <select
-                                            required
-                                            value={formData.class}
-                                            onChange={(e) => setFormData({ ...formData, class: e.target.value })}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none transition"
+                                            {...register('class')}
+                                            disabled={isSubmitting}
+                                            className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.class
+                                                ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                }`}
                                         >
                                             <option value="">Select a class</option>
                                             <option value="Nursery">Nursery</option>
@@ -170,14 +210,17 @@ export default function FeesStructurePage() {
                                             <option value="Class 11">Class 11</option>
                                             <option value="Class 12">Class 12</option>
                                         </select>
+                                        {errors.class && (
+                                            <p className="mt-1 text-xs text-red-500 font-medium">{errors.class.message}</p>
+                                        )}
                                     </div>
 
                                     <button
                                         type="submit"
-                                        disabled={submitting}
+                                        disabled={isSubmitting}
                                         className="w-full px-6 py-4 bg-springer-red text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                     >
-                                        {submitting ? (
+                                        {isSubmitting ? (
                                             <>
                                                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                                 Processing...
