@@ -129,11 +129,11 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                         {/* Contact Form */}
                         <AnimatedCard direction="left">
-                            <div className="bg-white rounded-3xl shadow-card p-8 lg:p-10">
+                            <div className="bg-white rounded-xl sm:rounded-3xl shadow-card p-6 lg:p-10">
                                 <h2 className="text-xl lg:text-2xl font-semibold text-springer-charcoal mb-2">
                                     Send us a Message
                                 </h2>
-                                <p className="text-springer-gray mb-8">
+                                <p className="text-springer-gray sm:text-lg text-sm mb-8">
                                     Fill out the form below and we'll get back to you within 24 hours.
                                 </p>
 

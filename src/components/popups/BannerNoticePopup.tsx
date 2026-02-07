@@ -88,13 +88,13 @@ export default function BannerNoticePopup() {
             {showBanner && banner && banner.image && (
                 <DialogPrimitive.Root open={showBanner} onOpenChange={handleCloseBanner}>
                     <DialogPrimitive.Portal>
-                        <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 transition-opacity duration-300" />
-                        <DialogPrimitive.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-4xl outline-none">
+                        <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 transition-opacity duration-300 border-2 border-red-500" />
+                        <DialogPrimitive.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-4xl outline-none p-8 sm:p-32">
                             <div className="relative">
                                 <img
                                     src={banner.image}
                                     alt="Banner"
-                                    className="w-full h-auto rounded-xl shadow-2xl border border-white/20"
+                                    className="w-full h-auto rounded-xl shadow-2xl border-2 border-red-500"
                                 />
                                 <DialogPrimitive.Close asChild>
                                     <button
@@ -115,7 +115,7 @@ export default function BannerNoticePopup() {
                 <DialogPrimitive.Root open={showNotice} onOpenChange={handleCloseNotice}>
                     <DialogPrimitive.Portal>
                         <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 transition-opacity duration-300" />
-                        <DialogPrimitive.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-2xl outline-none">
+                        <DialogPrimitive.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-2xl outline-none p-8 sm:p-4">
                             <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
                                 {/* Header */}
                                 <div className="flex items-center justify-between p-6 border-b border-gray-100">

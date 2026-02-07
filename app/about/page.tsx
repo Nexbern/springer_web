@@ -154,15 +154,15 @@ export default function AboutPage() {
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <div className="p-6 bg-red-50 rounded-2xl">
-                            <h3 className="font-bold text-lg mb-2 text-springer-charcoal">CISCE Affiliation</h3>
+                            <h3 className="font-semibold text-lg mb-2 text-springer-charcoal">CISCE Affiliation</h3>
                             <p className="text-springer-gray text-sm">In 1996, it became the first unaided ICSE school in the region, bringing global standards home.</p>
                         </div>
                         <div className="p-6 bg-red-50 rounded-2xl">
-                            <h3 className="font-bold text-lg mb-2 text-springer-charcoal">Tech-First Education</h3>
+                            <h3 className="font-semibold text-lg mb-2 text-springer-charcoal">Tech-First Education</h3>
                             <p className="text-springer-gray text-sm">Established the first fully functional Computer Lab in 1998 in association with NIIT.</p>
                         </div>
                         <div className="p-6 bg-red-50 rounded-2xl">
-                            <h3 className="font-bold text-lg mb-2 text-springer-charcoal">Holistic Facilities</h3>
+                            <h3 className="font-semibold text-lg mb-2 text-springer-charcoal">Holistic Facilities</h3>
                             <p className="text-springer-gray text-sm">Among the first in Eastern UP to offer equestrian (horse riding) and swimming to its students.</p>
                         </div>
                     </div>
@@ -186,7 +186,7 @@ export default function AboutPage() {
                                     worker and former Member of the UP State Women Commission—assumed charge. Under her
                                     stewardship, the school stayed true to its mission of providing quality, value-based education.
                                 </p>
-                                <div className="font-bold text-springer-charcoal text-lg">Mrs. Shipra Srivastava</div>
+                                <div className="font-semibold text-springer-charcoal text-lg">Mrs. Shipra Srivastava</div>
                                 <div className="text-springer-gray">Secretary, Springer Education Foundation Society</div>
                             </div>
                         </AnimatedCard>
@@ -250,7 +250,7 @@ export default function AboutPage() {
                                     </p>
                                 </div>
                                 <div className="mt-8">
-                                    <div className="font-bold text-springer-charcoal text-lg">Mr. Arjun Vaibhav Srivastava</div>
+                                    <div className="font-semibold text-springer-charcoal text-lg">Mr. Arjun Vaibhav Srivastava</div>
                                     <div className="text-springer-gray font-medium">Managing Director & Visionary Leader</div>
                                 </div>
                             </div>
@@ -270,19 +270,19 @@ export default function AboutPage() {
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div className="p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl">
-                            <h4 className="font-bold text-xl mb-3 text-springer-red">Ranked #1</h4>
+                            <h4 className="font-semibold text-xl mb-3 text-springer-red">Ranked #1</h4>
                             <p className="text-sm text-white/70">In Gorakhpur and #2 in Uttar Pradesh by EducationWorld Magazine (2025-26).</p>
                         </div>
                         <div className="p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl">
-                            <h4 className="font-bold text-xl mb-3 text-springer-red">IIT Madras Partner</h4>
+                            <h4 className="font-semibold text-xl mb-3 text-springer-red">IIT Madras Partner</h4>
                             <p className="text-sm text-white/70">Collaboration for courses in AI, Data Science, and Architecture.</p>
                         </div>
                         <div className="p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl">
-                            <h4 className="font-bold text-xl mb-3 text-springer-red">AI & Robotics Lab</h4>
+                            <h4 className="font-semibold text-xl mb-3 text-springer-red">AI & Robotics Lab</h4>
                             <p className="text-sm text-white/70">Fully functional lab from session 2025-26 with Future Gurukuls.</p>
                         </div>
                         <div className="p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl">
-                            <h4 className="font-bold text-xl mb-3 text-springer-red">Financial Literacy</h4>
+                            <h4 className="font-semibold text-xl mb-3 text-springer-red">Financial Literacy</h4>
                             <p className="text-sm text-white/70">First school in the region to introduce Financial Literacy for Grades VI-X.</p>
                         </div>
                     </div>
@@ -330,7 +330,7 @@ export default function AboutPage() {
                                         <div className="w-14 h-14 bg-gradient-to-br from-springer-red to-red-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                                             <Icon className="w-7 h-7 text-white" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-springer-charcoal mb-3">
+                                        <h3 className="text-xl font-semibold text-springer-charcoal mb-3">
                                             {value.title}
                                         </h3>
                                         <p className="text-springer-gray leading-relaxed">

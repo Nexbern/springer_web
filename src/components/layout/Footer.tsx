@@ -24,7 +24,7 @@ export function Footer() {
           {/* School Info - Takes more space */}
           <div className="lg:col-span-5">
             <Link href="/" className="inline-block mb-6">
-              <div className="relative w-[25rem] h-16 rounded-lg overflow-hidden">
+              <div className="relative w-[20rem] sm:w-[25rem] h-16 rounded-lg overflow-hidden">
                 <Image
                   src="/images/springer_asset/logo.png"
                   alt={schoolInfo.name}

@@ -223,18 +223,18 @@ export function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.5 }}
-                            className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/20"
+                            className="flex flex-wrap lg:gap-8 gap-4 mt-12 pt-8 border-t border-white/20"
                         >
                             <div>
-                                <div className="text-2xl md:text-3xl font-bold text-white">30+</div>
+                                <div className="text-xl md:text-2xl font-bold text-white">30+</div>
                                 <div className="text-white/60 text-sm">Years of Excellence</div>
                             </div>
                             <div>
-                                <div className="text-2xl md:text-3xl font-bold text-white">2500+</div>
+                                <div className="text-xl md:text-2xl font-bold text-white">2500+</div>
                                 <div className="text-white/60 text-sm">Happy Students</div>
                             </div>
                             <div>
-                                <div className="text-2xl md:text-3xl font-bold text-white">150+</div>
+                                <div className="text-xl md:text-2xl font-bold text-white">150+</div>
                                 <div className="text-white/60 text-sm">Expert Faculty</div>
                             </div>
                         </motion.div>
@@ -242,7 +242,7 @@ export function Hero() {
                 </div>
 
                 {/* Carousel Navigation */}
-                <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
+                <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
                     {/* Prev Button */}
                     <button
                         onClick={prevSlide}
@@ -286,21 +286,6 @@ export function Hero() {
                     </div>
                 </div>
 
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.7 }}
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
-                >
-                    <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-                        <motion.div
-                            animate={{ y: [0, 12, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity }}
-                            className="w-1.5 h-1.5 bg-white rounded-full"
-                        />
-                    </div>
-                </motion.div>
             </section>
         </>
     );

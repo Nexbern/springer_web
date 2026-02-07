@@ -45,15 +45,14 @@ export function FinancialRoadmap() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5 }}
-                            className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 text-springer-red rounded-full mb-6 shadow-sm"
+                            className="inline-flex items-center gap-2 px-5 py-1 bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 text-springer-red rounded-full mb-6 shadow-sm"
                         >
-                            <Sparkles className="w-4 h-4 animate-pulse" />
-                            <span className="text-xs font-bold tracking-widest uppercase">Innovation in Education</span>
+                            <span className="text-xs font-semibold">Innovation in Education</span>
                         </motion.div>
-                        <h2 className="text-3xl md:text-5xl font-bold text-springer-charcoal mb-8 leading-tight">
+                        <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-8 leading-tight">
                             Building <span className="text-springer-red">Financially Wise</span> Leaders
                         </h2>
-                        <p className="text-springer-gray text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                        <p className="text-springer-gray text-sm lg:text-lg max-w-3xl mx-auto leading-relaxed">
                             Through our partnership with <span className="font-bold text-springer-charcoal">Super Saarthi</span>,
                             we empower students to master money management from an early age.
                         </p>
@@ -134,13 +133,13 @@ export function FinancialRoadmap() {
 
                             <div className="relative z-10 max-w-2xl mx-auto">
                                 <GraduationCap className="w-16 h-16 text-springer-red mx-auto mb-8 opacity-50" />
-                                <h3 className="text-3xl font-bold mb-6 italic">"Empowering the next generation with the language of money."</h3>
-                                <p className="text-white/60 text-lg mb-10">
+                                <h3 className="text-xl lg:text-2xl font-semibold mb-6 italic">"Empowering the next generation with the language of money."</h3>
+                                <p className="text-white/60 text-sm lg:text-lg mb-10">
                                     Admissions for the 2025-26 session are now open. Secure your child's spot in a school that looks beyond the textbooks.
                                 </p>
                                 <a
                                     href="/admissions"
-                                    className="inline-flex items-center gap-3 px-10 py-5 bg-springer-red text-white font-black rounded-2xl hover:bg-springer-darkred transition-all shadow-[0_10px_30px_-10px_rgba(220,38,38,0.5)] active:scale-95 group"
+                                    className="inline-flex items-center gap-3 px-5 py-3 lg:px-10 lg:py-5 bg-springer-red text-white font-semibold rounded-2xl hover:bg-springer-darkred transition-all group"
                                 >
                                     JOIN SPRINGER TODAY
                                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

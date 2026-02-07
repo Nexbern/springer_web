@@ -104,12 +104,12 @@ export default function FeesStructurePage() {
                             </div>
 
                             {/* Right Side - Form */}
-                            <div className="p-8 md:p-10">
+                            <div className="p-4 md:p-10">
                                 <div className="text-center mb-8">
-                                    <h2 className="text-2xl font-bold text-springer-charcoal mb-3">
+                                    <h2 className="text-2xl font-semibold text-springer-charcoal mb-3">
                                         Request Fee Structure
                                     </h2>
-                                    <p className="text-springer-gray">
+                                    <p className="text-springer-gray sm:text-base text-sm">
                                         Please provide your details to access the fee structure
                                     </p>
                                 </div>

@@ -15,9 +15,9 @@ import BannerNoticePopup from '@/components/popups/BannerNoticePopup';
 export default function HomePage() {
     return (
         <main>
-            <BannerNoticePopup />
+            {/* <BannerNoticePopup /> */}
             <Hero />
-            <LatestUpdates />
+            {/* <LatestUpdates /> */}
             <AboutIntro />
             <WhyChooseUs />
             <AcademicPrograms />

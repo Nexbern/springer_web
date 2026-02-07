@@ -104,7 +104,7 @@ export default function AdmissionsPage() {
                                             </span>
                                         </div>
 
-                                        <h3 className="text-lg font-bold text-springer-charcoal mb-2">
+                                        <h3 className="text-lg font-semibold text-springer-charcoal mb-2">
                                             {step.title}
                                         </h3>
                                         <p className="text-springer-gray text-sm leading-relaxed">
@@ -126,7 +126,7 @@ export default function AdmissionsPage() {
                             <div className="grid grid-cols-1 lg:grid-cols-5">
                                 {/* Info Side */}
                                 <div className="lg:col-span-2 bg-springer-red p-8 lg:p-10 text-white">
-                                    <h3 className="text-2xl font-bold mb-6">Admission Enquiry</h3>
+                                    <h3 className="text-2xl font-semibold mb-6">Admission Enquiry</h3>
                                     <p className="text-white/80 mb-8">
                                         Fill out the form and our admissions team will get back to you within 24 hours.
                                     </p>
@@ -158,7 +158,7 @@ export default function AdmissionsPage() {
                                 </div>
 
                                 {/* Form Side */}
-                                <div className="lg:col-span-3 p-8 lg:p-10">
+                                <div className="lg:col-span-3 p-4 py-6 lg:p-10">
                                     {admissionsOpen ? (
                                         <form onSubmit={handleSubmit} className="space-y-6">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

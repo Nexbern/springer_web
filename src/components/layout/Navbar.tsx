@@ -96,25 +96,15 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Portal Login */}
-            <div className="hidden lg:flex items-center gap-2">
-              <a
-                href={schoolInfo.portalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-springer-charcoal hover:text-springer-red border border-gray-300 rounded-lg hover:border-springer-red transition-all"
-              >
-                <LogIn className="w-4 h-4" />
-                Portal Login
-              </a>
+            {/* <div className="hidden lg:flex items-center gap-2">
               <Link
                 href="/admissions"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium bg-springer-red text-white hover:bg-springer-darkred border border-red-500 rounded-lg hover:border-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                Apply Now
+                Parent/Teacher Login
               </Link>
-            </div>
+            </div> */}
 
             {/* Mobile Menu Button */}
             <button
@@ -157,15 +147,8 @@ export function Navbar() {
                 className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-springer-charcoal border border-gray-300 rounded-lg hover:border-springer-red hover:text-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                Student/Parent Portal
+                Parent/Teacher Portal
               </a>
-              <Link
-                href="/admissions"
-                className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-springer-red rounded-lg hover:bg-red-700 transition-all font-semibold"
-              >
-                <LogIn className="w-4 h-4" />
-                Apply for Admission
-              </Link>
             </div>
           </div>
         </div>

@@ -109,7 +109,7 @@ export default function AcademicsPage() {
                             </div>
                             {/* Badge */}
                             <div className="absolute -bottom-4 -right-4 bg-springer-red text-white px-6 py-3 rounded-xl shadow-lg">
-                                <div className="text-2xl font-bold">{activeProgram.grades}</div>
+                                <div className="text-xl lg:text-2xl font-semibold">{activeProgram.grades}</div>
                                 <div className="text-xs opacity-90">Grade Levels</div>
                             </div>
                         </div>
@@ -122,16 +122,16 @@ export default function AcademicsPage() {
                                 </span>
                             </div>
 
-                            <h3 className="text-3xl font-bold text-springer-charcoal mb-4">
+                            <h3 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
                                 {activeProgram.name}
                             </h3>
 
-                            <p className="text-springer-gray text-lg leading-relaxed mb-8">
+                            <p className="text-springer-gray text-base lg:text-lg leading-relaxed mb-8">
                                 {activeProgram.description}
                             </p>
 
                             <div className="space-y-4">
-                                <h4 className="font-semibold text-springer-charcoal mb-4">
+                                <h4 className="text-lg lg:text-xl font-semibold text-springer-charcoal mb-4">
                                     Key Features
                                 </h4>
                                 {activeProgram.features.map((feature) => (
@@ -139,10 +139,10 @@ export default function AcademicsPage() {
                                         key={feature}
                                         className="flex items-center gap-3"
                                     >
-                                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                                            <Check className="w-4 h-4 text-springer-green" />
+                                        <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                            <Check className="w-3 h-3 lg:w-4 lg:h-4 text-springer-green" />
                                         </div>
-                                        <span className="text-springer-charcoal">{feature}</span>
+                                        <span className="text-sm lg:text-lg text-springer-charcoal">{feature}</span>
                                     </div>
                                 ))}
                             </div>
@@ -160,7 +160,7 @@ export default function AcademicsPage() {
                             <span className="inline-block px-4 py-1.5 bg-springer-red/10 text-springer-red text-sm font-medium rounded-full mb-4">
                                 Curriculum Overview
                             </span>
-                            <h2 className="text-3xl lg:text-4xl font-bold text-springer-charcoal mb-8">
+                            <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-8">
                                 Our Approach to Learning
                             </h2>
 
@@ -243,45 +243,6 @@ export default function AcademicsPage() {
 
             {/* Financial Literacy Roadmap */}
             <FinancialRoadmap />
-
-            {/* Academic Calendar */}
-            <section className="py-20 lg:py-28 bg-white">
-                <div className="section-padding">
-                    <SectionHeader
-                        subtitle="Academic Calendar"
-                        title="Important Dates & Events"
-                        description="Stay updated with the academic calendar and important events throughout the year."
-                    />
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {[
-                            { month: 'April', event: 'New Academic Year Begins', date: '1st April' },
-                            { month: 'May', event: 'Summer Camp Activities', date: '1-31 May' },
-                            { month: 'June', event: 'Mid-Term Examinations', date: '15-30 June' },
-                            { month: 'August', event: 'Independence Day Celebration', date: '15th August' },
-                            { month: 'October', event: 'Half-Yearly Examinations', date: '1-15 October' },
-                            { month: 'November', event: 'Annual Sports Day', date: '15th November' },
-                            { month: 'December', event: 'Winter Break', date: '25 Dec - 5 Jan' },
-                            { month: 'January', event: 'Annual Day Celebration', date: '26th January' },
-                            { month: 'March', event: 'Final Examinations', date: '1-31 March' },
-                        ].map((item, index) => (
-                            <AnimatedCard key={index} delay={index * 50}>
-                                <div className="bg-springer-gray-light rounded-xl p-6 hover:bg-red-50 transition-colors group">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div className="w-12 h-12 bg-springer-red rounded-xl flex items-center justify-center">
-                                            <span className="text-white font-bold text-sm">{item.month.slice(0, 3)}</span>
-                                        </div>
-                                        <span className="text-sm text-springer-gray">{item.date}</span>
-                                    </div>
-                                    <h4 className="font-semibold text-springer-charcoal group-hover:text-springer-red transition-colors">
-                                        {item.event}
-                                    </h4>
-                                </div>
-                            </AnimatedCard>
-                        ))}
-                    </div>
-                </div>
-            </section>
         </main>
     );
 }

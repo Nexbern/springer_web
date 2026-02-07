@@ -214,12 +214,12 @@ export default function AchievementsPage() {
             </section>
 
             {/* Stats */}
-            <section className="py-16 bg-springer-red">
+            <section className="py-10 lg:py-16 bg-springer-red">
                 <div className="section-padding">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                         {achievements.map((item) => (
                             <div key={item.label} className="text-center">
-                                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+                                <div className="text-2xl md:text-3xl font-semibold text-white mb-2">
                                     <Counter end={item.value} suffix={item.suffix} duration={2000} />
                                 </div>
                                 <div className="text-white/80 text-sm">{item.label}</div>
@@ -274,7 +274,7 @@ export default function AchievementsPage() {
                                             </span>
                                         </div>
 
-                                        <h3 className="text-lg font-bold text-springer-charcoal mb-2 group-hover:text-springer-red transition-colors">
+                                        <h3 className="text-lg font-semibold text-springer-charcoal mb-2 group-hover:text-springer-red transition-colors">
                                             {achievement.title}
                                         </h3>
 

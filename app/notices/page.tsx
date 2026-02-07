@@ -71,7 +71,7 @@ export default function NoticesPage() {
             <section className="py-20 lg:py-28 bg-white">
                 <div className="section-padding">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12">
-                        <h2 className="text-2xl font-bold text-springer-charcoal">
+                        <h2 className="text-xl lg:text-2xl font-semibold text-springer-charcoal">
                             All Notices ({filteredNotices.length})
                         </h2>
 
@@ -121,7 +121,7 @@ export default function NoticesPage() {
                                                 </span>
                                             </div>
 
-                                            <h3 className="text-lg font-bold text-springer-charcoal mb-2 group-hover:text-springer-red transition-colors">
+                                            <h3 className="text-lg font-semibold text-springer-charcoal mb-2 group-hover:text-springer-red transition-colors">
                                                 {notice.title}
                                             </h3>
 
