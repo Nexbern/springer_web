@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
 import ImageUpload from '@/components/admin/ImageUpload';
 import {
@@ -12,6 +15,18 @@ import {
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Button } from '@/components/ui/button';
 
+const facultySchema = z.object({
+    name: z.string().min(1, 'Name is required'),
+    degree: z.string().min(1, 'Degree is required'),
+    experience: z.number().min(0, 'Experience must be 0 or more'),
+    subject: z.string().min(1, 'Subject is required'),
+    description: z.string().min(1, 'Description is required'),
+    image: z.string().min(1, 'Faculty image is required'),
+    order: z.number(),
+});
+
+type FacultyFormData = z.infer<typeof facultySchema>;
+
 interface Faculty {
     _id: string;
     name: string;
@@ -19,9 +34,9 @@ interface Faculty {
     experience: number;
     subject: string;
     description: string;
-    image: string;
-    order: number;
-    createdAt: string;
+    image?: string;
+    order?: number;
+    createdAt: string; // Keep this if it's used elsewhere, but not in form
 }
 
 export default function FacultiesManagementPage() {
@@ -29,18 +44,31 @@ export default function FacultiesManagementPage() {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingFaculty, setEditingFaculty] = useState<Faculty | null>(null);
-    const [formData, setFormData] = useState({
-        name: '',
-        degree: '',
-        experience: 0,
-        subject: '',
-        description: '',
-        image: '',
-        order: 0,
-    });
-    const [submitting, setSubmitting] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [facultyToDelete, setFacultyToDelete] = useState<string | null>(null);
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        watch,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<FacultyFormData>({
+        resolver: zodResolver(facultySchema),
+        mode: 'onChange',
+        defaultValues: {
+            name: '',
+            degree: '',
+            experience: 0,
+            subject: '',
+            description: '',
+            image: '',
+            order: 0,
+        }
+    });
+
+    const facultyImage = watch('image');
 
     useEffect(() => {
         fetchFaculties();
@@ -58,16 +86,7 @@ export default function FacultiesManagementPage() {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!formData.image) {
-            alert('Please upload a faculty image');
-            return;
-        }
-
-        setSubmitting(true);
-
+    const onSubmit = async (data: FacultyFormData) => {
         try {
             const url = editingFaculty
                 ? `/api/faculties/${editingFaculty._id}`
@@ -77,7 +96,7 @@ export default function FacultiesManagementPage() {
             const response = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {
@@ -89,8 +108,6 @@ export default function FacultiesManagementPage() {
             handleCloseModal();
         } catch (error: any) {
             alert(error.message || 'Failed to save faculty');
-        } finally {
-            setSubmitting(false);
         }
     };
 
@@ -122,14 +139,14 @@ export default function FacultiesManagementPage() {
 
     const handleEdit = (faculty: Faculty) => {
         setEditingFaculty(faculty);
-        setFormData({
+        reset({
             name: faculty.name,
             degree: faculty.degree,
             experience: faculty.experience,
             subject: faculty.subject,
             description: faculty.description,
-            image: faculty.image,
-            order: faculty.order,
+            image: faculty.image || '',
+            order: faculty.order || 0,
         });
         setShowModal(true);
     };
@@ -137,7 +154,7 @@ export default function FacultiesManagementPage() {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingFaculty(null);
-        setFormData({
+        reset({
             name: '',
             degree: '',
             experience: 0,
@@ -169,7 +186,11 @@ export default function FacultiesManagementPage() {
                     </p>
                 </div>
                 <button
-                    onClick={() => setShowModal(true)}
+                    onClick={() => {
+                        setEditingFaculty(null);
+                        reset();
+                        setShowModal(true);
+                    }}
                     className="flex items-center gap-2 px-4 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition"
                 >
                     <Plus className="w-5 h-5" />
@@ -245,74 +266,89 @@ export default function FacultiesManagementPage() {
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
                         <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     Faculty Image *
                                 </label>
                                 <ImageUpload
-                                    value={formData.image}
-                                    onChange={(url) => setFormData({ ...formData, image: url })}
-                                    onRemove={() => setFormData({ ...formData, image: '' })}
+                                    value={facultyImage}
+                                    onChange={(url) => setValue('image', url, { shouldValidate: true })}
+                                    onRemove={() => setValue('image', '', { shouldValidate: true })}
                                 />
+                                {errors.image && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+                                )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Name *
+                                    Full Name *
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                    placeholder="Enter faculty name"
+                                    {...register('name')}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.name
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
+                                    placeholder="Enter full name"
                                 />
+                                {errors.name && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.name.message}</p>
+                                )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Degree *
+                                    Degree/Qualification *
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.degree}
-                                    onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                    placeholder="e.g., M.Sc., Ph.D., B.Ed."
+                                    {...register('degree')}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.degree
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
+                                    placeholder="e.g. M.Sc, B.Ed"
                                 />
+                                {errors.degree && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.degree.message}</p>
+                                )}
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                        Experience (Years) *
+                                    </label>
+                                    <input
+                                        type="number"
+                                        {...register('experience', { valueAsNumber: true })}
+                                        className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.experience
+                                            ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                            : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                            }`}
+                                        placeholder="e.g. 5"
+                                    />
+                                    {errors.experience && (
+                                        <p className="mt-1 text-xs text-red-500 font-medium">{errors.experience.message}</p>
+                                    )}
+                                </div>
                                 <div>
                                     <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                         Subject *
                                     </label>
                                     <input
-                                        type="text"
-                                        required
-                                        value={formData.subject}
-                                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                        className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                        placeholder="e.g., Mathematics"
+                                        {...register('subject')}
+                                        className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.subject
+                                            ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                            : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                            }`}
+                                        placeholder="e.g. Mathematics"
                                     />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                        Experience (years) *
-                                    </label>
-                                    <input
-                                        type="number"
-                                        required
-                                        min="0"
-                                        value={formData.experience}
-                                        onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
-                                        className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
-                                        placeholder="0"
-                                    />
+                                    {errors.subject && (
+                                        <p className="mt-1 text-xs text-red-500 font-medium">{errors.subject.message}</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -321,13 +357,17 @@ export default function FacultiesManagementPage() {
                                     Description *
                                 </label>
                                 <textarea
-                                    required
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    {...register('description')}
                                     rows={4}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
-                                    placeholder="Brief description about the faculty member"
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none resize-none transition ${errors.description
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
+                                    placeholder="Enter short description"
                                 />
+                                {errors.description && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.description.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -336,14 +376,19 @@ export default function FacultiesManagementPage() {
                                 </label>
                                 <input
                                     type="number"
-                                    value={formData.order}
-                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    {...register('order', { valueAsNumber: true })}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.order
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="0"
                                 />
                                 <p className="text-xs text-springer-gray mt-1">
                                     Lower numbers appear first
                                 </p>
+                                {errors.order && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.order.message}</p>
+                                )}
                             </div>
                         </div>
 
@@ -352,15 +397,16 @@ export default function FacultiesManagementPage() {
                                 type="button"
                                 variant="outline"
                                 onClick={handleCloseModal}
+                                disabled={isSubmitting}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 type="submit"
-                                disabled={submitting}
+                                disabled={isSubmitting || !isValid}
                                 className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
-                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {isSubmitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingFaculty ? 'Update' : 'Add'}
                             </Button>
                         </div>

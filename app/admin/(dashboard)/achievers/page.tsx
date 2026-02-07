@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
 import ImageUpload from '@/components/admin/ImageUpload';
 import Image from 'next/image';
@@ -13,31 +16,54 @@ import {
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Button } from '@/components/ui/button';
 
-interface StudentAchiever {
+const achieverSchema = z.object({
+    name: z.string().min(1, 'Name is required'),
+    heading: z.string().min(1, 'Heading is required'),
+    description: z.string().min(1, 'Description is required'),
+    image: z.string().min(1, 'Achiever image is required'),
+    order: z.number(),
+});
+
+type AchieverFormData = z.infer<typeof achieverSchema>;
+
+interface Achiever {
     _id: string;
     name: string;
-    imageUrl: string;
     heading: string;
     description: string;
-    order: number;
+    image?: string;
+    order?: number;
     createdAt: string;
 }
 
 export default function AchieversManagementPage() {
-    const [achievers, setAchievers] = useState<StudentAchiever[]>([]);
+    const [achievers, setAchievers] = useState<Achiever[]>([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    const [editingAchiever, setEditingAchiever] = useState<StudentAchiever | null>(null);
-    const [formData, setFormData] = useState({
-        name: '',
-        imageUrl: '',
-        heading: '',
-        description: '',
-        order: 0,
-    });
-    const [submitting, setSubmitting] = useState(false);
+    const [editingAchiever, setEditingAchiever] = useState<Achiever | null>(null);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [achieverToDelete, setAchieverToDelete] = useState<string | null>(null);
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        watch,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<AchieverFormData>({
+        resolver: zodResolver(achieverSchema),
+        mode: 'onChange',
+        defaultValues: {
+            name: '',
+            heading: '',
+            description: '',
+            image: '',
+            order: 0,
+        }
+    });
+
+    const achieverImage = watch('image');
 
     useEffect(() => {
         fetchAchievers();
@@ -47,7 +73,12 @@ export default function AchieversManagementPage() {
         try {
             const response = await fetch('/api/achievers');
             const data = await response.json();
-            setAchievers(data.achievers || []);
+            // Map imageUrl to image for consistency with the schema
+            const formattedAchievers = data.achievers.map((ach: any) => ({
+                ...ach,
+                image: ach.imageUrl,
+            }));
+            setAchievers(formattedAchievers || []);
         } catch (error) {
             console.error('Failed to fetch achievers:', error);
         } finally {
@@ -55,10 +86,7 @@ export default function AchieversManagementPage() {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setSubmitting(true);
-
+    const onSubmit = async (data: AchieverFormData) => {
         try {
             const url = editingAchiever
                 ? `/api/achievers/${editingAchiever._id}`
@@ -68,7 +96,7 @@ export default function AchieversManagementPage() {
             const response = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...data, imageUrl: data.image }), // Send imageUrl to API
             });
 
             if (!response.ok) {
@@ -80,8 +108,6 @@ export default function AchieversManagementPage() {
             handleCloseModal();
         } catch (error: any) {
             alert(error.message || 'Failed to save achiever');
-        } finally {
-            setSubmitting(false);
         }
     };
 
@@ -111,14 +137,14 @@ export default function AchieversManagementPage() {
         }
     };
 
-    const handleEdit = (achiever: StudentAchiever) => {
+    const handleEdit = (achiever: Achiever) => {
         setEditingAchiever(achiever);
-        setFormData({
+        reset({
             name: achiever.name,
-            imageUrl: achiever.imageUrl,
             heading: achiever.heading,
             description: achiever.description,
-            order: achiever.order,
+            image: achiever.image || '',
+            order: achiever.order || 0,
         });
         setShowModal(true);
     };
@@ -126,11 +152,11 @@ export default function AchieversManagementPage() {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingAchiever(null);
-        setFormData({
+        reset({
             name: '',
-            imageUrl: '',
             heading: '',
             description: '',
+            image: '',
             order: 0,
         });
     };
@@ -178,7 +204,7 @@ export default function AchieversManagementPage() {
                         >
                             <div className="relative h-48 bg-gray-100">
                                 <Image
-                                    src={achiever.imageUrl}
+                                    src={achiever.image || '/placeholder.png'}
                                     alt={achiever.name}
                                     fill
                                     className="object-cover"
@@ -228,20 +254,23 @@ export default function AchieversManagementPage() {
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
                         <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     Student Name *
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    {...register('name')}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.name
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="Enter student name"
                                 />
+                                {errors.name && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.name.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -249,10 +278,13 @@ export default function AchieversManagementPage() {
                                     Student Image *
                                 </label>
                                 <ImageUpload
-                                    value={formData.imageUrl}
-                                    onChange={(url) => setFormData({ ...formData, imageUrl: url })}
-                                    onRemove={() => setFormData({ ...formData, imageUrl: '' })}
+                                    value={achieverImage}
+                                    onChange={(url) => setValue('image', url, { shouldValidate: true })}
+                                    onRemove={() => setValue('image', '', { shouldValidate: true })}
                                 />
+                                {errors.image && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.image.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -260,13 +292,16 @@ export default function AchieversManagementPage() {
                                     Heading *
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.heading}
-                                    onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    {...register('heading')}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.heading
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="e.g., Class 10 Topper, State Level Cricket"
                                 />
+                                {errors.heading && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.heading.message}</p>
+                                )}
                                 <p className="text-xs text-springer-gray mt-1">
                                     Mention class for academic achievements or sport name for sports achievements
                                 </p>
@@ -277,13 +312,17 @@ export default function AchieversManagementPage() {
                                     Description *
                                 </label>
                                 <textarea
-                                    required
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    {...register('description')}
                                     rows={2}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none resize-none transition ${errors.description
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="Describe the achievement (e.g., marks obtained, tournament details)"
                                 />
+                                {errors.description && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.description.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -292,11 +331,16 @@ export default function AchieversManagementPage() {
                                 </label>
                                 <input
                                     type="number"
-                                    value={formData.order}
-                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    {...register('order', { valueAsNumber: true })}
+                                    className={`w-full px-4 py-2 border rounded-lg outline-none transition ${errors.order
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="0"
                                 />
+                                {errors.order && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.order.message}</p>
+                                )}
                                 <p className="text-xs text-springer-gray mt-1">
                                     Lower numbers appear first
                                 </p>
@@ -308,15 +352,16 @@ export default function AchieversManagementPage() {
                                 type="button"
                                 variant="outline"
                                 onClick={handleCloseModal}
+                                disabled={isSubmitting}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 type="submit"
-                                disabled={submitting || !formData.imageUrl}
+                                disabled={isSubmitting || !isValid}
                                 className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
-                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {isSubmitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingAchiever ? 'Update' : 'Create'}
                             </Button>
                         </div>

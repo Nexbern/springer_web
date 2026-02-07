@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Plus, Edit, Trash2, Loader2, X, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import {
@@ -11,6 +14,16 @@ import {
 } from '@/components/ui/dialog';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Button } from '@/components/ui/button';
+
+const noticeSchema = z.object({
+    title: z.string().min(1, 'Title is required'),
+    content: z.string().min(1, 'Content is required'),
+    date: z.string().min(1, 'Date is required'),
+    pdfUrl: z.string().optional(),
+    pdfFileName: z.string().optional(),
+});
+
+type NoticeFormData = z.infer<typeof noticeSchema>;
 
 interface Notice {
     _id: string;
@@ -27,17 +40,31 @@ export default function NoticesManagementPage() {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingNotice, setEditingNotice] = useState<Notice | null>(null);
-    const [formData, setFormData] = useState({
-        title: '',
-        content: '',
-        date: new Date().toISOString().split('T')[0],
-        pdfUrl: '',
-        pdfFileName: '',
-    });
-    const [submitting, setSubmitting] = useState(false);
     const [uploadingPdf, setUploadingPdf] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [noticeToDelete, setNoticeToDelete] = useState<string | null>(null);
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        watch,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<NoticeFormData>({
+        resolver: zodResolver(noticeSchema),
+        mode: 'onChange',
+        defaultValues: {
+            title: '',
+            content: '',
+            date: new Date().toISOString().split('T')[0],
+            pdfUrl: '',
+            pdfFileName: '',
+        }
+    });
+
+    const pdfUrl = watch('pdfUrl');
+    const pdfFileName = watch('pdfFileName');
 
     useEffect(() => {
         fetchNotices();
@@ -55,10 +82,7 @@ export default function NoticesManagementPage() {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setSubmitting(true);
-
+    const onSubmit = async (data: NoticeFormData) => {
         try {
             const url = editingNotice
                 ? `/api/notices/${editingNotice._id}`
@@ -68,7 +92,7 @@ export default function NoticesManagementPage() {
             const response = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {
@@ -80,8 +104,6 @@ export default function NoticesManagementPage() {
             handleCloseModal();
         } catch (error: any) {
             alert(error.message || 'Failed to save notice');
-        } finally {
-            setSubmitting(false);
         }
     };
 
@@ -113,7 +135,7 @@ export default function NoticesManagementPage() {
 
     const handleEdit = (notice: Notice) => {
         setEditingNotice(notice);
-        setFormData({
+        reset({
             title: notice.title,
             content: notice.content,
             date: new Date(notice.date).toISOString().split('T')[0],
@@ -126,7 +148,7 @@ export default function NoticesManagementPage() {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingNotice(null);
-        setFormData({
+        reset({
             title: '',
             content: '',
             date: new Date().toISOString().split('T')[0],
@@ -161,11 +183,8 @@ export default function NoticesManagementPage() {
             }
 
             const data = await response.json();
-            setFormData(prev => ({
-                ...prev,
-                pdfUrl: data.url,
-                pdfFileName: data.fileName,
-            }));
+            setValue('pdfUrl', data.url, { shouldValidate: true });
+            setValue('pdfFileName', data.fileName, { shouldValidate: true });
         } catch (error: any) {
             alert(error.message || 'Failed to upload PDF');
         } finally {
@@ -174,11 +193,8 @@ export default function NoticesManagementPage() {
     };
 
     const handleRemovePdf = () => {
-        setFormData(prev => ({
-            ...prev,
-            pdfUrl: '',
-            pdfFileName: '',
-        }));
+        setValue('pdfUrl', '', { shouldValidate: true });
+        setValue('pdfFileName', '', { shouldValidate: true });
     };
 
     if (loading) {
@@ -301,20 +317,23 @@ export default function NoticesManagementPage() {
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
                         <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     Title *
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    {...register('title')}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.title
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="Enter notice title"
                                 />
+                                {errors.title && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.title.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -322,13 +341,17 @@ export default function NoticesManagementPage() {
                                     Content *
                                 </label>
                                 <textarea
-                                    required
-                                    value={formData.content}
-                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                                    {...register('content')}
                                     rows={6}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none resize-none"
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none resize-none transition ${errors.content
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="Enter notice content"
                                 />
+                                {errors.content && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.content.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -337,28 +360,32 @@ export default function NoticesManagementPage() {
                                 </label>
                                 <input
                                     type="date"
-                                    required
-                                    value={formData.date}
-                                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-red focus:border-transparent outline-none"
+                                    {...register('date')}
+                                    className={`w-full px-4 py-2 border rounded-lg outline-none transition ${errors.date
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                 />
+                                {errors.date && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.date.message}</p>
+                                )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
                                     PDF Attachment (Optional)
                                 </label>
-                                {formData.pdfUrl ? (
+                                {pdfUrl ? (
                                     <div className="flex items-center gap-3 p-4 bg-red-50/50 border border-red-100 rounded-lg">
                                         <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100">
                                             <FileText className="w-5 h-5 text-springer-red" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm font-medium text-springer-charcoal truncate">
-                                                {formData.pdfFileName}
+                                                {pdfFileName}
                                             </p>
                                             <a
-                                                href={formData.pdfUrl}
+                                                href={pdfUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-xs text-springer-red hover:underline font-medium"
@@ -413,15 +440,16 @@ export default function NoticesManagementPage() {
                                 type="button"
                                 variant="outline"
                                 onClick={handleCloseModal}
+                                disabled={isSubmitting}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 type="submit"
-                                disabled={submitting}
+                                disabled={isSubmitting || !isValid}
                                 className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
-                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {isSubmitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingNotice ? 'Update' : 'Create'}
                             </Button>
                         </div>

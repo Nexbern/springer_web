@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Plus, Edit, Trash2, Loader2, X } from 'lucide-react';
 import { format } from 'date-fns';
 import ImageUpload from '@/components/admin/ImageUpload';
@@ -14,6 +17,17 @@ import {
 } from '@/components/ui/dialog';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Button } from '@/components/ui/button';
+
+const bannerSchema = z.object({
+    title: z.string().min(1, 'Title is required'),
+    message: z.string().min(1, 'Message is required'),
+    active: z.boolean(),
+    startDate: z.string().optional(),
+    endDate: z.string().optional(),
+    image: z.string().min(1, 'Banner image is required'),
+});
+
+type BannerFormData = z.infer<typeof bannerSchema>;
 
 interface Banner {
     _id: string;
@@ -31,17 +45,31 @@ export default function BannersManagementPage() {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
-    const [formData, setFormData] = useState({
-        title: '',
-        message: '',
-        active: false,
-        startDate: '',
-        endDate: '',
-        image: '',
-    });
-    const [submitting, setSubmitting] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [bannerToDelete, setBannerToDelete] = useState<string | null>(null);
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        watch,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<BannerFormData>({
+        resolver: zodResolver(bannerSchema),
+        mode: 'onChange',
+        defaultValues: {
+            title: '',
+            message: '',
+            active: false,
+            startDate: '',
+            endDate: '',
+            image: '',
+        }
+    });
+
+    const bannerImage = watch('image');
+    const bannerActive = watch('active');
 
     useEffect(() => {
         fetchBanners();
@@ -59,10 +87,7 @@ export default function BannersManagementPage() {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setSubmitting(true);
-
+    const onSubmit = async (data: BannerFormData) => {
         try {
             const url = editingBanner
                 ? `/api/banners/${editingBanner._id}`
@@ -72,7 +97,7 @@ export default function BannersManagementPage() {
             const response = await fetch(url, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {
@@ -84,8 +109,6 @@ export default function BannersManagementPage() {
             handleCloseModal();
         } catch (error: any) {
             alert(error.message || 'Failed to save banner');
-        } finally {
-            setSubmitting(false);
         }
     };
 
@@ -135,7 +158,7 @@ export default function BannersManagementPage() {
 
     const handleEdit = (banner: Banner) => {
         setEditingBanner(banner);
-        setFormData({
+        reset({
             title: banner.title,
             message: banner.message,
             active: banner.active,
@@ -149,7 +172,7 @@ export default function BannersManagementPage() {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingBanner(null);
-        setFormData({
+        reset({
             title: '',
             message: '',
             active: false,
@@ -265,20 +288,23 @@ export default function BannersManagementPage() {
                         </DialogTitle>
                     </DialogHeader>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
                         <div className="flex-1 overflow-y-auto p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Title *
+                                    Banner Title *
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                    {...register('title')}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none transition ${errors.title
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="Enter banner title"
                                 />
+                                {errors.title && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.title.message}</p>
+                                )}
                             </div>
 
                             <div>
@@ -286,24 +312,31 @@ export default function BannersManagementPage() {
                                     Message *
                                 </label>
                                 <textarea
-                                    required
-                                    value={formData.message}
-                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                    rows={4}
-                                    className="w-full placeholder:text-sm px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none resize-none"
+                                    {...register('message')}
+                                    rows={3}
+                                    className={`w-full placeholder:text-sm px-4 py-2 border rounded-lg outline-none resize-none transition ${errors.message
+                                        ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                        : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                        }`}
                                     placeholder="Enter banner message"
                                 />
+                                {errors.message && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.message.message}</p>
+                                )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-springer-charcoal mb-2">
-                                    Banner Image
+                                    Banner Image *
                                 </label>
                                 <ImageUpload
-                                    value={formData.image}
-                                    onChange={(url) => setFormData({ ...formData, image: url })}
-                                    onRemove={() => setFormData({ ...formData, image: '' })}
+                                    value={bannerImage}
+                                    onChange={(url) => setValue('image', url, { shouldValidate: true })}
+                                    onRemove={() => setValue('image', '', { shouldValidate: true })}
                                 />
+                                {errors.image && (
+                                    <p className="mt-1 text-xs text-red-500 font-medium">{errors.image.message}</p>
+                                )}
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
@@ -313,10 +346,15 @@ export default function BannersManagementPage() {
                                     </label>
                                     <input
                                         type="date"
-                                        value={formData.startDate}
-                                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                        {...register('startDate')}
+                                        className={`w-full px-4 py-2 border rounded-lg outline-none transition ${errors.startDate
+                                            ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                            : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                            }`}
                                     />
+                                    {errors.startDate && (
+                                        <p className="mt-1 text-xs text-red-500 font-medium">{errors.startDate.message}</p>
+                                    )}
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-springer-charcoal mb-2">
@@ -324,22 +362,27 @@ export default function BannersManagementPage() {
                                     </label>
                                     <input
                                         type="date"
-                                        value={formData.endDate}
-                                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-springer-green focus:border-transparent outline-none"
+                                        {...register('endDate')}
+                                        className={`w-full px-4 py-2 border rounded-lg outline-none transition ${errors.endDate
+                                            ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                            : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                            }`}
                                     />
+                                    {errors.endDate && (
+                                        <p className="mt-1 text-xs text-red-500 font-medium">{errors.endDate.message}</p>
+                                    )}
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <div>
+                                    <h4 className="text-sm font-medium text-springer-charcoal">Active Status</h4>
+                                    <p className="text-xs text-gray-500 mt-1">Control visibility on homepage</p>
+                                </div>
                                 <Switch
-                                    id="active"
-                                    checked={formData.active}
-                                    onCheckedChange={(checked) => setFormData({ ...formData, active: checked })}
+                                    checked={bannerActive}
+                                    onCheckedChange={(checked) => setValue('active', checked, { shouldValidate: true })}
                                 />
-                                <label htmlFor="active" className="text-sm font-medium text-springer-charcoal">
-                                    Active (Show on website)
-                                </label>
                             </div>
                         </div>
 
@@ -348,15 +391,16 @@ export default function BannersManagementPage() {
                                 type="button"
                                 variant="outline"
                                 onClick={handleCloseModal}
+                                disabled={isSubmitting}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 type="submit"
-                                disabled={submitting}
+                                disabled={isSubmitting || !isValid}
                                 className="bg-springer-red hover:bg-red-700 text-white min-w-[100px]"
                             >
-                                {submitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                                {isSubmitting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                                 {editingBanner ? 'Update' : 'Create'}
                             </Button>
                         </div>
