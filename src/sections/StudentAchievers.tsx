@@ -203,9 +203,9 @@ export function StudentAchievers() {
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1 bg-red-50 backdrop-blur-sm border border-red-200 text-springer-red rounded-full mb-4">
                             <Trophy className="w-4 h-4" />
-                            <span className="text-sm font-semibold">Stars of Springer</span>
+                            <span className="text-xs font-semibold lg:text-sm">Stars of Springer</span>
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-semibold text-red-50 mb-4">
+                        <h2 className="text-xl lg:text-3xl font-semibold text-red-50 mb-4">
                             Our Achievers
                         </h2>
                         <p className="text-white max-w-2xl mx-auto">
@@ -252,7 +252,7 @@ export function StudentAchievers() {
                 </div>
 
                 {/* Other Achievers Grid - 5 columns */}
-                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
                     {otherAchievers.map((achiever, index) => (
                         <motion.div
                             key={achiever._id}

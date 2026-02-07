@@ -40,7 +40,7 @@ export function WhyChooseUs() {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-springer-charcoal mb-3 group-hover:text-springer-red transition-colors">
+                  <h3 className="text-xl font-semibold text-springer-charcoal mb-3 group-hover:text-springer-red transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-springer-gray leading-relaxed">

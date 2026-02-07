@@ -60,7 +60,7 @@ export function AcademicPrograms() {
               </div>
               {/* Badge */}
               <div className="absolute -bottom-4 -right-4 bg-springer-red text-white px-6 py-3 rounded-xl shadow-lg">
-                <div className="text-2xl font-bold">{activeProgram.grades}</div>
+                <div className="lg:text-2xl text-lg font-semibold">{activeProgram.grades}</div>
                 <div className="text-xs opacity-90">Grade Levels</div>
               </div>
             </div>
@@ -73,16 +73,16 @@ export function AcademicPrograms() {
                 </span>
               </div>
 
-              <h3 className="text-3xl font-bold text-springer-charcoal mb-4">
+              <h3 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
                 {activeProgram.name}
               </h3>
 
-              <p className="text-springer-gray text-lg leading-relaxed mb-8">
+              <p className="text-springer-gray lg:text-lg text-base leading-relaxed mb-8">
                 {activeProgram.description}
               </p>
 
               <div className="space-y-4">
-                <h4 className="font-semibold text-springer-charcoal mb-4">
+                <h4 className="lg:text-xl text-lg font-semibold text-springer-charcoal mb-4">
                   Key Features
                 </h4>
                 {activeProgram.features.map((feature, index) => (
@@ -93,10 +93,10 @@ export function AcademicPrograms() {
                     transition={{ delay: index * 0.1 }}
                     className="flex items-center gap-3"
                   >
-                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-4 h-4 text-springer-green" />
+                    <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 lg:w-4 lg:h-4 text-springer-green" />
                     </div>
-                    <span className="text-springer-charcoal">{feature}</span>
+                    <span className="lg:text-base text-sm text-springer-charcoal">{feature}</span>
                   </motion.div>
                 ))}
               </div>

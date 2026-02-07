@@ -102,7 +102,7 @@ export function FacultySpotlight() {
                                 {/* Faculty Details */}
                                 <div className="space-y-4">
                                     <div>
-                                        <h3 className="text-3xl font-bold text-springer-charcoal mb-2">
+                                        <h3 className="text-xl lg:text-2xl font-semibold text-springer-charcoal mb-2">
                                             {currentFaculty.name}
                                         </h3>
                                         <p className="text-springer-red font-semibold text-lg">
@@ -113,20 +113,20 @@ export function FacultySpotlight() {
                                         </p>
                                     </div>
 
-                                    <p className="text-springer-gray leading-relaxed">
+                                    <p className="text-springer-gray leading-relaxed text-base lg:text-lg">
                                         {currentFaculty.description}
                                     </p>
 
                                     {/* Stats */}
                                     <div className="flex gap-6 pt-4 border-t border-gray-200">
                                         <div>
-                                            <div className="text-2xl font-bold text-springer-charcoal">
+                                            <div className="lg:text-2xl text-xl font-semibold text-springer-charcoal">
                                                 {currentFaculty.experience} years
                                             </div>
                                             <div className="text-xs text-springer-gray">Teaching Experience</div>
                                         </div>
                                         <div>
-                                            <div className="text-2xl font-bold text-springer-green">
+                                            <div className="lg:text-2xl text-xl font-semibold text-springer-green">
                                                 {currentFaculty.subject}
                                             </div>
                                             <div className="text-xs text-springer-gray">Specialization</div>

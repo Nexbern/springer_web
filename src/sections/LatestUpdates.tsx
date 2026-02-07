@@ -70,8 +70,8 @@ export function LatestUpdates() {
   return (
     <section className="bg-springer-charcoal">
       <div className="overflow-hidden">
-        <div className="flex flex-col lg:flex-row">
-          <div className="bg-springer-red flex items-center gap-3 lg:w-64 flex-shrink-0 pl-12 h-14">
+        <div className="flex ">
+          <div className="bg-springer-red flex items-center gap-3 w-36 pl-4 lg:w-64 flex-shrink-0 lg:pl-12 h-14">
             <span className="text-white font-semibold">Latest News</span>
           </div>
 
@@ -87,7 +87,7 @@ export function LatestUpdates() {
                     href={`/news/${notice._id}`}
                     className="inline-flex items-center gap-3 px-6 hover:text-springer-red transition-colors whitespace-nowrap"
                   >
-                    <span className="font-medium text-springer-white">
+                    <span className="lg:font-medium font-normal text-sm lg:text-base text-springer-white">
                       {notice.title}
                     </span>
                     <img
@@ -111,7 +111,7 @@ export function LatestUpdates() {
         }
 
         .marquee-content {
-          animation: marquee 60s linear infinite;
+          animation: marquee 10s linear infinite;
         }
 
         .marquee-content:hover {

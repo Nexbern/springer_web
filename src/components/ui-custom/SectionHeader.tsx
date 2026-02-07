@@ -39,7 +39,7 @@ export function SectionHeader({
       )}
     >
       {subtitle && (
-        <span className="inline-block px-4 py-1.5 bg-red-50 border border-red-200 text-springer-red text-sm font-medium rounded-full mb-4">
+        <span className="inline-block px-6 lg:py-1.5 py-1 bg-red-50 border border-red-200 text-springer-red lg:text-sm text-xs font-medium rounded-full mb-4">
           {subtitle}
         </span>
       )}
@@ -50,7 +50,7 @@ export function SectionHeader({
         {title}
       </h2>
       {description && (
-        <p className="text-springer-gray text-sm lg:text-lg max-w-2xl mx-auto leading-relaxed">
+        <p className="text-springer-gray text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
           {description}
         </p>
       )}

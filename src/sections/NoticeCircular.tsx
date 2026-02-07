@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Bell, ArrowRight } from 'lucide-react';
+import { SectionHeader } from '@/components/ui-custom/SectionHeader';
 
 interface Notice {
     _id: string;
@@ -65,26 +66,11 @@ export function NoticeCircular() {
         <section className="section-padding bg-white py-16">
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
-                <div className="text-center mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="inline-flex items-center gap-2 px-4 py-1 bg-red-50 border border-red-200 text-springer-red rounded-full mb-4">
-                            <Bell className="w-4 h-4 text-springer-red" />
-                            <span className="text-sm font-semibold text-springer-red">Stay Updated</span>
-                        </div>
-                        <h2 className="text-2xl md:text-3xl font-semibold text-springer-charcoal mb-4">
-                            Notice Board
-                        </h2>
-                        <p className="text-springer-gray max-w-2xl mx-auto">
-                            Important announcements and updates from the school
-                        </p>
-                    </motion.div>
-                </div>
-
+                <SectionHeader
+                    subtitle="Stay Updated"
+                    title="Notice Board"
+                    description="Important announcements and updates from the school"
+                />
                 {/* Notice Board Container */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -97,7 +83,7 @@ export function NoticeCircular() {
                         {/* Notice Board Header */}
                         <div className="bg-springer-red px-6 py-4 flex items-center gap-3">
                             <Bell className="w-5 h-5 text-white" />
-                            <span className="text-white font-bold text-lg">Latest Notices</span>
+                            <span className="text-white font-semibold text-lg">Latest Notices</span>
                         </div>
 
                         {/* Scrolling Notice List with CSS Animation */}
@@ -115,7 +101,7 @@ export function NoticeCircular() {
                                         {/* Notice Content */}
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-3 mb-1">
-                                                <h3 className="font-semibold text-springer-charcoal group-hover:text-springer-red transition-colors line-clamp-1">
+                                                <h3 className="font-medium text-sm lg:text-base text-springer-charcoal group-hover:text-springer-red transition-colors line-clamp-1">
                                                     {notice.title}
                                                 </h3>
                                                 {/* New GIF Icon - Right side of title */}
@@ -164,7 +150,7 @@ export function NoticeCircular() {
                         <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
                             <Link
                                 href="/notices"
-                                className="flex items-center justify-center gap-2 text-springer-red font-semibold hover:text-red-700 transition-colors"
+                                className="flex items-center justify-center gap-2 text-springer-red font-medium text-sm lg:text-base hover:text-red-700 transition-colors"
                             >
                                 View All Notices
                                 <ArrowRight className="w-5 h-5" />
