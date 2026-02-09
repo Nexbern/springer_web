@@ -11,6 +11,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { CampusVisitDialog } from '@/components/popups/CampusVisitDialog';
 
 // Hero carousel slides
 const heroSlides = [
@@ -87,6 +88,7 @@ const noticeItems = [
 export function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [direction, setDirection] = useState(0);
+    const [isCampusVisitDialogOpen, setIsCampusVisitDialogOpen] = useState(false);
     const latestNotice = notices[0];
 
     // Auto-advance carousel
@@ -209,13 +211,13 @@ export function Hero() {
                                 <Calendar className="w-5 h-5" />
                                 Admissions Open
                             </Link>
-                            <Link
-                                href="/contact"
+                            <button
+                                onClick={() => setIsCampusVisitDialogOpen(true)}
                                 className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300"
                             >
                                 <BookOpen className="w-5 h-5" />
                                 Book Campus Visit
-                            </Link>
+                            </button>
                         </motion.div>
 
                         {/* Stats */}
@@ -287,6 +289,12 @@ export function Hero() {
                 </div>
 
             </section>
+
+            {/* Campus Visit Dialog */}
+            <CampusVisitDialog
+                open={isCampusVisitDialogOpen}
+                onOpenChange={setIsCampusVisitDialogOpen}
+            />
         </>
     );
 }
