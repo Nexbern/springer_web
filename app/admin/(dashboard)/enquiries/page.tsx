@@ -2,10 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { Trash2, Loader2, Calendar, Mail, Phone, User, MapPin, Clock, FileText, GraduationCap, MessageSquare } from 'lucide-react';
+import { Trash2, Loader2, Calendar, Mail, Phone, User, MapPin, Clock, FileText, GraduationCap, MessageSquare, Eye } from 'lucide-react';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from '@/components/ui/dialog';
 
 interface CampusVisit {
     _id: string;
@@ -74,6 +81,12 @@ export default function EnquiriesPage() {
     const [loading, setLoading] = useState(true);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState<{ id: string; type: string } | null>(null);
+
+    // Detail modal states
+    const [selectedCampusVisit, setSelectedCampusVisit] = useState<CampusVisit | null>(null);
+    const [selectedAdmission, setSelectedAdmission] = useState<AdmissionEnquiry | null>(null);
+    const [selectedFees, setSelectedFees] = useState<FeesEnquiry | null>(null);
+    const [selectedContact, setSelectedContact] = useState<ContactEnquiry | null>(null);
 
     useEffect(() => {
         fetchAllEnquiries();
@@ -212,7 +225,11 @@ export default function EnquiriesPage() {
                                         </tr>
                                     ) : (
                                         campusVisits.map((visit) => (
-                                            <tr key={visit._id} className="hover:bg-gray-50">
+                                            <tr
+                                                key={visit._id}
+                                                className="hover:bg-gray-50 cursor-pointer"
+                                                onClick={() => setSelectedCampusVisit(visit)}
+                                            >
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-2">
                                                         <User className="w-4 h-4 text-springer-red" />
@@ -253,7 +270,10 @@ export default function EnquiriesPage() {
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <button
-                                                        onClick={() => handleDeleteClick(visit._id, 'campus')}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDeleteClick(visit._id, 'campus');
+                                                        }}
                                                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
@@ -304,7 +324,11 @@ export default function EnquiriesPage() {
                                         </tr>
                                     ) : (
                                         admissionEnquiries.map((enquiry) => (
-                                            <tr key={enquiry._id} className="hover:bg-gray-50">
+                                            <tr
+                                                key={enquiry._id}
+                                                className="hover:bg-gray-50 cursor-pointer"
+                                                onClick={() => setSelectedAdmission(enquiry)}
+                                            >
                                                 <td className="px-6 py-4">
                                                     <div className="text-sm font-medium text-springer-charcoal">
                                                         {enquiry.studentName}
@@ -336,7 +360,10 @@ export default function EnquiriesPage() {
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <button
-                                                        onClick={() => handleDeleteClick(enquiry._id, 'admission')}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDeleteClick(enquiry._id, 'admission');
+                                                        }}
                                                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
@@ -384,7 +411,11 @@ export default function EnquiriesPage() {
                                         </tr>
                                     ) : (
                                         feesEnquiries.map((enquiry) => (
-                                            <tr key={enquiry._id} className="hover:bg-gray-50">
+                                            <tr
+                                                key={enquiry._id}
+                                                className="hover:bg-gray-50 cursor-pointer"
+                                                onClick={() => setSelectedFees(enquiry)}
+                                            >
                                                 <td className="px-6 py-4">
                                                     <div className="text-sm font-medium text-springer-charcoal">
                                                         {enquiry.name}
@@ -410,7 +441,10 @@ export default function EnquiriesPage() {
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <button
-                                                        onClick={() => handleDeleteClick(enquiry._id, 'fees')}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDeleteClick(enquiry._id, 'fees');
+                                                        }}
                                                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
@@ -461,7 +495,11 @@ export default function EnquiriesPage() {
                                         </tr>
                                     ) : (
                                         contactEnquiries.map((enquiry) => (
-                                            <tr key={enquiry._id} className="hover:bg-gray-50">
+                                            <tr
+                                                key={enquiry._id}
+                                                className="hover:bg-gray-50 cursor-pointer"
+                                                onClick={() => setSelectedContact(enquiry)}
+                                            >
                                                 <td className="px-6 py-4">
                                                     <div className="text-sm font-medium text-springer-charcoal">
                                                         {enquiry.name}
@@ -495,7 +533,10 @@ export default function EnquiriesPage() {
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <button
-                                                        onClick={() => handleDeleteClick(enquiry._id, 'contact')}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDeleteClick(enquiry._id, 'contact');
+                                                        }}
                                                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
@@ -510,6 +551,259 @@ export default function EnquiriesPage() {
                     </div>
                 </TabsContent>
             </Tabs>
+{/* Campus Visit Detail Modal */}
+<Dialog open={!!selectedCampusVisit} onOpenChange={() => setSelectedCampusVisit(null)}>
+    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+            <DialogTitle>Campus Visit Request Details</DialogTitle>
+            <DialogDescription>
+                Complete information about this campus visit request
+            </DialogDescription>
+        </DialogHeader>
+        {selectedCampusVisit && (
+            <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Visitor Name</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <User className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedCampusVisit.name}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Phone Number</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Phone className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedCampusVisit.phone}</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Address</label>
+                    <div className="flex items-center gap-2 mt-1">
+                        <MapPin className="w-4 h-4 text-springer-red" />
+                        <p className="text-sm text-springer-charcoal">{selectedCampusVisit.address}</p>
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Preferred Date</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Calendar className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">
+                                {format(new Date(selectedCampusVisit.preferredDate), 'MMMM dd, yyyy')}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Time Slot</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Clock className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">
+                                {timeSlotLabels[selectedCampusVisit.preferredTimeSlot]}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Reason for Visit</label>
+                    <p className="text-sm text-springer-charcoal mt-1 px-3 py-2 bg-blue-50 text-blue-600 rounded inline-block">
+                        {reasonLabels[selectedCampusVisit.reasonForVisit]}
+                    </p>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Submitted On</label>
+                    <p className="text-sm text-springer-charcoal mt-1">
+                        {format(new Date(selectedCampusVisit.createdAt), 'MMMM dd, yyyy \'at\' h:mm a')}
+                    </p>
+                </div>
+            </div>
+        )}
+    </DialogContent>
+</Dialog>
+
+{/* Admission Enquiry Detail Modal */}
+<Dialog open={!!selectedAdmission} onOpenChange={() => setSelectedAdmission(null)}>
+    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+            <DialogTitle>Admission Enquiry Details</DialogTitle>
+            <DialogDescription>
+                Complete information about this admission enquiry
+            </DialogDescription>
+        </DialogHeader>
+        {selectedAdmission && (
+            <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Student Name</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <User className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal font-medium">{selectedAdmission.studentName}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Parent/Guardian Name</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <User className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedAdmission.parentName}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Email Address</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Mail className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedAdmission.email}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Phone Number</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Phone className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedAdmission.phone}</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Grade/Class</label>
+                    <p className="text-sm text-springer-charcoal mt-1 px-3 py-2 bg-green-50 text-green-600 rounded inline-flex items-center gap-1">
+                        <GraduationCap className="w-4 h-4" />
+                        {selectedAdmission.grade}
+                    </p>
+                </div>
+                {selectedAdmission.message && (
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Additional Message</label>
+                        <p className="text-sm text-springer-charcoal mt-1 p-3 bg-gray-50 rounded">
+                            {selectedAdmission.message}
+                        </p>
+                    </div>
+                )}
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Submitted On</label>
+                    <p className="text-sm text-springer-charcoal mt-1">
+                        {format(new Date(selectedAdmission.createdAt), 'MMMM dd, yyyy \'at\' h:mm a')}
+                    </p>
+                </div>
+            </div>
+        )}
+    </DialogContent>
+</Dialog>
+
+{/* Fees Enquiry Detail Modal */}
+<Dialog open={!!selectedFees} onOpenChange={() => setSelectedFees(null)}>
+    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+            <DialogTitle>Fees Enquiry Details</DialogTitle>
+            <DialogDescription>
+                Complete information about this fees structure request
+            </DialogDescription>
+        </DialogHeader>
+        {selectedFees && (
+            <div className="space-y-4">
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Name</label>
+                    <div className="flex items-center gap-2 mt-1">
+                        <User className="w-4 h-4 text-springer-red" />
+                        <p className="text-sm text-springer-charcoal font-medium">{selectedFees.name}</p>
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Email Address</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Mail className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedFees.email}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Phone Number</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Phone className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedFees.phone}</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Class/Grade</label>
+                    <p className="text-sm text-springer-charcoal mt-1 px-3 py-2 bg-purple-50 text-purple-600 rounded inline-block">
+                        {selectedFees.class}
+                    </p>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Submitted On</label>
+                    <p className="text-sm text-springer-charcoal mt-1">
+                        {format(new Date(selectedFees.createdAt), 'MMMM dd, yyyy \'at\' h:mm a')}
+                    </p>
+                </div>
+            </div>
+        )}
+    </DialogContent>
+</Dialog>
+
+{/* Contact Enquiry Detail Modal */}
+<Dialog open={!!selectedContact} onOpenChange={() => setSelectedContact(null)}>
+    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+            <DialogTitle>Contact Enquiry Details</DialogTitle>
+            <DialogDescription>
+                Complete information about this contact message
+            </DialogDescription>
+        </DialogHeader>
+        {selectedContact && (
+            <div className="space-y-4">
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Name</label>
+                    <div className="flex items-center gap-2 mt-1">
+                        <User className="w-4 h-4 text-springer-red" />
+                        <p className="text-sm text-springer-charcoal font-medium">{selectedContact.name}</p>
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="text-sm font-medium text-springer-gray">Email Address</label>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Mail className="w-4 h-4 text-springer-red" />
+                            <p className="text-sm text-springer-charcoal">{selectedContact.email}</p>
+                        </div>
+                    </div>
+                    {selectedContact.phone && (
+                        <div>
+                            <label className="text-sm font-medium text-springer-gray">Phone Number</label>
+                            <div className="flex items-center gap-2 mt-1">
+                                <Phone className="w-4 h-4 text-springer-red" />
+                                <p className="text-sm text-springer-charcoal">{selectedContact.phone}</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Subject</label>
+                    <div className="flex items-center gap-2 mt-1">
+                        <FileText className="w-4 h-4 text-springer-red" />
+                        <p className="text-sm text-springer-charcoal font-medium">{selectedContact.subject}</p>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Message</label>
+                    <div className="flex items-start gap-2 mt-1">
+                        <MessageSquare className="w-4 h-4 text-springer-red mt-1" />
+                        <p className="text-sm text-springer-charcoal p-3 bg-gray-50 rounded flex-1">
+                            {selectedContact.message}
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-springer-gray">Submitted On</label>
+                    <p className="text-sm text-springer-charcoal mt-1">
+                        {format(new Date(selectedContact.createdAt), 'MMMM dd, yyyy \'at\' h:mm a')}
+                    </p>
+                </div>
+            </div>
+        )}
+    </DialogContent>
+</Dialog>
 
             {/* Delete Confirmation Dialog */}
             <ConfirmDialog
@@ -517,7 +811,7 @@ export default function EnquiriesPage() {
                 onClose={() => setIsDeleteDialogOpen(false)}
                 onConfirm={handleDelete}
                 title="Delete Enquiry"
-                description="Are you sure you want to delete this enquiry? This action cannot be undone."
+                description="Are you sure you want to delete this enquiry?"
                 confirmText="Delete"
                 variant="destructive"
             />

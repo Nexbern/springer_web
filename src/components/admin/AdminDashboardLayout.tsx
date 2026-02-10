@@ -12,6 +12,7 @@ import {
     Trophy,
     LogOut,
     Menu,
+    SearchAlert,
     X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -22,6 +23,7 @@ const navigation = [
     { name: 'Banners', href: '/admin/banners', icon: Megaphone },
     { name: 'Faculties', href: '/admin/faculties', icon: Users },
     { name: 'Achievers', href: '/admin/achievers', icon: Trophy },
+    { name: 'Enquiries', href: '/admin/enquiries', icon: SearchAlert },
 ];
 
 export default function AdminDashboardPage({

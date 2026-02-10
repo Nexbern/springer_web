@@ -96,15 +96,17 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* <div className="hidden lg:flex items-center gap-2">
-              <Link
-                href="/admissions"
+            <div className="hidden lg:flex items-center gap-2">
+              <a
+                href={schoolInfo.portalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium bg-springer-red text-white hover:bg-springer-darkred border border-red-500 rounded-lg hover:border-springer-red transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                Parent/Teacher Login
-              </Link>
-            </div> */}
+                Parent/Teacher Portal
+              </a>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
