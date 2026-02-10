@@ -1,15 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import type { Metadata } from 'next';
-import { MapPin, Phone, Mail, Clock, Send, Check } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, Check, User, MessageSquare } from 'lucide-react';
 import { schoolInfo } from '@/data/siteData';
 import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
 import { SectionHeader } from '@/components/ui-custom/SectionHeader';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
     Dialog,
     DialogContent,
@@ -17,6 +17,19 @@ import {
     DialogTitle,
     DialogDescription,
 } from '@/components/ui/dialog';
+
+const contactFormSchema = z.object({
+    name: z.string()
+        .min(3, 'Name must be at least 3 characters long')
+        .regex(/^[a-zA-Z\s]+$/, 'Name should only contain letters'),
+    email: z.string().email('Please enter a valid email address'),
+    phone: z.string().min(10, 'Phone number must be at least 10 digits')
+        .regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit mobile number'),
+    subject: z.string().min(3, 'Subject must be at least 3 characters'),
+    message: z.string().min(10, 'Message must be at least 10 characters'),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const contactInfo = [
     {
@@ -47,22 +60,29 @@ const contactInfo = [
 
 export default function ContactPage() {
     const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<ContactFormData>({
+        resolver: zodResolver(contactFormSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            phone: '',
+            subject: '',
+            message: '',
+        }
     });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const onSubmit = async (data: ContactFormData) => {
         try {
             const response = await fetch('/api/contact-enquiries', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {
@@ -77,14 +97,7 @@ export default function ContactPage() {
             }
 
             setShowSuccessDialog(true);
-            // Reset form
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                subject: '',
-                message: '',
-            });
+            reset();
         } catch (error: any) {
             console.error('Contact form error:', error);
             alert(error.message || 'Failed to submit contact enquiry');
@@ -164,75 +177,123 @@ export default function ContactPage() {
                                 <h2 className="text-xl lg:text-2xl font-semibold text-springer-charcoal mb-2">
                                     Send us a Message
                                 </h2>
-                                <p className="text-springer-gray sm:text-lg text-sm mb-8">
+                                <p className="text-springer-gray sm:text-base text-sm mb-8">
                                     Fill out the form below and we'll get back to you within 24 hours.
                                 </p>
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
+                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="name">Your Name *</Label>
-                                            <Input
-                                                id="name"
+                                        <div>
+                                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                                <User className="w-4 h-4 inline mr-2" />
+                                                Your Name *
+                                            </label>
+                                            <input
+                                                {...register('name')}
+                                                className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.name
+                                                    ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                    : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                    }`}
                                                 placeholder="Enter your name"
-                                                value={formData.name}
-                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                required
+                                                disabled={isSubmitting}
                                             />
+                                            {errors.name && (
+                                                <p className="mt-1 text-xs text-red-500 font-medium">{errors.name.message}</p>
+                                            )}
                                         </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="email">Email Address *</Label>
-                                            <Input
-                                                id="email"
-                                                type="email"
-                                                placeholder="Enter your email"
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                required
+                                        <div>
+                                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                                <Mail className="w-4 h-4 inline mr-2" />
+                                                Email Address *
+                                            </label>
+                                            <input
+                                                {...register('email')}
+                                                className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.email
+                                                    ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                    : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                    }`}
+                                                placeholder="your.email@example.com"
+                                                disabled={isSubmitting}
                                             />
+                                            {errors.email && (
+                                                <p className="mt-1 text-xs text-red-500 font-medium">{errors.email.message}</p>
+                                            )}
                                         </div>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="phone">Phone Number</Label>
-                                            <Input
-                                                id="phone"
-                                                type="tel"
-                                                placeholder="Enter your phone number"
-                                                value={formData.phone}
-                                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                        <div>
+                                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                                <Phone className="w-4 h-4 inline mr-2" />
+                                                Phone Number
+                                            </label>
+                                            <input
+                                                {...register('phone')}
+                                                type="text"
+                                                inputMode="numeric"
+                                                maxLength={10}
+                                                onChange={(e) => {
+                                                    const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                                    e.target.value = value;
+                                                    register('phone').onChange(e);
+                                                }}
+                                                className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.phone
+                                                    ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                    : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                    }`}
+                                                placeholder="10 digit mobile number"
+                                                disabled={isSubmitting}
                                             />
+                                            {errors.phone && (
+                                                <p className="mt-1 text-xs text-red-500 font-medium">{errors.phone.message}</p>
+                                            )}
                                         </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="subject">Subject *</Label>
-                                            <Input
-                                                id="subject"
+                                        <div>
+                                            <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                                <MessageSquare className="w-4 h-4 inline mr-2" />
+                                                Subject *
+                                            </label>
+                                            <input
+                                                {...register('subject')}
+                                                className={`w-full px-4 py-3 border rounded-lg outline-none transition ${errors.subject
+                                                    ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                    : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                    }`}
                                                 placeholder="What is this about?"
-                                                value={formData.subject}
-                                                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                                required
+                                                disabled={isSubmitting}
                                             />
+                                            {errors.subject && (
+                                                <p className="mt-1 text-xs text-red-500 font-medium">{errors.subject.message}</p>
+                                            )}
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <Label htmlFor="message">Message *</Label>
-                                        <Textarea
-                                            id="message"
-                                            placeholder="Write your message here..."
+                                    <div>
+                                        <label className="block text-sm font-medium text-springer-charcoal mb-2">
+                                            <Send className="w-4 h-4 inline mr-2" />
+                                            Message *
+                                        </label>
+                                        <textarea
+                                            {...register('message')}
                                             rows={5}
-                                            value={formData.message}
-                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                            required
+                                            className={`w-full px-4 py-3 border rounded-lg outline-none transition resize-none ${errors.message
+                                                ? 'border-red-500 focus:ring-2 focus:ring-red-200'
+                                                : 'border-gray-300 focus:ring-2 focus:ring-springer-red focus:border-transparent'
+                                                }`}
+                                            placeholder="Write your message here..."
+                                            disabled={isSubmitting}
                                         />
+                                        {errors.message && (
+                                            <p className="mt-1 text-xs text-red-500 font-medium">{errors.message.message}</p>
+                                        )}
                                     </div>
 
                                     <Button
                                         type="submit"
                                         className="w-full bg-springer-red hover:bg-red-700 text-white py-6"
+                                        disabled={isSubmitting}
                                     >
-                                        Send Message
+                                        {isSubmitting ? 'Sending...' : 'Send Message'}
                                         <Send className="w-4 h-4 ml-2" />
                                     </Button>
                                 </form>
@@ -244,7 +305,7 @@ export default function ContactPage() {
                             <div className="bg-white rounded-3xl shadow-card overflow-hidden h-full">
                                 <div className="aspect-square lg:aspect-auto lg:h-full">
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17752.276192457146!2d83.35213101167238!3d26.79881504234065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399145b89702bb61%3A0xbf2d72cfcf45a3da!2sSpringer%20Public%20Schools!5e0!3m2!1sen!2sin!4v1770706011519!5m2!1sen!2sin"                                        width="100%"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17752.276192457146!2d83.35213101167238!3d26.79881504234065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399145b89702bb61%3A0xbf2d72cfcf45a3da!2sSpringer%20Public%20Schools!5e0!3m2!1sen!2sin!4v1770706011519!5m2!1sen!2sin" width="100%"
                                         height="100%"
                                         style={{ border: 0, minHeight: '400px' }}
                                         allowFullScreen
