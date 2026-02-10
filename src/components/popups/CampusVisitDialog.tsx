@@ -60,11 +60,22 @@ export function CampusVisitDialog({ open, onOpenChange }: CampusVisitDialogProps
 
     const onSubmit = async (data: CampusVisitFormData) => {
         try {
-            // TODO: Replace with actual API call when backend is ready
-            console.log('Campus Visit Form Data:', data);
+            const response = await fetch('/api/campus-visits', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
 
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            if (!response.ok) {
+                let errorMessage = 'Failed to submit campus visit request';
+                try {
+                    const error = await response.json();
+                    errorMessage = error.error || errorMessage;
+                } catch (e) {
+                    errorMessage = response.statusText || errorMessage;
+                }
+                throw new Error(errorMessage);
+            }
 
             setSubmitSuccess(true);
 
@@ -75,6 +86,7 @@ export function CampusVisitDialog({ open, onOpenChange }: CampusVisitDialogProps
                 onOpenChange(false);
             }, 2000);
         } catch (error: any) {
+            console.error('Campus visit form error:', error);
             alert(error.message || 'Failed to submit campus visit request');
         }
     };

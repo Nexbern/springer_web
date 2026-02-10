@@ -38,10 +38,29 @@ export default function FeesStructurePage() {
     });
 
     const onSubmit = async (data: FeeFormData) => {
-        // data is already validated by zod here
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setShowFeeStructure(true);
+        try {
+            const response = await fetch('/api/fees-enquiries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                let errorMessage = 'Failed to submit fees enquiry';
+                try {
+                    const error = await response.json();
+                    errorMessage = error.error || errorMessage;
+                } catch (e) {
+                    errorMessage = response.statusText || errorMessage;
+                }
+                throw new Error(errorMessage);
+            }
+
+            setShowFeeStructure(true);
+        } catch (error: any) {
+            console.error('Fees form error:', error);
+            alert(error.message || 'Failed to submit fees enquiry');
+        }
     };
 
     const handleDownloadPDF = () => {

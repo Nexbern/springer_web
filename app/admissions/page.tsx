@@ -38,9 +38,41 @@ export default function AdmissionsPage() {
         message: '',
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setShowSuccessDialog(true);
+
+        try {
+            const response = await fetch('/api/admission-enquiries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                let errorMessage = 'Failed to submit admission enquiry';
+                try {
+                    const error = await response.json();
+                    errorMessage = error.error || errorMessage;
+                } catch (e) {
+                    errorMessage = response.statusText || errorMessage;
+                }
+                throw new Error(errorMessage);
+            }
+
+            setShowSuccessDialog(true);
+            // Reset form
+            setFormData({
+                studentName: '',
+                parentName: '',
+                email: '',
+                phone: '',
+                grade: '',
+                message: '',
+            });
+        } catch (error: any) {
+            console.error('Admission form error:', error);
+            alert(error.message || 'Failed to submit admission enquiry');
+        }
     };
 
     const admissionsOpen = true;

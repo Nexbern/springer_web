@@ -55,9 +55,40 @@ export default function ContactPage() {
         message: '',
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setShowSuccessDialog(true);
+
+        try {
+            const response = await fetch('/api/contact-enquiries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                let errorMessage = 'Failed to submit contact enquiry';
+                try {
+                    const error = await response.json();
+                    errorMessage = error.error || errorMessage;
+                } catch (e) {
+                    errorMessage = response.statusText || errorMessage;
+                }
+                throw new Error(errorMessage);
+            }
+
+            setShowSuccessDialog(true);
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                subject: '',
+                message: '',
+            });
+        } catch (error: any) {
+            console.error('Contact form error:', error);
+            alert(error.message || 'Failed to submit contact enquiry');
+        }
     };
 
     return (
@@ -213,8 +244,7 @@ export default function ContactPage() {
                             <div className="bg-white rounded-3xl shadow-card overflow-hidden h-full">
                                 <div className="aspect-square lg:aspect-auto lg:h-full">
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.1234567890123!2d77.209021!3d28.613939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM2JzUwLjIiTiA3N8KwMTInMzIuNSJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
-                                        width="100%"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17752.276192457146!2d83.35213101167238!3d26.79881504234065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399145b89702bb61%3A0xbf2d72cfcf45a3da!2sSpringer%20Public%20Schools!5e0!3m2!1sen!2sin!4v1770706011519!5m2!1sen!2sin"                                        width="100%"
                                         height="100%"
                                         style={{ border: 0, minHeight: '400px' }}
                                         allowFullScreen
