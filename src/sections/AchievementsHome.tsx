@@ -20,8 +20,8 @@ export function AchievementsHome() {
                 <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
                     {/* Image Side */}
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: -50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
                         className="relative"
@@ -56,8 +56,8 @@ export function AchievementsHome() {
 
                     {/* Content Side */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                         className="space-y-6"

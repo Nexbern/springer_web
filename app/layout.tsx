@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { schoolInfo } from '@/data/siteData';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import ConditionalLayout from '@/components/layout/ConditionalLayout';
 
 const inter = Inter({

@@ -95,7 +95,7 @@ export default function ProspectusPage() {
                 <Download className="w-4 h-4" />
                 Download PDF
             </button>
-                <div className="max-w-7xl mx-auto px-4">
+                <div className="lg:w-7xl w-full overflow-auto mx-auto px-4">
                     <div className="flex items-center gap-2 overflow-x-auto p-2">
                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                             <button
