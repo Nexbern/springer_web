@@ -21,13 +21,13 @@ export default function HomePage() {
             <AboutIntro />
             <WhyChooseUs />
             <AcademicPrograms />
-            {/* <AchievementsHome /> */}
-            {/* <StudentAchievers /> */}
-            {/* <NoticeCircular /> */}
-            {/* <Facilities /> */}
-            {/* <FacultySpotlight /> */}
-            {/* <Testimonials /> */}
-            {/* <FinalCTA /> */}
+            <AchievementsHome />
+            <StudentAchievers />
+            <NoticeCircular />
+            <Facilities />
+            <FacultySpotlight />
+            <Testimonials />
+            <FinalCTA />
         </main>
     );
 }
