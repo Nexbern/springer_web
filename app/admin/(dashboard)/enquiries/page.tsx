@@ -164,10 +164,10 @@ export default function EnquiriesPage() {
         <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="mb-6">
-                <h1 className="text-2xl font-semibold text-springer-charcoal">
+                <h1 className="lg:text-2xl text-xl font-semibold text-springer-charcoal">
                     Enquiries Management
                 </h1>
-                <p className="text-springer-gray mt-1">
+                <p className="text-springer-gray lg:text-base text-sm lg:mt-1 mt-0">
                     View and manage all enquiries from different sections
                 </p>
             </div>

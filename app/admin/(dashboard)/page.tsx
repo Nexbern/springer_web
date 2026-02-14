@@ -75,10 +75,10 @@ export default function AdminDashboardPage() {
         <div className="max-w-7xl mx-auto">
             {/* Welcome Section */}
             <div className="mb-8">
-                <h1 className="text-2xl font-semibold text-springer-charcoal mb-2">
+                <h1 className="lg:text-2xl text-xl font-semibold text-springer-charcoal mb-2">
                     Welcome to Admin Dashboard
                 </h1>
-                <p className="text-springer-gray">
+                <p className="text-springer-gray lg:text-base text-sm">
                     Manage your school website content from here
                 </p>
             </div>
@@ -96,7 +96,7 @@ export default function AdminDashboardPage() {
                                 <p className="text-sm font-medium text-springer-gray mb-1">
                                     {stat.name}
                                 </p>
-                                <p className="text-3xl font-semibold text-springer-charcoal">
+                                <p className="lg:text-3xl text-xl font-semibold text-springer-charcoal">
                                     {loading ? '...' : stat.value}
                                 </p>
                             </div>
@@ -110,7 +110,7 @@ export default function AdminDashboardPage() {
 
             {/* Quick Actions */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-springer-charcoal mb-4">
+                <h2 className="lg:text-lg text-base font-semibold text-springer-charcoal mb-4">
                     Quick Actions
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -120,8 +120,8 @@ export default function AdminDashboardPage() {
                     >
                         <Bell className="w-5 h-5 text-springer-red" />
                         <div>
-                            <p className="font-medium text-springer-charcoal">Create Notice</p>
-                            <p className="text-sm text-springer-gray">Add a new notice</p>
+                            <p className="font-medium text-springer-charcoal lg:text-base text-sm">Create Notice</p>
+                            <p className="text-sm text-springer-gray lg:text-base text-sm">Add a new notice</p>
                         </div>
                     </a>
                     <a
@@ -130,8 +130,8 @@ export default function AdminDashboardPage() {
                     >
                         <Megaphone className="w-5 h-5 text-springer-green" />
                         <div>
-                            <p className="font-medium text-springer-charcoal">Create Banner</p>
-                            <p className="text-sm text-springer-gray">Add admission banner</p>
+                            <p className="font-medium text-springer-charcoal lg:text-base text-sm">Create Banner</p>
+                            <p className="text-sm text-springer-gray lg:text-base text-sm">Add admission banner</p>
                         </div>
                     </a>
                     <a
@@ -140,8 +140,8 @@ export default function AdminDashboardPage() {
                     >
                         <Users className="w-5 h-5 text-purple-600" />
                         <div>
-                            <p className="font-medium text-springer-charcoal">Add Faculty</p>
-                            <p className="text-sm text-springer-gray">Add faculty member</p>
+                            <p className="font-medium text-springer-charcoal lg:text-base text-sm">Add Faculty</p>
+                            <p className="text-sm text-springer-gray lg:text-base text-sm">Add faculty member</p>
                         </div>
                     </a>
                 </div>
@@ -151,17 +151,17 @@ export default function AdminDashboardPage() {
             <div className="mt-6 bg-gradient-to-r from-springer-red/10 to-springer-green/10 rounded-lg p-6 border border-gray-200">
                 <div className="flex items-start gap-4">
                     <div className="p-2 bg-white rounded-lg">
-                        <TrendingUp className="w-6 h-6 text-springer-red" />
+                        <TrendingUp className="w-5 h-5 text-springer-red" />
                     </div>
                     <div>
-                        <h3 className="font-semibold text-springer-charcoal mb-2">
+                        <h3 className="font-semibold text-springer-charcoal mb-2 lg:text-base text-sm">
                             Getting Started
                         </h3>
-                        <p className="text-sm text-springer-gray mb-4">
+                        <p className="text-springer-gray mb-4 lg:text-base text-sm">
                             Use the sidebar navigation to manage different sections of your website.
                             All changes will be reflected on the live website immediately.
                         </p>
-                        <ul className="text-sm text-springer-gray space-y-1">
+                        <ul className="text-springer-gray space-y-1 lg:text-base text-sm">
                             <li>• <strong>Notices:</strong> Manage school announcements and updates</li>
                             <li>• <strong>Banners:</strong> Control admission open/closed popups</li>
                             <li>• <strong>Faculties:</strong> Add and manage faculty member profiles</li>

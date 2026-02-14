@@ -97,7 +97,7 @@ export default function AdminDashboardPage({
                                     )}
                                 >
                                     <item.icon className="w-5 h-5" />
-                                    <span className="font-medium">{item.name}</span>
+                                    <span className="font-medium lg:text-base text-sm">{item.name}</span>
                                 </Link>
                             );
                         })}

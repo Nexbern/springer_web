@@ -193,20 +193,20 @@ export default function BannersManagementPage() {
     return (
         <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex lg:flex-row flex-col gap-4 lg:items-center items-start justify-between mb-6">
                 <div>
-                    <h1 className="text-2xl font-semibold text-springer-charcoal">
+                    <h1 className="lg:text-2xl text-xl font-semibold text-springer-charcoal">
                         Banners Management
                     </h1>
-                    <p className="text-springer-gray mt-1">
+                    <p className="text-springer-gray lg:text-base text-sm lg:mt-1 mt-0">
                         Manage admission banners and popups
                     </p>
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-springer-red text-white rounded-lg hover:bg-springer-red/80 transition"
+                    className="flex items-center gap-2 lg:px-4 lg:py-2 px-3 py-1.5 bg-springer-red text-white rounded-lg hover:bg-red-700 transition"
                 >
-                    <Plus className="w-5 h-5" />
+                    <Plus className="lg:w-5 lg:h-5 w-4 h-4" />
                     Create Banner
                 </button>
             </div>
