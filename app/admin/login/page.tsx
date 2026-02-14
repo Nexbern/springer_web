@@ -115,14 +115,14 @@ export default function AdminLoginPage() {
                     </form>
 
                     {/* Register Link */}
-                    <div className="mt-6 text-center">
+                    {/* <div className="mt-6 text-center">
                         <p className="text-sm text-springer-gray">
                             Don't have an account?{' '}
                             <Link href="/admin/register" className="text-springer-red hover:underline font-medium">
                                 Register here
                             </Link>
                         </p>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Back to Home */}
