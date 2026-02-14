@@ -8,6 +8,7 @@ export const schoolInfo = {
   address: "Gorakhpur, Uttar Pradesh, India",
   phone: "+917897012434",
   email: "springerpublicschool@gmail.com",
+  email2: "info@springer.org.in",
   website: "www.springerpublicschool.edu.in",
   affiliation: "Affiliated to the Council for the Indian School Certificate Examinations (10+2), New Delhi [Affiliation / School Code: UP125]",
   portalUrl: "https://springer.campusconnecterp.com",
@@ -65,7 +66,7 @@ export const academicPrograms = [
     age: "3-5 years",
     description: "Foundation years focusing on motor skills, social development, and early learning through play-based activities.",
     features: ["Activity-based learning", "Motor skill development", "Social interaction", "Creative expression"],
-    image: "/images/smart_classroom.jpg",
+    image: "/images/class/1.webp",
   },
   {
     id: "primary",
@@ -74,7 +75,7 @@ export const academicPrograms = [
     age: "6-10 years",
     description: "Building strong academic foundations with emphasis on reading, writing, arithmetic, and curiosity-driven learning.",
     features: ["Strong fundamentals", "Interactive learning", "Co-curricular activities", "Value education"],
-    image: "/images/hero_students_modern_classroom.jpg",
+    image: "/images/class/2.webp",
   },
   {
     id: "middle",
@@ -83,7 +84,7 @@ export const academicPrograms = [
     age: "11-13 years",
     description: "Transitional phase introducing specialized subjects, critical thinking, and independent learning skills.",
     features: ["Subject specialization", "Critical thinking", "Project-based learning", "Leadership skills"],
-    image: "/images/science_lab.jpg",
+    image: "/images/class/3.webp",
   },
   {
     id: "senior",
@@ -92,7 +93,7 @@ export const academicPrograms = [
     age: "14-17 years",
     description: "Preparation for board examinations and competitive entrances with career guidance and counseling.",
     features: ["Board preparation", "Career counseling", "Competitive exam coaching", "Stream selection"],
-    image: "/images/library.jpg",
+    image: "/images/class/4.webp",
   },
 ];
 

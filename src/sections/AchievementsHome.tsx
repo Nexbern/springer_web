@@ -28,7 +28,7 @@ export function AchievementsHome() {
                     >
                         <div className="relative rounded-xl overflow-hidden shadow-card border border-gray-200">
                             <img
-                                src="/images/hero_students_modern_classroom.jpg"
+                                src="/images/springer_asset/achievements-hero.webp"
                                 alt="Student Achievements"
                                 className="w-full h-[500px] object-cover"
                             />

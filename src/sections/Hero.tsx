@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, BookOpen, ChevronLeft, ChevronRight, Sparkles, Bell, ArrowRight } from 'lucide-react';
-import { notices } from '@/data/siteData';
 import {
     Dialog,
     DialogContent,
@@ -17,7 +16,7 @@ import { CampusVisitDialog } from '@/components/popups/CampusVisitDialog';
 const heroSlides = [
     {
         id: 1,
-        image: '/images/hero_students_modern_classroom.jpg',
+        image: '/images/hero/1.webp',
         badge: 'Admissions Open 2025-26',
         badgeColor: 'red',
         title: 'Shaping Minds. Building Futures.',
@@ -25,7 +24,7 @@ const heroSlides = [
     },
     {
         id: 2,
-        image: '/images/hero_banner_02.jpg',
+        image: '/images/hero/2.webp',
         badge: 'NEW',
         badgeColor: 'spark',
         title: 'Holistic Learning Environment',
@@ -33,7 +32,7 @@ const heroSlides = [
     },
     {
         id: 3,
-        image: '/images/hero_banner_03.jpg',
+        image: '/images/hero/3.webp',
         badge: 'STEM Excellence',
         badgeColor: 'green',
         title: 'Innovation Through Education',
@@ -41,7 +40,7 @@ const heroSlides = [
     },
     {
         id: 4,
-        image: '/images/hero_banner_04.jpg',
+        image: '/images/hero/4.webp',
         badge: 'Sports Champions',
         badgeColor: 'blue',
         title: 'Champions Are Made Here',
@@ -89,7 +88,6 @@ export function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [direction, setDirection] = useState(0);
     const [isCampusVisitDialogOpen, setIsCampusVisitDialogOpen] = useState(false);
-    const latestNotice = notices[0];
 
     // Auto-advance carousel
     useEffect(() => {
