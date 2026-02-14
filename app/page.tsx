@@ -11,6 +11,7 @@ import { FacultySpotlight } from '@/sections/FacultySpotlight';
 import { Testimonials } from '@/sections/Testimonials';
 import { FinalCTA } from '@/sections/FinalCTA';
 import BannerNoticePopup from '@/components/popups/BannerNoticePopup';
+import { FloatingButtons } from '@/components/ui-custom/FloatingButtons';
 
 export default function HomePage() {
     return (
@@ -28,6 +29,7 @@ export default function HomePage() {
             <FacultySpotlight />
             <Testimonials />
             <FinalCTA />
+            <FloatingButtons />
         </main>
     );
 }
