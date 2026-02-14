@@ -4,11 +4,11 @@ import {
   Phone,
   Mail,
   Facebook,
-  Twitter,
   Instagram,
   Youtube,
   ArrowRight,
-  Heart
+  Heart,
+  Linkedin
 } from 'lucide-react';
 import { schoolInfo, navigation } from '@/data/siteData';
 import Image from 'next/image';
@@ -43,28 +43,36 @@ export function Footer() {
               <h4 className="font-semibold text-white mb-4">Follow Us</h4>
               <div className="flex items-center gap-3">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/SpringerSchool"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-springer-red transition-colors"
                   aria-label="Facebook"
                 >
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/school/springerpublicschool/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-springer-red transition-colors"
-                  aria-label="Twitter"
+                  aria-label="Linkedin"
                 >
-                  <Twitter className="w-5 h-5" />
+                  <Linkedin className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/springerpublicschool"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-springer-red transition-colors"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.youtube.com/@springerpublicschool"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-springer-red transition-colors"
                   aria-label="YouTube"
                 >

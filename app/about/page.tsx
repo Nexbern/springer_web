@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { coreValues, schoolInfo } from '@/data/siteData';
 import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
 import { SectionHeader } from '@/components/ui-custom/SectionHeader';
@@ -195,7 +196,7 @@ export default function AboutPage() {
                             <div className="relative w-[280px]">
                                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                                     <img
-                                        src="/images/principal.jpg"
+                                        src="/images/persons/shipra_srivastava.webp"
                                         alt="Mrs. Shipra Srivastava"
                                         className="w-full h-full object-cover"
                                     />
@@ -214,7 +215,7 @@ export default function AboutPage() {
                             <div className="relative w-[280px]">
                                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                                     <img
-                                        src="/images/principal.jpg"
+                                        src="/images/persons/arjun_vaibhav.webp"
                                         alt="Mr. Arjun Vaibhav Srivastava"
                                         className="w-full h-full object-cover"
                                     />
@@ -355,21 +356,37 @@ export default function AboutPage() {
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {[
-                            '/images/campus_exterior.jpg',
-                            '/images/smart_classroom.jpg',
-                            '/images/science_lab.jpg',
-                            '/images/library.jpg',
-                            '/images/sports_ground.jpg',
-                            '/images/transport.jpg',
-                            '/images/robotics_lab.jpg',
-                            '/images/hero_students_modern_classroom.jpg',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_transport_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_2_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_4_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_AI $ robotics lab_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_7709_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8726_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8936_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8937_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8956_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8971_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9765_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9783_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9808_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9885_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9894_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9895_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_NKF_9927_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_Recreation ground_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_bio_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_chem_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_comp_converted.webp',
+                            '/images/about-page-campus-gallery/jpeg-optimizer_phy_converted.webp',
                         ].map((image, index) => (
-                            <AnimatedCard key={index} delay={index * 50} className={index === 0 ? 'col-span-2 row-span-2' : ''}>
+                            <AnimatedCard key={index} delay={index * 50} className={index === 0 || index % 6 === 0 ? 'col-span-2 row-span-2' : ''}>
                                 <div className="group relative overflow-hidden rounded-xl aspect-square">
-                                    <img
+                                    <Image
                                         src={image}
                                         alt={`Campus ${index + 1}`}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        fill
+                                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                                     />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
                                 </div>
