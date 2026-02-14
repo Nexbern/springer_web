@@ -2,21 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
 import Link from 'next/link';
+import ImageStack from '@/components/ui-custom/ImageStack';
 
 export function AboutIntro() {
-    const images = [
-        '/images/about-intro/1.webp',
-        '/images/about-intro/2.webp',
-        '/images/about-intro/3.webp',
-        '/images/about-intro/4.webp',
-    ];
-
     return (
         <section className="section-padding bg-gradient-to-br from-gray-50 to-white py-24">
             <div className="max-w-7xl mx-auto">
@@ -53,36 +42,7 @@ export function AboutIntro() {
                         viewport={{ once: true }}
                         className="relative w-full max-w-md mx-auto"
                     >
-                        <div className="relative w-full h-[520px]">
-                            <div className="absolute inset-0 z-10">
-                                <Swiper
-                                    modules={[Autoplay, Pagination]}
-                                    loop
-                                    slidesPerView={1}
-                                    autoplay={{
-                                        delay: 3500,
-                                        disableOnInteraction: false
-                                    }}
-                                    pagination={{ clickable: true }}
-                                    className="w-full h-full rounded-2xl shadow-2xl bg-white p-2"
-                                >
-                                    {images.map((image, index) => (
-                                        <SwiperSlide key={index}>
-                                            <div className="relative w-full h-full rounded-xl overflow-hidden">
-                                                <Image
-                                                    src={image}
-                                                    alt={`Springer Public School ${index + 1}`}
-                                                    fill
-                                                    sizes="(max-width:768px) 100vw, 50vw"
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                        </SwiperSlide>
-                                    ))}
-                                </Swiper>
-                            </div>
-
-                        </div>
+                        <ImageStack />
                     </motion.div>
 
                     {/* CONTENT SIDE */}

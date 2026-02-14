@@ -44,7 +44,7 @@ export default function AcademicsPage() {
                 {/* Background Image */}
                 <div className="absolute inset-0">
                     <img
-                        src="/images/library.jpg"
+                        src="/images/class/2.webp"
                         alt="Academics"
                         className="w-full h-full object-cover"
                     />

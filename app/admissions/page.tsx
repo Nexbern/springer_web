@@ -84,7 +84,7 @@ export default function AdmissionsPage() {
                 {/* Background Image */}
                 <div className="absolute inset-0">
                     <img
-                        src="/images/campus_exterior.jpg"
+                        src="/images/hero/3.webp"
                         alt="Admissions"
                         className="w-full h-full object-cover"
                     />

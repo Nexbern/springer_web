@@ -66,9 +66,9 @@ export default function GalleryPage() {
             <section className="relative py-24 lg:py-32 overflow-hidden">
                 <div className="absolute inset-0">
                     <img
-                        src="/images/campus_exterior.jpg"
+                        src="/images/hero/1.webp"
                         alt="Campus"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover object-top"
                     />
                     <div className="absolute inset-0 bg-black/70" />
                 </div>

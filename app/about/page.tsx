@@ -27,7 +27,7 @@ export default function AboutPage() {
                 {/* Background Image */}
                 <div className="absolute inset-0">
                     <img
-                        src="/images/campus_exterior.jpg"
+                        src="/images/hero/3.webp"
                         alt="Campus"
                         className="w-full h-full object-cover"
                     />
@@ -103,7 +103,7 @@ export default function AboutPage() {
                                 <div className="relative w-[280px]">
                                     <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                                         <img
-                                            src="/images/founder.jpg"
+                                            src="/images/persons/shri_vaibhav_srivastava.webp"
                                             alt="Late Shri Vaibhav Srivastava"
                                             className="w-full h-full object-cover"
                                         />

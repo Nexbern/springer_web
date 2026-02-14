@@ -111,7 +111,7 @@ export default function ContactPage() {
                 {/* Background Image */}
                 <div className="absolute inset-0">
                     <img
-                        src="/images/hero_banner_02.jpg"
+                        src="/images/about-page-campus-gallery/jpeg-optimizer_NKF_9783_converted.webp"
                         alt="Contact"
                         className="w-full h-full object-cover"
                     />

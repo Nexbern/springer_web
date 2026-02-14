@@ -76,10 +76,10 @@ export default function FeesStructurePage() {
         return (
             <main className="pt-24 min-h-screen bg-gradient-to-br from-gray-50 to-white">
                 {/* Hero Banner */}
-                <section className="relative py-20 overflow-hidden">
+                <section className="relative py-24 overflow-hidden">
                     <div className="absolute inset-0">
                         <img
-                            src="/images/campus_exterior.jpg"
+                            src="/images/about-page-campus-gallery/jpeg-optimizer_transport_converted.webp"
                             alt="Fees Structure"
                             className="w-full h-full object-cover"
                         />

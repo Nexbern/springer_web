@@ -99,7 +99,7 @@ export default function AchievementsPage() {
             <section className="relative py-24 lg:py-32 overflow-hidden">
                 <div className="absolute inset-0">
                     <img
-                        src="/images/sports_ground.jpg"
+                        src="/images/springer_asset/achievements-hero.webp"
                         alt="Achievements"
                         className="w-full h-full object-cover"
                     />
