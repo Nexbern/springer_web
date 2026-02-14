@@ -4,6 +4,7 @@ import {
   Phone,
   Mail,
   Facebook,
+  Twitter,
   Instagram,
   Youtube,
   ArrowRight,
@@ -116,9 +117,14 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-springer-red flex-shrink-0" />
-                <a href={`mailto:${schoolInfo.email}`} className="text-gray-400 text-sm hover:text-white transition-colors">
-                  {schoolInfo.email}
-                </a>
+                <div className="flex flex-col gap-1">
+                  <a href={`mailto:${schoolInfo.email_primary}`} className="text-gray-400 text-sm hover:text-white transition-colors">
+                    {schoolInfo.email_primary}
+                  </a>
+                  <a href={`mailto:${schoolInfo.email_secondary}`} className="text-gray-400 text-sm hover:text-white transition-colors">
+                    {schoolInfo.email_secondary}
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

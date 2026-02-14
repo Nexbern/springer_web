@@ -47,8 +47,8 @@ const contactInfo = [
     {
         icon: Mail,
         title: "Email Us",
-        content: schoolInfo.email,
-        link: `mailto:${schoolInfo.email}`,
+        content: `${schoolInfo.email_primary} | ${schoolInfo.email_secondary}`,
+        link: `mailto:${schoolInfo.email_primary}`,
     },
     {
         icon: Clock,
@@ -57,6 +57,7 @@ const contactInfo = [
         link: null,
     },
 ];
+
 
 export default function ContactPage() {
     const [showSuccessDialog, setShowSuccessDialog] = useState(false);

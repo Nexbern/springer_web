@@ -47,9 +47,10 @@ export function Navbar() {
                 <Phone className="w-3.5 h-3.5" />
                 <span>{schoolInfo.phone}</span>
               </a>
-              <a href={`mailto:${schoolInfo.email}`} className="flex items-center gap-1.5 hover:text-springer-red transition-colors hidden sm:flex">
+              <a href={`mailto:${schoolInfo.email_primary}`} className="flex items-center gap-1.5 hover:text-springer-red transition-colors hidden sm:flex">
                 <Mail className="w-3.5 h-3.5" />
-                <span>{schoolInfo.email}</span>
+                <span className="hidden md:inline">{schoolInfo.email_primary}</span>
+                <span className="md:hidden">{schoolInfo.email_secondary}</span>
               </a>
             </div>
             <div className="flex items-center gap-4">
