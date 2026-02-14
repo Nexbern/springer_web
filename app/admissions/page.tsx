@@ -184,7 +184,7 @@ export default function AdmissionsPage() {
 
                                     <div className="mt-10 pt-8 border-t border-white/20">
                                         <p className="text-sm text-white/70 mb-2">For queries, contact:</p>
-                                        <p className="font-semibold">+91 917897012434</p>
+                                        <p className="font-semibold">+91 7897012434</p>
                                         <p className="text-sm text-white/70">info@springer.org.in</p>
                                         <p className="text-sm text-white/70">springerpublicschool@gmail.com</p>
 

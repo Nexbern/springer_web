@@ -16,7 +16,7 @@ import { CampusVisitDialog } from '@/components/popups/CampusVisitDialog';
 const heroSlides = [
     {
         id: 1,
-        image: '/images/hero/1.webp',
+        image: '/images/hero/12.webp',
         badge: 'Admissions Open 2025-26',
         badgeColor: 'red',
         title: 'Shaping Minds. Building Futures.',

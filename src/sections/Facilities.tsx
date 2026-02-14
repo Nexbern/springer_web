@@ -74,6 +74,12 @@ const infrastructureFacilities = [
         name: 'Achievements Gallery',
         image: '/images/infrastructure/Achievements.webp',
         description: 'Showcase of our students\' remarkable achievements in academics, sports, and co-curricular activities.'
+    },
+    {
+        id: 12,
+        name: 'Swimming Pool',
+        image: '/images/infrastructure/swim.webp',
+        description: 'Modern school swimming pool promoting fitness, safety, teamwork, and excellence among students.'
     }
 ];
 

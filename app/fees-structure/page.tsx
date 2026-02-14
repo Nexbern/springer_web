@@ -79,7 +79,7 @@ export default function FeesStructurePage() {
                 <section className="relative py-24 overflow-hidden">
                     <div className="absolute inset-0">
                         <img
-                            src="/images/about-page-campus-gallery/jpeg-optimizer_transport_converted.webp"
+                            src="/images/about-page-campus-gallery/camp2.webp"
                             alt="Fees Structure"
                             className="w-full h-full object-cover"
                         />

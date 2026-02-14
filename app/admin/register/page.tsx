@@ -152,7 +152,7 @@ export default function AdminRegisterPage() {
                             />
                         </div>
 
-                        <button
+                        {/* <button
                             type="submit"
                             disabled={loading}
                             className="w-full px-6 py-3 bg-springer-green text-white font-semibold rounded-lg hover:bg-green-800 transition-all duration-300 hover:shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
@@ -165,7 +165,7 @@ export default function AdminRegisterPage() {
                             ) : (
                                 'Create Account'
                             )}
-                        </button>
+                        </button> */}
                     </form>
 
                     {/* Login Link */}

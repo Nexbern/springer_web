@@ -409,11 +409,13 @@ export default function AboutPage() {
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {[
+                            '/images/about-page-campus-gallery/camp1.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_transport_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_2_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_4_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_AI $ robotics lab_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_NKF_7709_converted.webp',
+                            '/images/about-page-campus-gallery/camp.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8726_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8936_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_NKF_8937_converted.webp',
@@ -431,6 +433,8 @@ export default function AboutPage() {
                             '/images/about-page-campus-gallery/jpeg-optimizer_chem_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_comp_converted.webp',
                             '/images/about-page-campus-gallery/jpeg-optimizer_phy_converted.webp',
+                            '/images/about-page-campus-gallery/camp2.webp',
+                            '/images/about-page-campus-gallery/swim.webp',
                         ].map((image, index) => (
                             <AnimatedCard key={index} delay={index * 50} className={index === 0 || index % 6 === 0 ? 'col-span-2 row-span-2' : ''}>
                                 <div className="group relative overflow-hidden rounded-xl aspect-square">

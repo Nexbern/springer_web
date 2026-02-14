@@ -214,7 +214,7 @@ export default function AcademicsPage() {
                             <div className="relative h-full">
                                 <div className="absolute inset-0 rounded-2xl overflow-hidden">
                                     <img
-                                        src="/images/smart_classroom.jpg"
+                                        src="/images/hero/12.webp"
                                         alt="Learning Environment"
                                         className="w-full h-full object-cover"
                                     />

@@ -56,6 +56,8 @@ const galleryImages = [
     { id: 48, src: '/images/gallery/image 01 (48).webp', alt: 'School Gallery Image 48' },
     { id: 49, src: '/images/gallery/image 01 (49).webp', alt: 'School Gallery Image 49' },
     { id: 50, src: '/images/gallery/image 01 (50).webp', alt: 'School Gallery Image 50' },
+    { id: 50, src: '/images/gallery/image 01 (51).webp', alt: 'School Gallery Image 51' },
+    { id: 50, src: '/images/gallery/image 01 (52).webp', alt: 'School Gallery Image 52' },
 ];
 
 export default function GalleryPage() {
