@@ -260,6 +260,59 @@ export default function AboutPage() {
                 </div>
             </section>
 
+            {/* Principal Section */}
+            <section className="py-20 lg:py-24 bg-springer-gray-light">
+                <div className="section-padding">
+                    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 lg:gap-12 items-center">
+                        <AnimatedCard direction="left" className="order-2 lg:order-1">
+                            <div>
+                                <span className="inline-block px-4 py-1.5 bg-springer-red/10 text-springer-red text-sm font-medium rounded-full mb-4">
+                                    Academic Leadership
+                                </span>
+                                <h2 className="text-2xl lg:text-3xl font-semibold text-springer-charcoal mb-4">
+                                    Mr. Tushar Sagar Nandy
+                                </h2>
+                                <div className="space-y-4 text-springer-gray leading-relaxed text-sm lg:text-base">
+                                    <p>
+                                        It gives me immense pleasure to address you as the Principal of this prestigious institution.
+                                        Since its inception in 1992, Springer Public School has been striving towards maintaining high
+                                        academic standards and excellence in the overall development of students.
+                                    </p>
+                                    <p>
+                                        We advocate activity-based learning, blending cognitive, affective, and psychomotor domains
+                                        of the educational process. Our curriculum is unique, and we believe that "Education is not
+                                        only the learning of facts but training the mind to think."
+                                    </p>
+                                    <p>
+                                        Our dedicated faculty provides students with the latest knowledge and skills to excel in this
+                                        competitive world. The campus is vibrant with energy and enthusiasm, creating a congenial
+                                        environment for learning and holistic development.
+                                    </p>
+                                </div>
+                                <div className="mt-8">
+                                    <div className="font-semibold text-springer-charcoal text-lg">Mr. Tushar Sagar Nandy</div>
+                                    <div className="text-springer-gray font-medium">Principal</div>
+                                </div>
+                            </div>
+                        </AnimatedCard>
+
+                        <AnimatedCard direction="right" className="order-1 lg:order-2 flex justify-center lg:justify-end">
+                            <div className="relative w-[280px]">
+                                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
+                                    <Image
+                                        src="/images/persons/tushar_sagar_nandy.webp"
+                                        alt="Mr. Tushar Sagar Nandy"
+                                        width={280}
+                                        height={373}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                        </AnimatedCard>
+                    </div>
+                </div>
+            </section>
+
             {/* Milestones and Recognition */}
             <section className="py-20 lg:py-28 bg-springer-charcoal text-white overflow-hidden relative">
                 <div className="section-padding">
