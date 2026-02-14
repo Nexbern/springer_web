@@ -7,7 +7,6 @@ import { achievements } from '@/data/siteData';
 import { AnimatedCard } from '@/components/ui-custom/AnimatedCard';
 import { SectionHeader } from '@/components/ui-custom/SectionHeader';
 import { Counter } from '@/components/ui-custom/Counter';
-import { AchieversShowcase, type Achiever } from '@/components/ui-custom/AchieversShowcase';
 import { cn } from '@/lib/utils';
 
 const achievementCategories = [
@@ -85,97 +84,7 @@ const allAchievements = [
     },
 ];
 
-// Demo achievers data for the showcase
-const demoAchievers: Achiever[] = [
-    {
-        _id: 'demo1',
-        name: 'Aarav Sharma',
-        imageUrl: '/images/parent_01.jpg',
-        heading: 'Class 10th ICSE Topper',
-        description: 'Council Board - 98.6%',
-        order: 1
-    },
-    {
-        _id: 'demo2',
-        name: 'Priya Patel',
-        imageUrl: '/images/parent_02.jpg',
-        heading: 'State Chess Championship',
-        description: '1st Position - Under 16',
-        order: 2
-    },
-    {
-        _id: 'demo3',
-        name: 'Rohan Verma',
-        imageUrl: '/images/parent_01.jpg',
-        heading: 'Inter-School Debate',
-        description: 'Winner - Best Speaker Award',
-        order: 3
-    },
-    {
-        _id: 'demo4',
-        name: 'Ananya Singh',
-        imageUrl: '/images/parent_02.jpg',
-        heading: 'Mathematics Olympiad',
-        description: 'Gold Medal - National Level',
-        order: 4
-    },
-    {
-        _id: 'demo5',
-        name: 'Kabir Mehta',
-        imageUrl: '/images/parent_01.jpg',
-        heading: 'District Athletics Meet',
-        description: '100m Sprint - Gold Medal',
-        order: 5
-    },
-    {
-        _id: 'demo6',
-        name: 'Ishita Reddy',
-        imageUrl: '/images/parent_02.jpg',
-        heading: 'State Art Competition',
-        description: '1st Prize - Painting Category',
-        order: 6
-    },
-    {
-        _id: 'demo7',
-        name: 'Arjun Kumar',
-        imageUrl: '/images/parent_01.jpg',
-        heading: 'Science Exhibition',
-        description: 'Best Innovation Award - Regional',
-        order: 7
-    },
-    {
-        _id: 'demo8',
-        name: 'Diya Sharma',
-        imageUrl: '/images/parent_02.jpg',
-        heading: 'Class 12th Commerce',
-        description: 'School Topper - 96.4%',
-        order: 8
-    },
-    {
-        _id: 'demo9',
-        name: 'Vivaan Joshi',
-        imageUrl: '/images/parent_01.jpg',
-        heading: 'Basketball Tournament',
-        description: 'MVP - Inter-School Championship',
-        order: 9
-    },
-    {
-        _id: 'demo10',
-        name: 'Aisha Khan',
-        imageUrl: '/images/parent_02.jpg',
-        heading: 'English Olympiad',
-        description: 'Silver Medal - International',
-        order: 10
-    },
-    {
-        _id: 'demo11',
-        name: 'Siddharth Rao',
-        imageUrl: '/images/parent_01.jpg',
-        heading: 'Badminton Championship',
-        description: '1st Position - State Level',
-        order: 11
-    }
-];
+
 
 export default function AchievementsPage() {
     const [activeCategory, setActiveCategory] = useState('all');
@@ -294,15 +203,6 @@ export default function AchievementsPage() {
                     </div>
                 </div>
             </section>
-
-            {/* Achievers Showcase */}
-            <AchieversShowcase
-                achievers={demoAchievers}
-                title="Our Star Performers"
-                subtitle="Hall of Fame"
-                description="Recognizing the outstanding achievements of our students who have brought laurels to the school."
-                showBackground={true}
-            />
         </main>
     );
 }

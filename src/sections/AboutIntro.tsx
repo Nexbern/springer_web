@@ -2,12 +2,26 @@
 
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
+import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import Link from 'next/link';
 
 export function AboutIntro() {
+    const images = [
+        '/images/about-intro/1.webp',
+        '/images/about-intro/2.webp',
+        '/images/about-intro/3.webp',
+        '/images/about-intro/4.webp',
+    ];
+
     return (
         <section className="section-padding bg-gradient-to-br from-gray-50 to-white py-24">
             <div className="max-w-7xl mx-auto">
-                {/* Centered Header */}
+
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -17,7 +31,9 @@ export function AboutIntro() {
                 >
                     <div className="inline-flex items-center gap-2 px-4 py-1 bg-red-50 border border-red-200 text-springer-red rounded-full mb-4">
                         <Heart className="w-4 h-4 text-springer-red" />
-                        <span className="lg:text-sm text-xs font-semibold text-springer-red">About Springer Public School</span>
+                        <span className="lg:text-sm text-xs font-semibold text-springer-red">
+                            About Springer Public School
+                        </span>
                     </div>
 
                     <h2 className="text-xl lg:text-3xl font-semibold text-springer-charcoal mb-6 leading-tight max-w-4xl mx-auto">
@@ -26,37 +42,58 @@ export function AboutIntro() {
                     </h2>
                 </motion.div>
 
-                {/* Main Content Grid */}
+                {/* Grid */}
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
-                    {/* Image Side */}
+
+                    {/* STACKED IMAGE SECTION */}
                     <motion.div
-                        initial={{ opacity: 0, y: -50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -80 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
-                        className="relative"
+                        className="relative w-full max-w-md mx-auto"
                     >
-                        {/* Main Image */}
-                        <div className="relative rounded-2xl overflow-hidden shadow-card border border-gray-200">
-                            <img
-                                src="/images/hero_students_modern_classroom.jpg"
-                                alt="Springer Public School"
-                                className="w-full h-[600px] object-cover"
-                            />
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+                        <div className="relative w-full h-[520px]">
+                            <div className="absolute inset-0 z-10">
+                                <Swiper
+                                    modules={[Autoplay, Pagination]}
+                                    loop
+                                    slidesPerView={1}
+                                    autoplay={{
+                                        delay: 3500,
+                                        disableOnInteraction: false
+                                    }}
+                                    pagination={{ clickable: true }}
+                                    className="w-full h-full rounded-2xl shadow-2xl bg-white p-2"
+                                >
+                                    {images.map((image, index) => (
+                                        <SwiperSlide key={index}>
+                                            <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                                <Image
+                                                    src={image}
+                                                    alt={`Springer Public School ${index + 1}`}
+                                                    fill
+                                                    sizes="(max-width:768px) 100vw, 50vw"
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            </div>
+
                         </div>
                     </motion.div>
 
-                    {/* Content Side */}
+                    {/* CONTENT SIDE */}
                     <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: 80 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        {/* Description */}
+
                         <p className="text-base lg:text-lg text-springer-gray leading-relaxed">
                             At Springer Public School, we believe in holistic education that goes beyond
                             textbooks. For over three decades, we've been shaping future leaders through
@@ -76,16 +113,16 @@ export function AboutIntro() {
                             in education for generations of families.
                         </p>
 
-                        {/* CTA Button */}
                         <div className="pt-4">
-                            <a
+                            <Link
                                 href="/about"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-springer-red text-white lg:font-semibold font-medium text-base lg:text-lg rounded-lg hover:bg-red-700 transition-all duration-300"
                             >
                                 Discover Our Story
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
+
                 </div>
             </div>
         </section>

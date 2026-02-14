@@ -7,7 +7,7 @@ export const schoolInfo = {
   founded: 1992,
   address: "Gorakhpur, Uttar Pradesh, India",
   phone: "+917897012434",
-  email: "info@springerpublicschool.edu.in",
+  email: "springerpublicschool@gmail.com",
   website: "www.springerpublicschool.edu.in",
   affiliation: "Affiliated to the Council for the Indian School Certificate Examinations (10+2), New Delhi [Affiliation / School Code: UP125]",
   portalUrl: "https://springer.campusconnecterp.com",
@@ -24,63 +24,6 @@ export const navigation = [
   { name: "Fees", href: "/fees-structure" },
   { name: "Notices", href: "/notices" },
   { name: "Contact", href: "/contact" },
-];
-
-export const notices = [
-  {
-    id: 1,
-    title: "Admissions Open for Academic Year 2025-26",
-    date: "2025-01-15",
-    category: "Admission",
-    priority: "high",
-    badge: "NEW",
-    content: "Applications are now being accepted for all classes. Limited seats available.",
-  },
-  // {
-  //   id: 2,
-  //   title: "Annual Sports Day - February 15, 2025",
-  //   date: "2025-01-10",
-  //   category: "Event",
-  //   priority: "medium",
-  //   badge: "EVENT",
-  //   content: "Join us for our Annual Sports Day celebration with various competitions.",
-  // },
-  // {
-  //   id: 3,
-  //   title: "Parent-Teacher Meeting Schedule",
-  //   date: "2025-01-08",
-  //   category: "Academic",
-  //   priority: "medium",
-  //   badge: "IMPORTANT",
-  //   content: "PTM scheduled for January 25, 2025. Timings: 9:00 AM - 3:00 PM.",
-  // },
-  // {
-  //   id: 4,
-  //   title: "Winter Break Extended Due to Cold Wave",
-  //   date: "2025-01-05",
-  //   category: "General",
-  //   priority: "high",
-  //   badge: "UPDATE",
-  //   content: "School will remain closed until January 12, 2025 due to severe cold conditions.",
-  // },
-  // {
-  //   id: 5,
-  //   title: "Science Exhibition 2025 - Call for Projects",
-  //   date: "2025-01-20",
-  //   category: "Academic",
-  //   priority: "medium",
-  //   badge: "NEW",
-  //   content: "Annual Science Exhibition scheduled for March 2025. Students can start preparing their projects.",
-  // },
-  // {
-  //   id: 6,
-  //   title: "Republic Day Celebration - January 26, 2025",
-  //   date: "2025-01-18",
-  //   category: "Event",
-  //   priority: "high",
-  //   badge: "EVENT",
-  //   content: "Join us in celebrating the 76th Republic Day with flag hoisting and cultural programs.",
-  // },
 ];
 
 export const whyChooseUs = [
