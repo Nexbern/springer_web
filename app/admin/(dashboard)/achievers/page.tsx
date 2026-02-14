@@ -183,7 +183,7 @@ export default function AchieversManagementPage() {
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="flex items-center gap-2 lg:px-4 lg:py-2 px-3 py-1.5 bg-springer-red text-white rounded-lg hover:bg-red-700 transition"
+                    className="flex items-center gap-2 lg:px-4 lg:py-2 px-3 py-1.5 bg-springer-red text-white rounded-lg hover:bg-red-700 transition lg:text-base text-sm"
                 >
                     <Plus className="lg:w-5 lg:h-5 w-4 h-4" />
                     Add Achiever
