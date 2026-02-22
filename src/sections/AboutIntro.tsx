@@ -36,8 +36,8 @@ export function AboutIntro() {
 
                     {/* STACKED IMAGE SECTION */}
                     <motion.div
-                        initial={{ opacity: 0, x: -80 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: -80 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
                         className="relative w-full max-w-md mx-auto"
@@ -47,8 +47,8 @@ export function AboutIntro() {
 
                     {/* CONTENT SIDE */}
                     <motion.div
-                        initial={{ opacity: 0, x: 80 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 80 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                         className="space-y-6"
